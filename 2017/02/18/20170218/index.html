@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>最长公共子序列 | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithmdynamic programming">
+  
+  
+  
+  
+  <meta name="description" content="Biological applications often need to compare the DNA of two (or more) different organisms. A strand of DNA consists of a string of molecules called bases, where the possible bases are adenine, guanin">
+<meta name="keywords" content="algorithm,dynamic programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最长公共子序列">
+<meta property="og:url" content="http://www.fogsail.net/2017/02/18/20170218/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="Biological applications often need to compare the DNA of two (or more) different organisms. A strand of DNA consists of a string of molecules called bases, where the possible bases are adenine, guanin">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/01.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/02.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/03.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/04.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/05.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/06.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/07.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/09.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/10.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/11.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/12.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/13.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/14.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/15.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/16.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/18.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/17.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/19.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/20.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/21.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/18/20170218/22.jpg">
+<meta property="og:updated_time" content="2018-03-02T17:38:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最长公共子序列">
+<meta name="twitter:description" content="Biological applications often need to compare the DNA of two (or more) different organisms. A strand of DNA consists of a string of molecules called bases, where the possible bases are adenine, guanin">
+<meta name="twitter:image" content="http://www.fogsail.net/2017/02/18/20170218/01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2017/02/18/20170218/",
+        "appid": "1593711792635024",
+        "title": "最长公共子序列",
+        "images": [
+        "http://www.fogsail.net/2017/02/18/20170218/01.png",
+        "http://www.fogsail.net/2017/02/18/20170218/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2017-02-18T01:05:00" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20170218" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      最长公共子序列
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/02/18/20170218/" class="article-date">
+	  <time datetime="2017-02-18T05:05:00.000Z" itemprop="datePublished">2017-02-18</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Biological applications often need to compare the DNA of two (or more) different organisms. A strand of DNA consists of a string of molecules called bases, where the possible bases are adenine, guanine, cytosine, and thymine. Representing each of these bases by its initial letter, we can express a strand of DNA as a string over the ﬁnite set {A,C,G,T}.</p>
+<p>这是生物学应用中最为常见的“最长公共子序列问题”。</p>
+<a id="more"></a>
+<h2 id="动态规划原理"><a href="#动态规划原理" class="headerlink" title="动态规划原理"></a>动态规划原理</h2><p>能够用动态规划解决的问题，通常具有两种属性：第一，存在最优子结构，即可以用“剪切，粘帖”的方法来证明；第二，具有重叠子问题。</p>
+<h3 id="递归和穷举算法分析"><a href="#递归和穷举算法分析" class="headerlink" title="递归和穷举算法分析"></a>递归和穷举算法分析</h3><p>在矩阵链乘法的问题中，可以使用递归和穷举两种方法来解决最优的括号化方案。其中，对每一种方案计算乘法运算次数。</p>
+<p>用穷举法的时候，表中的每一个节点都必须访问，记访问一个节点的时间为$b_k$<br>则有递推式：<br>$b_n= \sum_{k=0}^{n-1}b_kb_{n-1-k}$</p>
+<p>该递推式符合卡特兰数，可以推出通项公式为：<br>$b(n)=\frac{4^n}{\sqrt{\pi}n^{3/2}}(1+O(1/n))$<br>阶是关于n的指数函数。</p>
+<p>用Recursive-Matrix-Chain递归求解，递推式符合<br>$T(n)\geq1+\sum_{k=1}^{n-1}(T(k)+T(n-k)+1) \qquad n&gt;1$<br>可以求得递推公式为：<br>$T(n)\geq2^{n-1}$</p>
+<p>可见朴素递归算法比穷举好一些。</p>
+<h3 id="动态规划问题和分治法区别"><a href="#动态规划问题和分治法区别" class="headerlink" title="动态规划问题和分治法区别"></a>动态规划问题和分治法区别</h3><p>在merge-sort过程中，可以发现，问题不具有重叠字问题的性质，如下图所示，所有的子问题均不重叠。</p>
+<p><img src="/2017/02/18/20170218/01.jpg" alt="01"></p>
+<h3 id="最大化矩阵括号方案"><a href="#最大化矩阵括号方案" class="headerlink" title="最大化矩阵括号方案"></a>最大化矩阵括号方案</h3><p>最大化矩阵括号化方案，问题仍然具有最优子结构性质。因为“剪切，粘帖”的处理方式没有变。</p>
+<p>假设最大括号化方案能够使结果最优，则其中的划分为：<br>$A_1A_2\dots \dots A_kA_{k+1}\dots A_j$<br>如果该方案不是最优的，总可以找到另外一种方案如下：<br>$A_1A_2\dots A_iA_{i+1}\dots \dots A_j$<br>来替代该方案，使得结果最优。</p>
+<h3 id="贪心和动态规划的区别"><a href="#贪心和动态规划的区别" class="headerlink" title="贪心和动态规划的区别"></a>贪心和动态规划的区别</h3><p>贪心算法的原理是：我们不必计算原问题的最优解，总是可以在求解子问题的时候划分出$A_iA_{i+1}\dots A_j$，选定的k使得$p_{i-1}p_{k}p_{j}$最小。这样的贪心算法并不能够得到最优解。原因如下：</p>
+<p><img src="/2017/02/18/20170218/02.jpg" alt="02"></p>
+<p>虽然我们求出来的最优解如红色的图，但很有可能<br>$p_{u-1}p_wp_v&lt;p_{u-1}p_xp_v$</p>
+<p>原因如下：最优解的函数表达式与贪心中的$p_k$函数表达式不同，所以贪心算法并不能够用于最优解问题。</p>
+<p>编程验证：</p>
+<p>贪心策略如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//下面这是用错误的贪心算法求解的问题：</span><br><span class="line">Matrix_Chain Matrix_Chain_Order_greedy(int p[])</span><br><span class="line">&#123;</span><br><span class="line">    int N=n-1;</span><br><span class="line">    Matrix_Chain T_greedy;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;N;i++)</span><br><span class="line">      T_greedy.m[i][i]=0;</span><br><span class="line">    <span class="keyword">for</span>(int l=2;l&lt;=N;l++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;=N<span class="_">-l</span>+1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int j=i+l-1;</span><br><span class="line">            T_greedy.m[i-1][j-1]=INFINITY;</span><br><span class="line">            int q_min=INFINITY;</span><br><span class="line">            <span class="keyword">for</span>(int k=i;k&lt;=j-1;k++)</span><br><span class="line">            &#123;</span><br><span class="line">                int q=T_greedy.m[i-1][k-1]+T_greedy.m[k][j-1]+p[i-1]*p[k]*p[j];</span><br><span class="line">                <span class="keyword">if</span>(q_min&gt;p[i-1]*p[k]*p[j])</span><br><span class="line">                &#123;</span><br><span class="line">                    q_min=p[i-1]*p[k]*p[j];</span><br><span class="line">                    T_greedy.m[i-1][j-1]=q;</span><br><span class="line">                    T_greedy.s[i-1][j-1]=k-1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> T_greedy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如图：</p>
+<p><img src="/2017/02/18/20170218/03.jpg" alt="03"></p>
+<p><img src="/2017/02/18/20170218/04.jpg" alt="04"></p>
+<p><img src="/2017/02/18/20170218/05.jpg" alt="05"></p>
+<p>很显然地看出，greedy_result得到了不同的括号化结果。</p>
+<h3 id="钢条切割问题的限制"><a href="#钢条切割问题的限制" class="headerlink" title="钢条切割问题的限制"></a>钢条切割问题的限制</h3><p><img src="/2017/02/18/20170218/06.jpg" alt="06"></p>
+<p>如果我们限制，在r=4的时候，只能够切割成两段长度为1的钢条，则r=4的时候，最优切割方案1+1+1+1无法成立。</p>
+<h3 id="外币兑换问题"><a href="#外币兑换问题" class="headerlink" title="外币兑换问题"></a>外币兑换问题</h3><p>该问题可以看成是一种矩阵链乘法的变形，当佣金$C_k$为任意值的时候，并不符合最优子结构的性质。</p>
+<p>具体的描述见下图：</p>
+<p><img src="/2017/02/18/20170218/07.jpg" alt="07"></p>
+<p>合并问题的代价，可以描述为$C_k$</p>
+<p>解决每个问题所需要的代价为$R_k$</p>
+<p>总代价的递推式为：<br>$R_k+C_k$<br>$R_{k2}+C_{k_2}$</p>
+<p>如果$C_k$不为常数，假设它可以用一个$f(k)$描述，则问题的代价可以描述为：</p>
+<p>$R_k+f(k)$</p>
+<p>动态规划算法只能保证$R_k$的最优解，并不能保证$f(k)$的最优解。</p>
+<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h2><p>最长公共子序列的求解，如下图所示：</p>
+<p><img src="/2017/02/18/20170218/09.jpg" alt="09"></p>
+<p>可以看到，最长公共子序列的依赖关系如上图所示，[i,j]的值取决于{[i-1,j-1],[i,j-1],[i-1,j]}</p>
+<p>实现方法如下：</p>
+<p><strong>LCS_len.h</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string&gt;</span></span><br><span class="line"><span class="comment">#include &lt;locale&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define M 6</span></span><br><span class="line"><span class="comment">#define N 7</span></span><br><span class="line"></span><br><span class="line">wchar_t b[N+1][M+1]=&#123;<span class="string">'S'</span>&#125;;  //表示起点start</span><br><span class="line">int c[N+1][M+1]=&#123;0&#125;;</span><br><span class="line">wchar_t northwest=L<span class="string">'\\'</span>, up=L<span class="string">'|'</span>, leftway=L<span class="string">'-'</span>;</span><br><span class="line"></span><br><span class="line">void LCS_length(char *x,char *y)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i1=0;i1&lt;=N;i1++)</span><br><span class="line">      b[i1][0]=<span class="string">'S'</span>;</span><br><span class="line">    <span class="keyword">for</span>(int j1=0;j1&lt;=M;j1++)</span><br><span class="line">      b[0][j1]=<span class="string">'S'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=1;j&lt;=M;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x[i]==y[j])</span><br><span class="line">            &#123;</span><br><span class="line">                c[i][j]=c[i-1][j-1]+1;</span><br><span class="line">                b[i][j]=northwest;     //Northwest往左上</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(c[i-1][j]&gt;=c[i][j-1])</span><br><span class="line">                //c[i-1][j-1] 过渡到 c[i][j]，需要将c[i-1][j]和c[i][j-1]比较大小</span><br><span class="line">                //取较大的那一个值</span><br><span class="line">                &#123;</span><br><span class="line">                    c[i][j]=c[i-1][j];</span><br><span class="line">                    b[i][j]=up;  //Up往上</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    c[i][j]=c[i][j-1];</span><br><span class="line">                    b[i][j]=leftway;  //Left往左</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Print_lcs(char *x,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(i==0||j==0)</span><br><span class="line">      <span class="built_in">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(b[i][j]==northwest)</span><br><span class="line">    &#123;</span><br><span class="line">        Print_lcs(x,i-1,j-1);</span><br><span class="line">        std::cout&lt;&lt;x[i]&lt;&lt;<span class="string">" "</span>;     //当然，按y[j]输出也没有问题，因为是公共序列嘛！</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b[i][j]==up)</span><br><span class="line">          Print_lcs(x,i-1,j);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          Print_lcs(x,i,j-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong> 主函数LCS.cpp </strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;locale&gt;</span></span><br><span class="line"><span class="comment">#include "LCS_len.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    setlocale(LC_ALL,<span class="string">"chs"</span>);</span><br><span class="line">    char x[N+1]=&#123;<span class="string">'\0'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>&#125;;</span><br><span class="line">    char y[M+1]=&#123;<span class="string">'\0'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'C'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'A'</span>&#125;;</span><br><span class="line"></span><br><span class="line">    LCS_length(x,y);</span><br><span class="line">    Print_lcs(x,N,M);</span><br><span class="line">    std::cout&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line">    std::cout&lt;&lt;<span class="string">"Gene Distance:"</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;=M;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            std::wcout&lt;&lt;b[i][j]&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        std::cout&lt;&lt;std::endl;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;=M;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            std::cout&lt;&lt;c[i][j]&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        std::cout&lt;&lt;std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现结果输出</p>
+<p><img src="/2017/02/18/20170218/10.jpg" alt="10"></p>
+<h3 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h3><p>运行上述代码，可以知道<1,0,0,1,0,1,0,1>和<0,1,0,1,1,0,1,1,0>的一个LCS为：</0,1,0,1,1,0,1,1,0></1,0,0,1,0,1,0,1></p>
+<p><img src="/2017/02/18/20170218/11.jpg" alt="11"></p>
+<h3 id="不使用表b重构LCS"><a href="#不使用表b重构LCS" class="headerlink" title="不使用表b重构LCS"></a>不使用表b重构LCS</h3><p><strong>lcs_len2.h</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#define M 6</span></span><br><span class="line"><span class="comment">#define N 7</span></span><br><span class="line"></span><br><span class="line">void lcs_len_withouthelp(char *x, char *y,int c[][M+1])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=1;j&lt;=M;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x[i]==y[j])</span><br><span class="line">              c[i][j]=c[i-1][j-1]+1;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(c[i-1][j]&gt;=c[i][j-1])</span><br><span class="line">                  c[i][j]=c[i-1][j];</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                  c[i][j]=c[i][j-1];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print_LCS_withouthelp(int c[][M+1],char *x,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(i==0||j==0)</span><br><span class="line">      <span class="built_in">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(c[i][j]==c[i-1][j-1]+1)</span><br><span class="line">    &#123;</span><br><span class="line">        print_LCS_withouthelp(c,x,i-1,j-1);</span><br><span class="line">        std::cout&lt;&lt;x[i]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(c[i-1][j]&gt;=c[i][j-1])</span><br><span class="line">          print_LCS_withouthelp(c,x,i-1,j);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          print_LCS_withouthelp(c,x,i,j-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>LCS2.CPP</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include "lcs_len2.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char x[N+1]=&#123;<span class="string">'\0'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>&#125;;</span><br><span class="line">    char y[M+1]=&#123;<span class="string">'\0'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'C'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'A'</span>&#125;;</span><br><span class="line">    int c[N+1][M+1]=&#123;0&#125;;</span><br><span class="line">    lcs_len_withouthelp(x,y,c);</span><br><span class="line">    print_LCS_withouthelp(c,x,N,M);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/18/20170218/12.jpg" alt="12"></p>
+<h3 id="带备忘的LCS-Length"><a href="#带备忘的LCS-Length" class="headerlink" title="带备忘的LCS-Length"></a>带备忘的LCS-Length</h3><p>基本思路：</p>
+<p>一、初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Initialize(c)=&#123;0&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>二、带备忘的值，执行判断<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(i==0||j==0)</span><br><span class="line">  c[i][j]=0;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(c[i][j]&gt;0)</span><br><span class="line">  <span class="built_in">return</span> c[i][j];    //带备忘的<span class="built_in">return</span>,执行输出</span><br></pre></td></tr></table></figure></p>
+<p>实现过程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define M 6</span></span><br><span class="line"><span class="comment">#define N 7</span></span><br><span class="line"></span><br><span class="line">int Max(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">return</span> a&gt;b?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//数组初始化为0的方法：</span><br><span class="line">//只要定义第一个元素为0，后面就劝为0了</span><br><span class="line">//int c[N+1][M+1]=&#123;0&#125;</span><br><span class="line"></span><br><span class="line">int lcs_length(char *x,char *y,int c[][M+1],int i,int j)  //这里，i,j指下标，就是第几个数</span><br><span class="line">//在递归的时候，从最后一个数，就是第N，M个数算起</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(i==0||j==0)</span><br><span class="line">      c[i][j]=0;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(c[i][j]&gt;0)</span><br><span class="line">      <span class="built_in">return</span> c[i][j];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(x[i]==y[j])</span><br><span class="line">          c[i][j]=lcs_length(x,y,c,i-1,j-1)+1;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          c[i][j]=Max(lcs_length(x,y,c,i-1,j),lcs_length(x,y,c,i,j-1));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> c[i][j];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char x[N+1] = &#123;<span class="string">'\0'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>&#125;;</span><br><span class="line">    char y[M+1] = &#123;<span class="string">'\0'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'C'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'A'</span>&#125;;</span><br><span class="line">    int c[N+1][M+1]=&#123;0&#125;;</span><br><span class="line">    cout&lt;&lt;lcs_length(x,y,c,N,M);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2×min-m-n-计算LCS长度"><a href="#2×min-m-n-计算LCS长度" class="headerlink" title="2×min(m,n)计算LCS长度"></a>2×min(m,n)计算LCS长度</h3><p>实际上，根据c[i][j],c[i-1][j-1],c[i][j-1],c[i-1][j]的依赖关系，可以知道：<br>LCS的值仅仅依赖于两行关系，如下图所示：</p>
+<p><img src="/2017/02/18/20170218/13.jpg" alt="13"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define M 8</span></span><br><span class="line"><span class="comment">#define N 9</span></span><br><span class="line"></span><br><span class="line">//仅有的二维数组：</span><br><span class="line">/*用第0行作为上一行，第1行作为当前行，一次循环后，把旧的第1</span><br><span class="line">行(当前行)的所有数据转移给新的上一行，而新的当前行用来存储新的当前行数据，这样不断循环，最终</span><br><span class="line">得到LCS长度*/</span><br><span class="line">void copy(int res[][M+1])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=M;i++)</span><br><span class="line">      res[0][i]=res[1][i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void LCS_length_2mn(char *x,char *y)</span><br><span class="line">&#123;</span><br><span class="line">    int res[2][M+1]=&#123;0&#125;;</span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=1;j&lt;=M;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x[i]==y[j])</span><br><span class="line">              res[1][j]=res[0][j-1]+1;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(res[0][j]&gt;=res[1][j-1])</span><br><span class="line">                  res[1][j]=res[0][j];</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                  res[1][j]=res[1][j-1];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        copy(res);</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;<span class="string">"first line: "</span>&lt;&lt;res[0][M]&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">"second line: "</span>&lt;&lt;res[1][M]&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()    </span><br><span class="line">&#123;    </span><br><span class="line">   //char x[N+1] = &#123;<span class="string">'\0'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>&#125;;    </span><br><span class="line">   //char y[M+1] = &#123;<span class="string">'\0'</span>,<span class="string">'B'</span>,<span class="string">'D'</span>,<span class="string">'C'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'A'</span>&#125;;   </span><br><span class="line">   char x[M+1] = &#123;<span class="string">'\0'</span>,<span class="string">'1'</span>,<span class="string">'0'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>&#125;;    </span><br><span class="line">   char y[N+1] = &#123;<span class="string">'\0'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'1'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'1'</span>,<span class="string">'0'</span>&#125;;   </span><br><span class="line">   LCS_length_2mn(x,y);</span><br><span class="line">   <span class="built_in">return</span> 0;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后输出结果为6，公共子序列为{1，0，1，0，1，1}</p>
+<h3 id="最长公共单调递增子序列"><a href="#最长公共单调递增子序列" class="headerlink" title="最长公共单调递增子序列"></a>最长公共单调递增子序列</h3><p><strong>具体实现方法：<br>1、利用快速排序先将原序列排序。<br>2、然后再计算原序列和已排序序列两者公共子序列。<br>3、打印公共子序列。</strong></p>
+<h4 id="LCS-quicksort-h"><a href="#LCS-quicksort-h" class="headerlink" title="LCS_quicksort.h"></a>LCS_quicksort.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;ctime&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int PARTITION(int A[],int p,int r)</span><br><span class="line">&#123;</span><br><span class="line">    int x=A[r];</span><br><span class="line">    int i=p-1;</span><br><span class="line">    <span class="keyword">for</span>(int j=p;j&lt;=r-1;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(A[j]&lt;=x)</span><br><span class="line">        &#123;</span><br><span class="line">            i++;</span><br><span class="line">            swap(A[i],A[j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(A[i+1],A[r]);</span><br><span class="line">    <span class="built_in">return</span> i+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void QUICKSORT(int A[],int p,int r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(p&lt;r)</span><br><span class="line">    &#123;</span><br><span class="line">        int q=PARTITION(A,p,r);</span><br><span class="line">        QUICKSORT(A,p,q-1);</span><br><span class="line">        QUICKSORT(A,q+1,r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="LCS-len-h"><a href="#LCS-len-h" class="headerlink" title="LCS_len.h"></a>LCS_len.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string&gt;</span></span><br><span class="line"><span class="comment">#include &lt;locale&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define M 11</span></span><br><span class="line"><span class="comment">#define N 11</span></span><br><span class="line"></span><br><span class="line">wchar_t b[N+1][M+1]=&#123;<span class="string">'S'</span>&#125;;  //表示起点start</span><br><span class="line">int c[N+1][M+1]=&#123;0&#125;;</span><br><span class="line">wchar_t northwest=L<span class="string">'\\'</span>, up=L<span class="string">'|'</span>, leftway=L<span class="string">'-'</span>;</span><br><span class="line"></span><br><span class="line">void LCS_length(int *x,int *y)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i1=0;i1&lt;=N;i1++)</span><br><span class="line">      b[i1][0]=<span class="string">'S'</span>;</span><br><span class="line">    <span class="keyword">for</span>(int j1=0;j1&lt;=M;j1++)</span><br><span class="line">      b[0][j1]=<span class="string">'S'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=1;j&lt;=M;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x[i]==y[j])</span><br><span class="line">            &#123;</span><br><span class="line">                c[i][j]=c[i-1][j-1]+1;</span><br><span class="line">                b[i][j]=northwest;     //Northwest往左上</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(c[i-1][j]&gt;=c[i][j-1])</span><br><span class="line">                //c[i-1][j-1] 过渡到 c[i][j]，需要将c[i-1][j]和c[i][j-1]比较大小</span><br><span class="line">                //取较大的那一个值</span><br><span class="line">                &#123;</span><br><span class="line">                    c[i][j]=c[i-1][j];</span><br><span class="line">                    b[i][j]=up;  //Up往上</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    c[i][j]=c[i][j-1];</span><br><span class="line">                    b[i][j]=leftway;  //Left往左</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Print_lcs(int *x,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(i==0||j==0)</span><br><span class="line">      <span class="built_in">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(b[i][j]==northwest)</span><br><span class="line">    &#123;</span><br><span class="line">        Print_lcs(x,i-1,j-1);</span><br><span class="line">        std::cout&lt;&lt;x[i]&lt;&lt;<span class="string">" "</span>;     //当然，按y[j]输出也没有问题，因为是公共序列嘛！</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b[i][j]==up)</span><br><span class="line">          Print_lcs(x,i-1,j);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          Print_lcs(x,i,j-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="LCS-increase-cpp"><a href="#LCS-increase-cpp" class="headerlink" title="LCS_increase.cpp"></a>LCS_increase.cpp</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "LCS_quicksort.h"</span></span><br><span class="line"><span class="comment">#include "LCS_len.h"</span></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;locale&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    setlocale(LC_ALL,<span class="string">"chs"</span>);</span><br><span class="line">    srand((unsigned)time(NULL));</span><br><span class="line">    int x[N+1]=&#123;0&#125;;</span><br><span class="line">    int y[N+1]=&#123;0&#125;;  //一般，第一个位置放0，第二个位置放1</span><br><span class="line">    //i的循环，从i=1 to N</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        y[i]=x[i]=rand()%10+1;</span><br><span class="line">        std::cout&lt;&lt;x[i]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout&lt;&lt;std::endl;</span><br><span class="line">    QUICKSORT(y,0,N);</span><br><span class="line">    LCS_length(x,y);</span><br><span class="line">    Print_lcs(x,N,N);</span><br><span class="line">    std::cout&lt;&lt;std::endl;</span><br><span class="line">    std::cout&lt;&lt;<span class="string">"15-8"</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;=N;j++)</span><br><span class="line">          std::wcout&lt;&lt;b[i][j]&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line"></span><br><span class="line">        std::cout&lt;&lt;std::endl;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;=N;j++)</span><br><span class="line">          std::cout&lt;&lt;c[i][j]&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line">        std::cout&lt;&lt;std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<p><img src="/2017/02/18/20170218/14.jpg" alt="14"></p>
+<h3 id="最长公共单调递增子序列的改进"><a href="#最长公共单调递增子序列的改进" class="headerlink" title="最长公共单调递增子序列的改进"></a>最长公共单调递增子序列的改进</h3><p>可以把算法的运行时间缩短到$O(nlgn)$</p>
+<p>具体的实现方法如下图：</p>
+<p><img src="/2017/02/18/20170218/15.jpg" alt="15"></p>
+<p>可能常见的错误：</p>
+<p><img src="/2017/02/18/20170218/16.jpg" alt="16"></p>
+<h4 id="bisearch-h"><a href="#bisearch-h" class="headerlink" title="bisearch.h"></a>bisearch.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"></span><br><span class="line">//使用二分查找寻找合适的位置</span><br><span class="line">//要插入的位置，是比该数大的第一个数值</span><br><span class="line">int bisearch(int *b,int len,int w)</span><br><span class="line">&#123;</span><br><span class="line">    int left=0,right=len-1;</span><br><span class="line">    int mid;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(left&lt;=right)</span><br><span class="line">    &#123;</span><br><span class="line">        mid=left+(right-mid)/2;</span><br><span class="line">        <span class="keyword">if</span>(b[mid]&gt;w)</span><br><span class="line">          right=mid-1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(b[mid]&lt;w)</span><br><span class="line">          left=mid+1;</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//二分查找最后返回的值，是b[mid+1]</span><br><span class="line">//当然，如果找不到该值，最后返回的是b[0+1]，或者是b[len+1]</span><br></pre></td></tr></table></figure>
+<h4 id="LIS-h"><a href="#LIS-h" class="headerlink" title="LIS.h"></a>LIS.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include "bisearch.h"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define N 9</span></span><br><span class="line"></span><br><span class="line">int B[N];</span><br><span class="line">int len; //用来标注数组B中元素的个数</span><br><span class="line"></span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int data;</span><br><span class="line">    int prev;  //存放上一个prev的下标</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int LIS(int *array,node *result,int n)</span><br><span class="line">&#123;</span><br><span class="line">    int len=1;  //B[]数组的长度</span><br><span class="line">    B[0]=array[0];</span><br><span class="line">    int i,pos=0;</span><br><span class="line"></span><br><span class="line">    result[0].data=B[0];</span><br><span class="line">    result[0].prev=-1;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;n;i++)  //为什么下标从1开始？</span><br><span class="line">    //[i]要和[i-1]比较，然后执行替换，原来array[0]作为初始值</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(array[i]&gt;B[len-1])</span><br><span class="line">        &#123;</span><br><span class="line">            B[len]=array[i];</span><br><span class="line">            result[len].data=array[i];</span><br><span class="line">            result[len].prev=len-1;</span><br><span class="line">            len++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            int pos=bisearch(B,len,array[i]);</span><br><span class="line">            B[pos]=array[i];</span><br><span class="line">            result[pos+1].prev=pos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> len;</span><br><span class="line">&#125;</span><br><span class="line">//这里，result提供用于回溯的另一组数值</span><br></pre></td></tr></table></figure>
+<h4 id="LCS-increase-imple-cpp"><a href="#LCS-increase-imple-cpp" class="headerlink" title="LCS_increase_imple.cpp"></a>LCS_increase_imple.cpp</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include "LIS.h"</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define N 9</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int array[N]=&#123;2,1,6,3,5,4,8,7,9&#125;;</span><br><span class="line">    node *result=new node[N+1];</span><br><span class="line"></span><br><span class="line">    int cur_len=LIS(array,result,N);</span><br><span class="line">    cout&lt;&lt;cur_len&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;cur_len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;B[i]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">"wrong answer:"</span>&lt;&lt;endl;</span><br><span class="line">    int temp[cur_len]=&#123;0&#125;;</span><br><span class="line">    int id=cur_len-1;</span><br><span class="line">    <span class="keyword">for</span>(int i=cur_len-1;i&gt;=0;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        temp[i]=result[id].data;</span><br><span class="line">        id=result[id].prev;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;temp[0]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;cur_len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;0 &amp;&amp; temp[i]&gt;=temp[i-1])</span><br><span class="line">           cout&lt;&lt;temp[i]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    delete[] result;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最优二叉搜索树"><a href="#最优二叉搜索树" class="headerlink" title="最优二叉搜索树"></a>最优二叉搜索树</h2><h3 id="最优二叉搜索树的动态规划"><a href="#最优二叉搜索树的动态规划" class="headerlink" title="最优二叉搜索树的动态规划"></a>最优二叉搜索树的动态规划</h3><p>由最优二叉搜索树期望搜索代价的递推公式：</p>
+<p><img src="/2017/02/18/20170218/18.jpg" alt="18"></p>
+<p>因此，若$k_r$为包含关键字$k_i \cdots k_j$的最优二叉搜索树的根节点，我们的递推公式可以这样理解：<br>$e$作为期望代价，当选定一个新的根节点$k_r$的时候，左右子树的深度均$+1$。</p>
+<p>而$w(i,j)=\sum_{l=i}^{j}p_l+\sum_{l=i-1}^{j}q_l$</p>
+<p>根据期望的公式可以这么理解：$e[i,j]$为期望代价，指定新的节点作为根节点的时候，所有的节点都必须重新排列。<br>由$(15.11)$公式可知，左右子树节点的深度都$+1$的时候，$E[search \, cost \, in \, T]$增加的值为$w(i,j)=\sum_{l=i}^{j}p_l+\sum_{l=i-1}^{j}q_l$。</p>
+<p>同时，还要加上根节点的期望$p_r$。</p>
+<p>$e[i,j]=p_r+(e[i,r-1]+w(i,r-1))+(e[r+1,j]+w(r+1,j))$<br>$w(i,j)=w(i,r-1)+p_r+w(r+1,j)$</p>
+<p>因此$e[i,j]$可以重写为<br>$e[i,j]=e[i,r-1]+e[r+1,j]+w(i,j)$<br>如果选取期望搜索代价最低的为根节点，可以有递推公式：</p>
+<script type="math/tex; mode=display">e[i,j]=
+\begin{cases}
+q_{i-1}& \text{j=i-1}\\
+\min \limits_{i \leq r \leq j} (e[i,r-1]+e[r+1,j]+w(i,j))& \text{i<=j}
+\end{cases}</script><h3 id="最优二叉搜索树动态规划实现"><a href="#最优二叉搜索树动态规划实现" class="headerlink" title="最优二叉搜索树动态规划实现"></a>最优二叉搜索树动态规划实现</h3><p>实现最优二叉搜索树，对w，e和root的表单更新如下：</p>
+<p>与矩阵链乘法类似，相应的结构如下图：</p>
+<p><img src="/2017/02/18/20170218/17.jpg" alt="17"></p>
+<p><img src="/2017/02/18/20170218/19.jpg" alt="19"></p>
+<p><img src="/2017/02/18/20170218/20.jpg" alt="20"></p>
+<h4 id="Optimal-bst-h"><a href="#Optimal-bst-h" class="headerlink" title="Optimal_bst.h"></a>Optimal_bst.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define n 5</span></span><br><span class="line"><span class="comment">#define INFINITY 0x7fffffff</span></span><br><span class="line"></span><br><span class="line">struct e_root</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;vector&lt;double&gt; &gt; e;</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; root;</span><br><span class="line"></span><br><span class="line">    e_root()</span><br><span class="line">    &#123;</span><br><span class="line">        e.resize(n+2);</span><br><span class="line">        <span class="keyword">for</span>(int i=0;i&lt;n+2;i++)</span><br><span class="line">          e[i].resize(n+1);</span><br><span class="line"></span><br><span class="line">        root.resize(n+1);</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;n+1;j++)</span><br><span class="line">          root[j].resize(n+1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">e_root Optimal_bst(double p[],double q[])</span><br><span class="line">&#123;</span><br><span class="line">    e_root Table;</span><br><span class="line">    double w[n+2][n+1]=&#123;0&#125;;  //w[][]用来计算概率值，更多是辅助数组</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=n+1;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        Table.e[i][i-1]=q[i-1];</span><br><span class="line">        w[i][i-1]=q[i-1];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int l=1;l&lt;=n;l++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;=n<span class="_">-l</span>+1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int j=i+l-1;</span><br><span class="line">            Table.e[i][j]=INFINITY;</span><br><span class="line">            w[i][j]=w[i][j-1]+p[j]+q[j];</span><br><span class="line">            <span class="keyword">for</span>(int r=i;r&lt;=j;r++)</span><br><span class="line">            &#123;</span><br><span class="line">                double tmp=Table.e[i][r-1]+Table.e[r+1][j]+w[i][j]; //递归公式</span><br><span class="line">                <span class="keyword">if</span>(tmp&lt;Table.e[i][j])</span><br><span class="line">                &#123;</span><br><span class="line">                    Table.e[i][j]=tmp;</span><br><span class="line">                    Table.root[i][j]=r;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> Table;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//输出BST的值</span><br><span class="line">void Construct_Optimal_BST(e_root Table,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    int cur_root=Table.root[i][j];</span><br><span class="line">    <span class="keyword">if</span>(i==1&amp;&amp;j==n)</span><br><span class="line">      cout&lt;&lt;<span class="string">"k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" is root "</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(i==cur_root)</span><br><span class="line">      cout&lt;&lt;<span class="string">"d"</span>&lt;&lt;i-1&lt;&lt;<span class="string">" is k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" left child "</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"k"</span>&lt;&lt;Table.root[i][cur_root-1]&lt;&lt;<span class="string">" is "</span>&lt;&lt;<span class="string">"k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" left child "</span>&lt;&lt;endl;</span><br><span class="line">        Construct_Optimal_BST(Table,i,cur_root-1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(j==cur_root)</span><br><span class="line">      cout&lt;&lt;<span class="string">"d"</span>&lt;&lt;j&lt;&lt;<span class="string">" is "</span>&lt;&lt;<span class="string">"k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" right child "</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"k"</span>&lt;&lt;Table.root[cur_root+1][j]&lt;&lt;<span class="string">" is k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" right child "</span>&lt;&lt;endl;</span><br><span class="line">        Construct_Optimal_BST(Table,cur_root+1,j);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Optimal-bst-cpp"><a href="#Optimal-bst-cpp" class="headerlink" title="Optimal_bst.cpp"></a>Optimal_bst.cpp</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include "optimal_bst.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double p[n+1]=&#123;0,0.15,0.10,0.05,0.10,0.20&#125;;</span><br><span class="line">    double q[n+2]=&#123;0.05,0.10,0.05,0.05,0.05,0.10&#125;;</span><br><span class="line"></span><br><span class="line">    e_root Table=Optimal_bst(p,q);</span><br><span class="line">    cout&lt;&lt;<span class="string">"BST result "</span>&lt;&lt;endl;</span><br><span class="line">    Construct_Optimal_BST(Table,1,n);</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">"cost: "</span>&lt;&lt;Table.e[1][n]&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/18/20170218/21.jpg" alt="21"></p>
+<p><img src="/2017/02/18/20170218/22.jpg" alt="22"></p>
+<p>如果Optimal_bst不维护表$w[i,j]$，而是每一次都利用公式直接计算$w(i,j)$，然后在第11行维护使用这个值，如此改动会对渐进时间复杂性有什么影响？<br>实际上影响并不大。多了两个时间复杂性为$O(n)$的循环计算$w[i,j]$的值，对整个$O(n^3)$的常数系数值会增加，因为每一轮循环多了$c$的常数时间。<br>用数学公式描述如下：<br>$1^2+2^2+\cdots +(n-1+c)^2+(n+c)^2=k \times 1/6 \times n(n+1)(2n+1)$</p>
+<p>和原来的求和比，相差常数项。</p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>$Knuth[212]$已经证明,对所有$1 \leq i \leq j \leq n$，存在最优二叉搜索树，其根满足$root[i,j-1] \leq root[i,j] \leq root[i+1,j]$。利用这一特性修改算法OPTIMAL-BST，使得运行时间减少到$θ(n²)$。</p>
+<p>这个公式证明如下：</p>
+<p>$T(n)=2n+\sum_{l=1}^{n} \sum_{i=1}^{n-l+1} (root(i+1,i+l-1)-root(i,i+l-2))$<br>$=2n+\sum_{l=1}^n(root(2,l)-root(1,l-1)+root(3,l+1)-root(2,l)+\cdots$<br>$+root(n-l+2,n)-root(n-l+1,n-1))$<br>$=2n+\sum_{l=1}^{n}(root(n-l+2)-root(1,l-1))$<br>$\leq 2n+ \sum_{l=1}^{n}(n) \leq 2n+n^2 = O(n^2)$</p>
+<p>算法实现过程：</p>
+<p>1、问题规模最小的时候，$i==j$的时候，问题区间的规模只有一个元素$[i]$，也就是矩阵的最底端。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(i==j)  //在原来的公式中，让r用j来代替就可以了，得到规模最小的时候的求值表达式</span><br><span class="line">&#123;</span><br><span class="line">  Table.root[i][j]=j;</span><br><span class="line">  Table.e[i][j]=Table.e[i][j-1]+Table.e[j+1][j]+w[i][j];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2、其余的问题规模，由于$r$中，只有$root[i,j-1] \leq r \leq root[i+1,j]$中的$root$值需要维护。<br>所以当$r$遍历$root[i,j-1] \cdots root[i+1,j]$的时候，维护$Table.root[i][j]=r$的信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">for</span>(int r=Table.root[i][j-1];r&lt;=Table.root[i+1][j];r++)</span><br><span class="line">  &#123;</span><br><span class="line">    double tmp=Table.e[i][r-1]+Table.e[r+1][j]+w[i][j];</span><br><span class="line">    <span class="keyword">if</span>(tmp&lt;Table.e[i][j])</span><br><span class="line">    &#123;</span><br><span class="line">      Table.e[i][j]=tmp;</span><br><span class="line">      Table.root[i][j]=r;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法实现过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define n 7</span></span><br><span class="line"><span class="comment">#define INFINITY 0x7fffffff</span></span><br><span class="line"></span><br><span class="line">struct e_root</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;vector&lt;double&gt; &gt; e;</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; root;</span><br><span class="line"></span><br><span class="line">    e_root()</span><br><span class="line">    &#123;</span><br><span class="line">        e.resize(n+2);</span><br><span class="line">        <span class="keyword">for</span>(int i=0;i&lt;n+2;i++)</span><br><span class="line">          e[i].resize(n+1);</span><br><span class="line"></span><br><span class="line">        root.resize(n+1);</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;n+1;j++)</span><br><span class="line">          root[j].resize(n+1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">e_root Optimal_bst(double p[],double q[])</span><br><span class="line">&#123;</span><br><span class="line">    e_root Table;</span><br><span class="line">    double w[n+2][n+1]=&#123;0&#125;;  //w[][]用来计算概率值，更多是辅助数组</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=n+1;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        Table.e[i][i-1]=q[i-1];</span><br><span class="line">        w[i][i-1]=q[i-1];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int l=1;l&lt;=n;l++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;=n<span class="_">-l</span>+1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int j=i+l-1;</span><br><span class="line">            Table.e[i][j]=INFINITY;</span><br><span class="line">            w[i][j]=w[i][j-1]+p[j]+q[j];</span><br><span class="line">            /*<span class="keyword">for</span>(int r=i;r&lt;=j;r++)</span><br><span class="line">            &#123;</span><br><span class="line">                double tmp=Table.e[i][r-1]+Table.e[r+1][j]+w[i][j]; //递归公式</span><br><span class="line">                <span class="keyword">if</span>(tmp&lt;Table.e[i][j])</span><br><span class="line">                &#123;</span><br><span class="line">                    Table.e[i][j]=tmp;</span><br><span class="line">                    Table.root[i][j]=r;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;*/</span><br><span class="line">            <span class="keyword">if</span>(i==j)</span><br><span class="line">            &#123;</span><br><span class="line">                Table.root[i][j]=j;</span><br><span class="line">                Table.e[i][j]=Table.e[i][j-1]+Table.e[j+1][j]+w[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span>(int r=Table.root[i][j-1];r&lt;=Table.root[i+1][j];r++)</span><br><span class="line">                &#123;</span><br><span class="line">                    double tmp=Table.e[i][r-1]+Table.e[r+1][j]+w[i][j];</span><br><span class="line">                    <span class="keyword">if</span>(tmp&lt;Table.e[i][j])</span><br><span class="line">                    &#123;</span><br><span class="line">                        Table.e[i][j]=tmp;</span><br><span class="line">                        Table.root[i][j]=r;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> Table;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//输出BST的值</span><br><span class="line">void Construct_Optimal_BST(e_root Table,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    int cur_root=Table.root[i][j];</span><br><span class="line">    <span class="keyword">if</span>(i==1&amp;&amp;j==n)</span><br><span class="line">      cout&lt;&lt;<span class="string">"k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" is root "</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(i==cur_root)</span><br><span class="line">      cout&lt;&lt;<span class="string">"d"</span>&lt;&lt;i-1&lt;&lt;<span class="string">" is k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" left child "</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"k"</span>&lt;&lt;Table.root[i][cur_root-1]&lt;&lt;<span class="string">" is "</span>&lt;&lt;<span class="string">"k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" left child "</span>&lt;&lt;endl;</span><br><span class="line">        Construct_Optimal_BST(Table,i,cur_root-1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(j==cur_root)</span><br><span class="line">      cout&lt;&lt;<span class="string">"d"</span>&lt;&lt;j&lt;&lt;<span class="string">" is "</span>&lt;&lt;<span class="string">"k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" right child "</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"k"</span>&lt;&lt;Table.root[cur_root+1][j]&lt;&lt;<span class="string">" is k"</span>&lt;&lt;cur_root&lt;&lt;<span class="string">" right child "</span>&lt;&lt;endl;</span><br><span class="line">        Construct_Optimal_BST(Table,cur_root+1,j);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include "optimal_bst_adjust.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double p[n+1]=&#123;0,0.04,0.06,0.08,0.02,0.10,0.12,0.14&#125;;</span><br><span class="line">    double q[n+2]=&#123;0.06,0.06,0.06,0.06,0.05,0.05,0.05,0.05&#125;;</span><br><span class="line"></span><br><span class="line">    e_root Table=Optimal_bst(p,q);</span><br><span class="line">    cout&lt;&lt;<span class="string">"BST result "</span>&lt;&lt;endl;</span><br><span class="line">    Construct_Optimal_BST(Table,1,n);</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">"cost: "</span>&lt;&lt;Table.e[1][n]&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Zhangmin Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/02/18/20170218/" target="_blank" title="最长公共子序列">http://www.fogsail.net/2017/02/18/20170218/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-programming/">dynamic programming</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/05/20170305/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          回文子序列与欧几里德旅行商
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/02/20170202/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">动态规划概论</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态规划原理"><span class="nav-number">1.</span> <span class="nav-text">动态规划原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#递归和穷举算法分析"><span class="nav-number">1.1.</span> <span class="nav-text">递归和穷举算法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态规划问题和分治法区别"><span class="nav-number">1.2.</span> <span class="nav-text">动态规划问题和分治法区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最大化矩阵括号方案"><span class="nav-number">1.3.</span> <span class="nav-text">最大化矩阵括号方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贪心和动态规划的区别"><span class="nav-number">1.4.</span> <span class="nav-text">贪心和动态规划的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#钢条切割问题的限制"><span class="nav-number">1.5.</span> <span class="nav-text">钢条切割问题的限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外币兑换问题"><span class="nav-number">1.6.</span> <span class="nav-text">外币兑换问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最长公共子序列"><span class="nav-number">2.</span> <span class="nav-text">最长公共子序列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题解答"><span class="nav-number">2.1.</span> <span class="nav-text">问题解答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不使用表b重构LCS"><span class="nav-number">2.2.</span> <span class="nav-text">不使用表b重构LCS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带备忘的LCS-Length"><span class="nav-number">2.3.</span> <span class="nav-text">带备忘的LCS-Length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2×min-m-n-计算LCS长度"><span class="nav-number">2.4.</span> <span class="nav-text">2×min(m,n)计算LCS长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最长公共单调递增子序列"><span class="nav-number">2.5.</span> <span class="nav-text">最长公共单调递增子序列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LCS-quicksort-h"><span class="nav-number">2.5.1.</span> <span class="nav-text">LCS_quicksort.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LCS-len-h"><span class="nav-number">2.5.2.</span> <span class="nav-text">LCS_len.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LCS-increase-cpp"><span class="nav-number">2.5.3.</span> <span class="nav-text">LCS_increase.cpp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最长公共单调递增子序列的改进"><span class="nav-number">2.6.</span> <span class="nav-text">最长公共单调递增子序列的改进</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bisearch-h"><span class="nav-number">2.6.1.</span> <span class="nav-text">bisearch.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LIS-h"><span class="nav-number">2.6.2.</span> <span class="nav-text">LIS.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LCS-increase-imple-cpp"><span class="nav-number">2.6.3.</span> <span class="nav-text">LCS_increase_imple.cpp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优二叉搜索树"><span class="nav-number">3.</span> <span class="nav-text">最优二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最优二叉搜索树的动态规划"><span class="nav-number">3.1.</span> <span class="nav-text">最优二叉搜索树的动态规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最优二叉搜索树动态规划实现"><span class="nav-number">3.2.</span> <span class="nav-text">最优二叉搜索树动态规划实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Optimal-bst-h"><span class="nav-number">3.2.1.</span> <span class="nav-text">Optimal_bst.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optimal-bst-cpp"><span class="nav-number">3.2.2.</span> <span class="nav-text">Optimal_bst.cpp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">3.3.</span> <span class="nav-text">优化</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Zhangmin Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

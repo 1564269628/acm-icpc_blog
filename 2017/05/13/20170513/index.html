@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>库存规划 | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithmdynamic programming">
+  
+  
+  
+  
+  <meta name="description" content="Rinky Dink公司是一家制造溜冰场冰面修整设备的公司。这种设备每个月的需求量都在变化，因此公司希望设计一种策略来规划生产，需求是给定的，即它虽然是波动的，但是是可预测的。公司希望设计接下来的$n$个月的生产计划。 对第$i$个月，公司知道需求$d_i$，即该月能够销售出去的设备的总量。令$D=\sum_{i=1}^{n}d_i$为后$n$个月的总需求。公司雇佣的全职员工，可以提供一个月制造$">
+<meta name="keywords" content="algorithm,dynamic programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="库存规划">
+<meta property="og:url" content="http://www.fogsail.net/2017/05/13/20170513/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="Rinky Dink公司是一家制造溜冰场冰面修整设备的公司。这种设备每个月的需求量都在变化，因此公司希望设计一种策略来规划生产，需求是给定的，即它虽然是波动的，但是是可预测的。公司希望设计接下来的$n$个月的生产计划。 对第$i$个月，公司知道需求$d_i$，即该月能够销售出去的设备的总量。令$D=\sum_{i=1}^{n}d_i$为后$n$个月的总需求。公司雇佣的全职员工，可以提供一个月制造$">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2017/05/13/20170513/01.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/05/13/20170513/02.jpg">
+<meta property="og:updated_time" content="2018-03-02T20:45:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="库存规划">
+<meta name="twitter:description" content="Rinky Dink公司是一家制造溜冰场冰面修整设备的公司。这种设备每个月的需求量都在变化，因此公司希望设计一种策略来规划生产，需求是给定的，即它虽然是波动的，但是是可预测的。公司希望设计接下来的$n$个月的生产计划。 对第$i$个月，公司知道需求$d_i$，即该月能够销售出去的设备的总量。令$D=\sum_{i=1}^{n}d_i$为后$n$个月的总需求。公司雇佣的全职员工，可以提供一个月制造$">
+<meta name="twitter:image" content="http://www.fogsail.net/2017/05/13/20170513/01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2017/05/13/20170513/",
+        "appid": "1593711792635024",
+        "title": "库存规划",
+        "images": [
+        "http://www.fogsail.net/2017/05/13/20170513/01.png",
+        "http://www.fogsail.net/2017/05/13/20170513/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2017-05-13T02:07:00" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20170513" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      库存规划
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/05/13/20170513/" class="article-date">
+	  <time datetime="2017-05-13T06:07:00.000Z" itemprop="datePublished">2017-05-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Rinky Dink公司是一家制造溜冰场冰面修整设备的公司。这种设备每个月的需求量都在变化，因此公司希望设计一种策略来规划生产，需求是给定的，即它虽然是波动的，但是是可预测的。公司希望设计接下来的$n$个月的生产计划。</p>
+<p>对第$i$个月，公司知道需求$d_i$，即该月能够销售出去的设备的总量。令$D=\sum_{i=1}^{n}d_i$<br>为后$n$个月的总需求。公司雇佣的全职员工，可以提供一个月制造$m$台设备的劳动力。如果公司希望一个月内制造多于$m$台的设备，可以雇佣额外的兼职劳动力，雇佣的成本为每制造一台机器付出$c$美元。而且，如果在月末还有设备未售出，公司将付出库存成本。<br><a id="more"></a></p>
+<p>保存$j$台设备的成本可以描述为一个函数$h(j)$，$j=1,2,\cdots,D$，其中对所有的$1 \leq j \leq D$，$h(j) \geq 0$，对$1 \leq j \leq D-1$，$h(j) \leq h(j+1)$。</p>
+<p>设计库存规划算法。</p>
+<h2 id="能量守恒的观点分析"><a href="#能量守恒的观点分析" class="headerlink" title="能量守恒的观点分析"></a>能量守恒的观点分析</h2><p><strong>库存规划的问题，可以用物理学中的能量守恒的观点进行分析</strong></p>
+<p>$store \ cost+HR \ cost=total \ value$<br>其中，$total \ value$表示总能量，总能量在$store \ cost$和$HR \ cost$中能够相互转换。</p>
+<p>算法分析：</p>
+<p><img src="/2017/05/13/20170513/01.jpg" alt="01"></p>
+<h2 id="inventory-dynamic-h"><a href="#inventory-dynamic-h" class="headerlink" title="inventory_dynamic.h"></a>inventory_dynamic.h</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define m 15</span></span><br><span class="line"><span class="comment">#define n 10</span></span><br><span class="line"><span class="comment">#define c 3</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void find_create(int *extra_create,int *create_result,int *d)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=n;i++)</span><br><span class="line">        create_result[i]=extra_create[i]+d[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int min_val(int a ,int b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">return</span> a&lt;b?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int man_cost(int man_num)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(man_num&lt;=m)</span><br><span class="line">        <span class="built_in">return</span> 0;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">return</span> c*(man_num-m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int store_cost(int store_num)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(store_num&gt;0)</span><br><span class="line">        <span class="built_in">return</span> (int)<span class="built_in">log</span>((double)store_num);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int create_material(int d[],int create[][n+1],int start,int end)</span><br><span class="line">//start从0开始</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(start==end)</span><br><span class="line">    &#123;</span><br><span class="line">        create[start][end]=0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(end==start+1)</span><br><span class="line">    &#123;</span><br><span class="line">        create[start][end]=d[end];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(end&gt;start)</span><br><span class="line">    &#123;</span><br><span class="line">        create[start][end]=create_material(d,create,start,end-1)+d[end];</span><br><span class="line">        //实现结果 d[start+1]+d[start+2]+.....+d[end]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> create[start][end];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void init_create(int create[][n+1],int d[])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;n;i++)</span><br><span class="line">        create_material(d,create,i,n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int min_cost(int d[],int HR_extra[],int start,int end)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(start&gt;=end)</span><br><span class="line">        <span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line">    int cost=0; //最初cost[]值为0，一开始每一个位置所保存的create[]就是当前需求值</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=start;i&lt;=end;i++)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(d[i]&lt;=m)</span><br><span class="line">        &#123;</span><br><span class="line">            //此时不需要花费额外的人力成本，所有的create[i]==d[i]均会销售出去</span><br><span class="line">            cost+=0; //不需要花费任何代价，月末就可以出售完毕，没有库存</span><br><span class="line">            HR_extra[i]=m<span class="_">-d</span>[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            HR_extra[i]=m<span class="_">-d</span>[i];</span><br><span class="line">            int HR_cost=d[i];  //人力资源成本超出预算，这部分预算可以考虑转换成库存成本</span><br><span class="line">            int HR_cost_copy=d[i]; //副本，用来输出</span><br><span class="line"></span><br><span class="line">            int cost_original=man_cost(HR_cost);</span><br><span class="line">            int extra_store=0; //额外付出的库存代价</span><br><span class="line">            //注意判断cost_original和cost_adjust哪个大？哪个小？</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(int l=start;l&lt;i;l++)  //(l,i)</span><br><span class="line">            &#123;</span><br><span class="line">                int cur_extra=HR_extra[l];</span><br><span class="line">                <span class="keyword">if</span>(cur_extra&gt;0 &amp;&amp; HR_cost!=0)  //这部分人力资源成本可以用来存放库存，转换成库存成本</span><br><span class="line">                &#123;</span><br><span class="line">                    int temp_excess=min_val(cur_extra,HR_cost);</span><br><span class="line">                    //势能守恒来求解</span><br><span class="line">                    HR_cost-=temp_excess;</span><br><span class="line">                    extra_store+=temp_excess;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            int cost_adjust=man_cost(HR_cost)+store_cost(extra_store);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(cost_adjust&lt;cost_original)</span><br><span class="line">            &#123;</span><br><span class="line">                cost+=cost_adjust;</span><br><span class="line">                //HR_extra也要调整</span><br><span class="line">                <span class="keyword">for</span>(int l=start;l&lt;i;l++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(HR_extra[l]&gt;0 &amp;&amp; HR_cost_copy!=0)</span><br><span class="line">                    &#123;</span><br><span class="line">                        int temp_excess_copy=min_val(HR_extra[l],HR_cost_copy);</span><br><span class="line"></span><br><span class="line">                        HR_cost_copy-=temp_excess_copy;</span><br><span class="line"></span><br><span class="line">                        //保持势能守恒</span><br><span class="line">                        HR_extra[l]-=temp_excess_copy;</span><br><span class="line">                        HR_extra[i]+=temp_excess_copy;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cost+=cost_original;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> cost;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="inventory-dynamic-cpp"><a href="#inventory-dynamic-cpp" class="headerlink" title="inventory_dynamic.cpp"></a>inventory_dynamic.cpp</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "inventory_dynamic.h"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int result_cost,original_create;</span><br><span class="line">    int d[n+1]=&#123;0,10,11,13,14,20,25,29,9,8,7&#125;;  //146</span><br><span class="line"></span><br><span class="line">    int HR_extra[n+1]=&#123;0&#125;;</span><br><span class="line">    int result[n+1]=&#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    int create[n+1][n+1]=&#123;0&#125;;</span><br><span class="line">    //int cost[n+1][n+1]=&#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    original_create=create_material(d,create,0,n);</span><br><span class="line">    init_create(create,d);</span><br><span class="line"></span><br><span class="line">    result_cost=min_cost(d,HR_extra,1,n);</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;<span class="string">"The result is :"</span>&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;result_cost&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;<span class="string">"The create result is :"</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;m-HR_extra[i]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法运行结果"><a href="#算法运行结果" class="headerlink" title="算法运行结果"></a>算法运行结果</h2><p><img src="/2017/05/13/20170513/02.jpg" alt="02"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Zhangmin Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/05/13/20170513/" target="_blank" title="库存规划">http://www.fogsail.net/2017/05/13/20170513/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-programming/">dynamic programming</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/23/20170523/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          签约棒球运动员
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/12/20170512/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">基于接缝裁剪的图像压缩</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#能量守恒的观点分析"><span class="nav-number">1.</span> <span class="nav-text">能量守恒的观点分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inventory-dynamic-h"><span class="nav-number">2.</span> <span class="nav-text">inventory_dynamic.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inventory-dynamic-cpp"><span class="nav-number">3.</span> <span class="nav-text">inventory_dynamic.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法运行结果"><span class="nav-number">4.</span> <span class="nav-text">算法运行结果</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Zhangmin Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

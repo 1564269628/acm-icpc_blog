@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>动态规划概论 | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithmdynamic programming">
+  
+  
+  
+  
+  <meta name="description" content="动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶">
+<meta name="keywords" content="algorithm,dynamic programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划概论">
+<meta property="og:url" content="http://www.fogsail.net/2017/02/02/20170202/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/01.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/02.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/03.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/04.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/05.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/06.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/08.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/09.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/10.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/11.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/12.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/13.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/14.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/02/02/20170202/08.jpg">
+<meta property="og:updated_time" content="2018-03-02T17:14:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划概论">
+<meta name="twitter:description" content="动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶">
+<meta name="twitter:image" content="http://www.fogsail.net/2017/02/02/20170202/01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2017/02/02/20170202/",
+        "appid": "1593711792635024",
+        "title": "动态规划概论",
+        "images": [
+        "http://www.fogsail.net/2017/02/02/20170202/01.png",
+        "http://www.fogsail.net/2017/02/02/20170202/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2017-02-02T01:00:00" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20170202" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      动态规划概论
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/02/02/20170202/" class="article-date">
+	  <time datetime="2017-02-01T17:00:00.000Z" itemprop="datePublished">2017-02-02</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划。</p>
+<a id="more"></a>
+<h2 id="钢条切割问题"><a href="#钢条切割问题" class="headerlink" title="钢条切割问题"></a>钢条切割问题</h2><h3 id="算法运行时间分析"><a href="#算法运行时间分析" class="headerlink" title="算法运行时间分析"></a>算法运行时间分析</h3><p>如果采用最平凡的递推算法，由$r_n= \underset{1 \leq i \leq n}{\max} (p_i+r_{n-i})$<br>令$T(n)$表示算法第二个参数值为n的时候CUT-ROD的调用次数，可以推出：$T(n)=1+ \sum_{j=0}^{n-1}T(j)$</p>
+<p>$T(n)=1+T(1)+T(2)+\cdots+T(n-1)$<br>$T(n-1)=1+T(1)+T(2)+\cdots+T(n-2)$</p>
+<p>即$T(n)=2+2T(1)+\cdots+2T(n-2)=2T(n-1)$</p>
+<p>$\frac{T(n)}{T(n-1)}=2$</p>
+<p>由等比数列的递推公式，$T(n)=2^n$<br>所以，平凡的递归算法反复求解相同的子问题，耗费了大量的时间。</p>
+<p><strong>使用动态规划</strong></p>
+<p><img src="/2017/02/02/20170202/01.jpg" alt="01"></p>
+<p>求解子问题的两种方法：<br>使用memorized_cut_rod方法的时候，memorized_cut_rod_aux(p,n,r)的递归，最多递归到r[]的下标为n-1，因为在循环中执行的是for(int i=0;i&lt;n;i++)</p>
+<p><img src="/2017/02/02/20170202/02.jpg" alt="02"></p>
+<p>使用自底向上递归求解。</p>
+<p><img src="/2017/02/02/20170202/03.jpg" alt="03"></p>
+<p>由上图所示，在递归过程中：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">r[0]=0;</span><br><span class="line"><span class="keyword">for</span>(int j=0;j&lt;n;j++)</span><br><span class="line">&#123;</span><br><span class="line">  int result=-INFINITY;</span><br><span class="line">  <span class="keyword">for</span>(int i=0;i&lt;=j;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    //获取scale=j时候的max值，即最大收益result</span><br><span class="line">    //随着j++，我们获取最大收益的时候要返回r[j+1]的值，这样</span><br><span class="line">    //scale=scale+1时候的最大收益，即r[j+1]，即为上一步求出的</span><br><span class="line">    //result值，即r[j+1]=result</span><br><span class="line">    result=max(result,p[i]+r[j-1]);</span><br><span class="line">  &#125;</span><br><span class="line">  r[j+1]=result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">return</span> r[n];</span><br><span class="line">//返回的r[n]这里的n指问题的规模</span><br></pre></td></tr></table></figure></p>
+<p>算法实现过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#define INFINITY 0x7fffffff</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int max(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">return</span> a&gt;b?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int memorized_cut_rod_aux(int p[],int n,int r)  //n表示问题的规模</span><br><span class="line">&#123;</span><br><span class="line">  //注意，这里p[i]的意义和r[i]的意义不一样</span><br><span class="line">  //p[i]表示对应的数组元素，i表示下标</span><br><span class="line">  //r[i]表示问题的规模为i所对应的解</span><br><span class="line">  //p[i]对应的问题是第i个，其规模为i+1，剩余的问题规模是n-(i+1)</span><br><span class="line">  //从另一个角度，0&lt;=i&lt;=n-1 0&lt;=r&lt;=n-1，所以递归的时候是(p,n-1-i,r)</span><br><span class="line">  int result;</span><br><span class="line">  <span class="keyword">if</span>(r[n]&gt;=0)</span><br><span class="line">    <span class="built_in">return</span> r[n];  //表示问题已经被求解完毕了，返回该值</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(n==0)</span><br><span class="line">    result=0;  //表示没有切割</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    result=-INFINITY;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">      result=max(result,p[i]+memorized_cut_rod_aux(p,n-1-i,r));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  //表示规模为n的问题求解完毕</span><br><span class="line">  r[n]=result;</span><br><span class="line">  <span class="built_in">return</span> result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">int memorized_cut_rod(int p[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  int *r=new int[n];</span><br><span class="line">  <span class="keyword">for</span>(int i=0;i&lt;n;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    r[i]=-INFINITY;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> memorized_cut_rod_aux(p,n,r);  //这里(p,n,r)</span><br><span class="line">  //r[]的递归标最多为n-1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int BOTTOM_UP_CUT_ROD(int p[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  int *r=new int [n];</span><br><span class="line">  r[0]=0;</span><br><span class="line">  <span class="keyword">for</span>(int j=0;j&lt;n;j++)</span><br><span class="line">  &#123;</span><br><span class="line">    int result=-INFINITY;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=j;i++)</span><br><span class="line">    &#123;</span><br><span class="line">      //获取scale=j时候的max值，即最大收益result</span><br><span class="line">      //随着j++，我们获取最大收益的时候要返回r[j+1]的值，这样</span><br><span class="line">      //scale=scale+1时候的最大收益，即r[j+1]，即为上一步求出的</span><br><span class="line">      //result值，即r[j+1]=result</span><br><span class="line">      result=max(result,p[i]+r[j-1]);</span><br><span class="line">    &#125;</span><br><span class="line">    r[j+1]=result;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> r[n];</span><br><span class="line">  //返回的r[n]这里的n指问题的规模</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主函数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  const int n=10;</span><br><span class="line">  int p[10]=&#123;1,5,8,9,10,17,17,20,24,30&#125;;</span><br><span class="line">  cout&lt;&lt;memorized_cut_rod(p,9)&lt;&lt;endl;</span><br><span class="line">  cout&lt;&lt;BOTTOM_UP_CUT_ROD(p,9)&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="子问题图与重构解"><a href="#子问题图与重构解" class="headerlink" title="子问题图与重构解"></a>子问题图与重构解</h3><p>这里特别说明一种表示方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array *EXTENDED_BOTTOM_UP_CUT_ROD(int p[],int n)</span><br></pre></td></tr></table></figure></p>
+<p>这里p[]表示指向数组第一个元素的指针，注意区分以下两种表示方法：当表示第n个元素的时候<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*(p+n)-&gt;element</span><br><span class="line">p[n].element</span><br></pre></td></tr></table></figure></p>
+<p>这两种表示方式不同，一种是指针，一种是结构体表示。</p>
+<p>具体的说明见下图：</p>
+<p><img src="/2017/02/02/20170202/04.jpg" alt="04"></p>
+<p>动态规划解决钢条切割问题，问题的输出：注意让规模逐渐减小。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define INFINITY 0x7fffffff</span></span><br><span class="line"></span><br><span class="line">struct rod</span><br><span class="line">&#123;</span><br><span class="line">  int result;   //代表最大收益</span><br><span class="line">  int solution;  //代表切割方案</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">rod *EXTENDED_BOTTOM_UP_CUT_ROD(int p[], int n)</span><br><span class="line">&#123;</span><br><span class="line">  rod *res=new rod[n];</span><br><span class="line">  res[0].result=0;  //初始化，钢条规模为0，收益为0</span><br><span class="line">  int q;</span><br><span class="line">  <span class="keyword">for</span>(int j=0;j&lt;n;j++)</span><br><span class="line">  &#123;</span><br><span class="line">    q=-INFINITY;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=j;i++)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(q&lt;p[i]+res[j-i].result)</span><br><span class="line">      &#123;</span><br><span class="line">        q=p[i]+res[j-i].result;</span><br><span class="line">        res[j+1].solution=i+1;  //保存切割方式</span><br><span class="line">      &#125;        //这里的i表示切割下来的片段，规模有多大？</span><br><span class="line">    &#125;</span><br><span class="line">    //此时已经完成了从1---j的循环</span><br><span class="line">    res[j+1].result=q;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> res+n;  //注意：这里res表示指向第一个元素的指针</span><br><span class="line">&#125;</span><br><span class="line">//res+n表示指针移动n位，新的指针指向n之后的那个位置</span><br><span class="line">//rod *res=new rod[n] res[i].result  (res+i)-&gt;result</span><br><span class="line">//两种用法注意区分</span><br><span class="line"></span><br><span class="line">//特别注意：这里res[0].result=0  最后res[j+1].result</span><br><span class="line">//res[j+1].solution，意味这res[]的存储范围如下：</span><br><span class="line">//res[1]，res[2],......,res[n]</span><br><span class="line">//res初始指针位置为res[0]，res末指针的位置为res[n]</span><br><span class="line"></span><br><span class="line">void PRINT_CUT_ROD_SOLUTION(int p[], int n)</span><br><span class="line">&#123;</span><br><span class="line">  rod *res=EXTENDED_BOTTOM_UP_CUT_ROD(p,n);</span><br><span class="line">  //注意这里函数的返回值为res+n，即最后一个数组元素的地址</span><br><span class="line">  <span class="keyword">while</span>(n&gt;0)</span><br><span class="line">  &#123;</span><br><span class="line">    cout&lt;&lt;(*res).solution&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    n=n-(*res).solution;</span><br><span class="line">    //注意返回的res指的是res[n]的位置</span><br><span class="line">    //返回的是规模为n时候的切割方法,从最大规模往最小规模输出</span><br><span class="line">    //这里从大规模往小规模输出，指针也要调整</span><br><span class="line">    //从规模为n的位置逐渐减小到i，再逐渐减小到1，0</span><br><span class="line">    res=res-(*res).solution;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  const int n=10;</span><br><span class="line">  int p[10]=&#123;1,5,8,9,10,17,17,20,24,30&#125;;</span><br><span class="line">  cout&lt;&lt;(*EXTENDED_BOTTOM_UP_CUT_ROD(p,4)).result&lt;&lt;endl;</span><br><span class="line">  PRINT_CUT_ROD_SOLUTION(p,4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><p><strong>15.1-2</strong></p>
+<p>反例如下图：</p>
+<p><img src="/2017/02/02/20170202/05.jpg" alt="05"></p>
+<p><strong>15.1-3 钢条切割的时候考虑固定成本为c</strong></p>
+<p>特别注意，这里的固定成本为c，在执行循环的时候，存在表达式的不同！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//当j==i的时候有不同！</span><br><span class="line"><span class="keyword">for</span>(int j=0;j&lt;n;j++)</span><br><span class="line">&#123;</span><br><span class="line">  //省略的code</span><br><span class="line">  <span class="keyword">for</span>(int i=0;i&lt;j;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    //i&lt;j时候表示钢条一定会进行切割！</span><br><span class="line">    <span class="keyword">if</span>(q&lt;=p[i]+res[j-i].result-c)</span><br><span class="line">    &#123;</span><br><span class="line">      q=p[i]+res[j-i].result-c;</span><br><span class="line">      res[j+1].solution=i+1;</span><br><span class="line">      cut_or_not=<span class="literal">true</span>;  //表示进行切割了</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  //当i==j时候的情况不一样了！</span><br><span class="line">  //此时已经保存的最大收益是q</span><br><span class="line">  //很有可能</span><br><span class="line">  //p[i]+res[j-i].result-c&lt;q&lt;=p[i]+res[j-i].result</span><br><span class="line">  //这个时候j==i可能没有发生切割，没有发生切割和发生切割</span><br><span class="line">  //收益的表达式不同，一个减去成本，一个没有</span><br><span class="line">  <span class="keyword">if</span>(j==i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span>(q&lt;=p[i]+res[j-i].result &amp;&amp; cut_or_not==<span class="literal">false</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      res[j+1].solution=i+1;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  //j求解完毕</span><br><span class="line">  res[j+1].result=q;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">return</span> res+n;</span><br></pre></td></tr></table></figure>
+<p>具体实现的过程如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define INFINITY -0x7fffffff</span></span><br><span class="line"><span class="comment">#define cost 2</span></span><br><span class="line"></span><br><span class="line">int max(int a, int b)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">return</span> a&gt;b?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct rod_cost</span><br><span class="line">&#123;</span><br><span class="line">  int result;</span><br><span class="line">  int solution;</span><br><span class="line">  bool cut_or_not;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">rod_cost *EXTENDED_BOTTOM_UP_CUT_ROD(int p[], int n)</span><br><span class="line">&#123;</span><br><span class="line">  rod_cost *res=new rod_cost[n];</span><br><span class="line">  res[0].result=0;</span><br><span class="line">  int q;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(int j=0;j&lt;n;j++)</span><br><span class="line">  &#123;</span><br><span class="line">    q=-INFINITY;</span><br><span class="line">    bool cut_or_not=<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;j;i++)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(q&lt;=p[i]+res[j-i].result-cost)</span><br><span class="line">      &#123;</span><br><span class="line">        q=p[i]+res[j-i].result-cost;</span><br><span class="line">        res[j+1].solution=i+1;</span><br><span class="line">        cut_or_not=<span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //每一次循环，j=0----j=n-1，表示问题的规模从1---n</span><br><span class="line">    //每一个规模，cut_or_not都初始化为<span class="literal">false</span>，最后看是否切割？</span><br><span class="line">    //如果发生了切割，在i的循环中，也就是j的子问题中</span><br><span class="line">    //让cut_or_not=<span class="literal">true</span>，最后判断是否切割？</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(j==i)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(q&lt;=p[i]+res[j-i].result &amp;&amp; cut_or_not==<span class="literal">false</span>)</span><br><span class="line">      &#123;</span><br><span class="line">        res[j+1].solution=i+1;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //求解完毕</span><br><span class="line">    res[j+1].result=q;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> res+n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void PRINT_CUT_ROD_SOLUTION(int p[], int n)</span><br><span class="line">&#123;</span><br><span class="line">  rod_cost *res=EXTENDED_BOTTOM_UP_CUT_ROD(p,n);</span><br><span class="line">  <span class="keyword">while</span>(n)</span><br><span class="line">  &#123;</span><br><span class="line">    cout&lt;&lt;(*res).solution&lt;&lt;<span class="string">" "</span>；</span><br><span class="line">    n=n-(*res).solution;</span><br><span class="line">    res=res-(*res).solution;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  const int n=10;</span><br><span class="line">  int p[10]=&#123;1,5,8,9,10,17,17,20,24,30&#125;;</span><br><span class="line">  cout&lt;&lt;(*EXTENDED_BOTTOM_UP_CUT_ROD(p,10)).result&lt;&lt;endl;</span><br><span class="line">  PRINT_CUT_ROD_SOLUTION(p,10);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>15.1-4修改memorized_cut_rod，使之返回最优收益值和切割方案</strong></p>
+<p>实现函数如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define INFINITY 0x7fffffff</span></span><br><span class="line"></span><br><span class="line">struct rod</span><br><span class="line">&#123;</span><br><span class="line">  int result;</span><br><span class="line">  int solution;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int max(int a, int b)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">return</span> a&gt;b?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rod *memorized_cut_rod_aux(int p[], int n, rod res[])</span><br><span class="line">&#123;</span><br><span class="line">  int q;</span><br><span class="line">  <span class="keyword">if</span>(res[n].result&gt;=0)</span><br><span class="line">    <span class="built_in">return</span> res+n;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(n==0)</span><br><span class="line">    q=0;   //规模为0的时候，自然收益为0</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    q=-INFINITY;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">      //会犯错误的地方：</span><br><span class="line">      //这里不能够直接写</span><br><span class="line">      //q=max(q,p[i]+(memorized_cut_rod(p,n-1-i,res))-&gt;solution)</span><br><span class="line">      //因为还要进行储存切割方案，在子问题规模为i+1的时候，有可能进行切割，也有可能不切割</span><br><span class="line">      int tmp=p[i]+memorized_cut_rod_aux(p,n-1-i,res)-&gt;solution;</span><br><span class="line">      //在p[i]处的最优方案是tmp，tmp和q进行比较判断后，推出在i+1处的最优方案</span><br><span class="line"></span><br><span class="line">      //这里把n分解成更小的子问题，怎么解决？通过递归解决</span><br><span class="line">      //memorized_cut_rod_aux(p,n-1-i,res)把n-1的子问题转化为n-1-i</span><br><span class="line">      <span class="keyword">if</span>(q&lt;tmp)</span><br><span class="line">      &#123;</span><br><span class="line">        q=tmp;</span><br><span class="line">        res[n].solution=i+1;</span><br><span class="line">        //我们这里返回的就是问题规模为n时候的切割方案，这里的切割方案是：</span><br><span class="line">        //切割一次or无切割！</span><br><span class="line">        //i&lt;n-1时候，q=tmp表示切割</span><br><span class="line">        //i==n-1的时候，tmp=p[n-1]+memorized_cut_rod(p,0,res)-&gt;solution</span><br><span class="line">        //如果此时还满足q&lt;tmp，res[n].solution=n-1+1=n，表示无切割</span><br><span class="line">        //这一步的目的在于保存每一个循环过程中i的最优方案</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  res[n].result=q;</span><br><span class="line">  <span class="built_in">return</span> res+n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rod *memorized_cut_rod(int p[], int n)</span><br><span class="line">&#123;</span><br><span class="line">  rod *res=new rod[n];</span><br><span class="line">  <span class="keyword">for</span>(int i=0;i&lt;=n;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    res[i].result=-INFINITY;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> memorized_cut_rod_aux(p,n,res);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void PRINT_CUT_ROD_SOLUTION(int p[], int n)</span><br><span class="line">&#123;</span><br><span class="line">  rod *res=memorized_cut_rod(p,n);</span><br><span class="line">  cout&lt;&lt;<span class="string">"max result"</span>&lt;&lt;res-&gt;result&lt;&lt;endl;</span><br><span class="line">  cout&lt;&lt;<span class="string">"solution: "</span>&lt;&lt;endl;</span><br><span class="line">  <span class="keyword">while</span>(n)</span><br><span class="line">  &#123;</span><br><span class="line">    cout&lt;&lt;(*res).solution&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    n=n-(*res).solution;</span><br><span class="line">    res=res-(*res).solution;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//重点：在于区分数组下标和子问题的规模，数组下标为i-1，子问题的规模为i</span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  const int n=10;</span><br><span class="line">  int p[10]=&#123;1,5,8,9,10,17,17,20,24,30&#125;;</span><br><span class="line">  PRINT_CUT_ROD_SOLUTION(p,10);</span><br><span class="line">  cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>15.1-5斐波那契数列</strong></p>
+<p>子问题图：</p>
+<p><img src="/2017/02/02/20170202/06.jpg" alt="06"></p>
+<p>实现方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int fibonacci(int array[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(n&gt;=0)</span><br><span class="line">    array[0]=0;</span><br><span class="line">  <span class="keyword">if</span>(n&gt;=1)</span><br><span class="line">    array[1]=1;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(int i=2;i&lt;n;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    array[i]=array[i-1]+array[i-2];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> array[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>特别说明：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(int j=0;j&lt;n;j++)</span><br><span class="line">&#123;</span><br><span class="line">  //code</span><br><span class="line">  <span class="keyword">for</span>(int i=0;i&lt;=j;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    q=max(q,p[i]+r[j-i]);</span><br><span class="line">  &#125;</span><br><span class="line">  r[j]=q;     //这样写也是可\ \;\;以的</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">return</span> r[n-1];  //只是返回值会不一样</span><br></pre></td></tr></table></figure>
+<div>
+    <center>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=417859263&auto=0&height=66"></iframe>
+    </center>
+</div>
+
+<h2 id="矩阵链乘法"><a href="#矩阵链乘法" class="headerlink" title="矩阵链乘法"></a>矩阵链乘法</h2><p><strong>矩阵规模序列</strong>  </p>
+<p>$A1 \qquad\ \;\;|A2 \qquad\ \;\;|A3 \qquad\ \;\;|$<br>$\underline{10}\times100\;\;|100\times5\;\;\;|\underline{5\times50}\quad\;\;\,|$</p>
+<p>$A1A2 \qquad\times A3=10\times5\times50$</p>
+<p>由此可以推出：<br>$A_{i \ldots k} \qquad \qquad \times \qquad \qquad A_{k+1 \ldots j}$<br>$=\underline{p_{i-1}} \times p_i \times p_{i+1} \times \qquad\quad \underline{p_k} \times p_{k+1}\times\underline{p_j}$<br>$=p_{i-1} \times p_k \times p_j$</p>
+<p>由矩阵规模序列推出矩阵链乘法，如上图所示，相乘的代价是：把有下划线的项相乘的值。<br>可以得到递推式如下：</p>
+<script type="math/tex; mode=display">m[i,j]=
+\begin{cases}
+0& \text{i=j}\\
+min(m[i,k]+m[k+1,j]+p_{i-1}p_kp_j)& \text{i<j}
+\end{cases}</script><h3 id="矩阵链乘法的运算过程"><a href="#矩阵链乘法的运算过程" class="headerlink" title="矩阵链乘法的运算过程"></a>矩阵链乘法的运算过程</h3><p>如下图所示：</p>
+<p><img src="/2017/02/02/20170202/08.jpg" alt="08"></p>
+<p>可以看出，三角形处的min值取决于两个圆圈处的值，具体的实现过程如下：<br><strong>line01:</strong></p>
+<script type="math/tex; mode=display">m[1,2]=
+\begin{cases}
+m[1,1]+m[2,2]+p_0p_1p_2\\
+=0+0+30\times35\times15
+=15750
+\end{cases}</script><script type="math/tex; mode=display">m[2,3]=
+\begin{cases}
+m[2,2]+m[3,3]+p_1p_2p_3\\
+=0+0+35\times15\times5
+=2625
+\end{cases}</script><script type="math/tex; mode=display">m[3,4]=
+\begin{cases}
+m[3,3]+m[4,4]+p_3p_4\\
+=0+0+15\times5\times10
+=750
+\end{cases}</script><script type="math/tex; mode=display">m[4,5]=
+\begin{cases}
+m[4,4]+m[5,5]+p_4p_5\\
+=0+0+5\times10\times20
+=1000
+\end{cases}</script><script type="math/tex; mode=display">m[5,6]=
+\begin{cases}
+m[5,5]+m[6,6]+p_5p_6\\
+=0+0+10\times20\times25
+=5000
+\end{cases}</script><p><strong>line02：括号中表示划分方式</strong></p>
+<script type="math/tex; mode=display">m[1,3]=min
+\begin{cases}
+0([1,1])+2625([2,3])+30\times35\times5=7875\\
+15750([1,2])+0+30\times15\times5=18000
+\end{cases}</script><script type="math/tex; mode=display">m[2,4]=min
+\begin{cases}
+0([2,2])+750([3,4])+35\times15\times10=6000\\
+2625([2,3])+0+35\times5\times10=4375
+\end{cases}</script><script type="math/tex; mode=display">m[3,5]=min
+\begin{cases}
+0([3,3])+1000([4,5])+15\times5\times20=2500\\
+750([3,4])+0+15\times10\times20=3750
+\end{cases}</script><script type="math/tex; mode=display">m[4,6]=min
+\begin{cases}
+0([4,4])+5000([5,6])+5\times10\times25=6250\\
+1000([4,5])+0+5\times20\times25=3500
+\end{cases}</script><p><strong>line03：</strong></p>
+<script type="math/tex; mode=display">m[1,4]=min
+\begin{cases}
+0([1,1])+4375([2,4])+30\times35\times10=14875\\
+15750([1,2])+750([3,4])+30\times15\times10=4500+750+15750=21000\\
+7875([1,3])+0([4,4])+30\times5\times10=9375
+\end{cases}</script><script type="math/tex; mode=display">m[3,6]=min
+\begin{cases}
+0([3,3])+3500([4,6])+15\times5\times25=5375\\
+750([3,4])+5000([5,6])+15\times10\times25=9500\\
+2500([3,5])+0([6,6])+15\times20\times25=10000
+\end{cases}</script><p><strong>line04：</strong></p>
+<script type="math/tex; mode=display">m[1,5]=min
+\begin{cases}
+0([1,1])+7125([2,5])+30\times35\times20=28125\\
+15750([1,2])+2500([3,5])+30\times15\times20=27250\\
+7875([1,3])+1000([4,5])+30\times5\times20=11875\\
+9375([1,4])+0([5,5])+30\times10\times20=15375
+\end{cases}</script><script type="math/tex; mode=display">m[2,6]=min
+\begin{cases}
+0([2,2])+5375([3,6])+35\times15\times25=18500\\
+2625([2,3])+3500([4,6])+35\times5\times25=10500\\
+4375([2,4])+5000([5,6])+35\times10\times25=18125\\
+7125([2,5])+0([6,6])+35\times20\times25=24625
+\end{cases}</script><p><strong>line05：</strong></p>
+<script type="math/tex; mode=display">m[1,6]=min
+\begin{cases}
+0([1,1])+10500([2,6])+30\times35\times25=36750\\
+15750([1,2])+5375([3,6])+30\times15\times25=32375\\
+7875([1,3])+3500([4,6])+30\times5\times25=15125\\
+9375([1,4])+5000([5,6])+30\times10\times25=21875\\
+11875([1,5])+0([6,6])+30\times20\times25=26875
+\end{cases}</script><h3 id="计算最优代价"><a href="#计算最优代价" class="headerlink" title="计算最优代价"></a>计算最优代价</h3><p><img src="/2017/02/02/20170202/09.jpg" alt="09"></p>
+<p>具体的实现过程如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;ctime&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define n 7</span></span><br><span class="line"><span class="comment">#define INFINITY 0x7fffffff</span></span><br><span class="line"></span><br><span class="line">struct Matrix</span><br><span class="line">&#123;</span><br><span class="line">    int rows;  //表示行数</span><br><span class="line">    int columns;  //表示列数</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; matrix;</span><br><span class="line">    Matrix(int r,int c)</span><br><span class="line">    &#123;</span><br><span class="line">        rows=r;</span><br><span class="line">        columns=c;</span><br><span class="line">        matrix.resize(rows);</span><br><span class="line">        <span class="keyword">for</span>(int i=0;i&lt;rows;i++)</span><br><span class="line">          matrix[i].resize(columns);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct Matrix_Chain</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; m;  //表示运算次数</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; s;  //划分方式</span><br><span class="line">    Matrix_Chain()</span><br><span class="line">    &#123;</span><br><span class="line">        m.resize(n-1);  //有n-1个括号</span><br><span class="line">        <span class="keyword">for</span>(int k=0;k&lt;n-1;k++)</span><br><span class="line">        &#123;</span><br><span class="line">            m[k].resize(n-1);    //最后输出的是一个对角阵</span><br><span class="line">                                 //辅助表m[1...n-1, 1...n-1]来保存代价</span><br><span class="line">                                 //s[1...n-1,2...n]记录最优值m[i,j]对应的分割点k</span><br><span class="line">        &#125;</span><br><span class="line">        s.resize(n-1);</span><br><span class="line">        <span class="keyword">for</span>(int t=0;t&lt;n-1;t++)</span><br><span class="line">        &#123;</span><br><span class="line">            s[t].resize(n-1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Matrix init(Matrix A)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;A.rows;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;A.columns;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            A.matrix[i][j]=rand()%10;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> A;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Matrix Matrix_Mutiply(Matrix A,Matrix B)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(A.columns!=B.rows)</span><br><span class="line">    &#123;</span><br><span class="line">        Matrix D(1,1);</span><br><span class="line">        D.matrix[0][0]=0;</span><br><span class="line">        cerr&lt;&lt;<span class="string">"incompatible dimensions"</span>&lt;&lt;endl;</span><br><span class="line">        <span class="built_in">return</span> D;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Matrix C(A.rows, B.columns);</span><br><span class="line">        <span class="keyword">for</span>(int i=0;i&lt;A.rows;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(int j=0;j&lt;B.columns;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                C.matrix[i][j]=0;</span><br><span class="line">                <span class="keyword">for</span>(int k=0;k&lt;A.columns;k++)</span><br><span class="line">                   C.matrix[i][j]=C.matrix[i][j]+A.matrix[i][k]*B.matrix[k][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">return</span> C;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Matrix_Chain Matrix_Chain_Order(int p[])</span><br><span class="line">&#123;</span><br><span class="line">    Matrix_Chain T;</span><br><span class="line">    int len=n-1;    //辅助表m[k,k]来保存代价，其中k=n-1，n为矩阵链长度</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;len;i++) //s[k,k]用来保存最优值m[i,j]对应的分割点</span><br><span class="line">    &#123;</span><br><span class="line">        T.m[i][i]=0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(int l=2;l&lt;=len;l++)  //l表示矩阵链长度</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;=len<span class="_">-l</span>+1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int j=i+l-1;</span><br><span class="line">            T.m[i-1][j-1]=INFINITY;   //用来计算[i,i+1..k] [k+1..,j-1,j]这样划分的运算代价</span><br><span class="line">            <span class="keyword">for</span>(int k=i;k&lt;j;k++)     //循环中的i表示第几个数，T.m[i]中的i表示数组下标</span><br><span class="line">            //千万注意，这里k从i开始！</span><br><span class="line">            &#123;</span><br><span class="line">                int q=T.m[i-1][k-1]+T.m[k][j-1]+p[i-1]*p[k]*p[j];</span><br><span class="line">                <span class="keyword">if</span>(q&lt;T.m[i-1][j-1])</span><br><span class="line">                &#123;</span><br><span class="line">                    T.m[i-1][j-1]=q;</span><br><span class="line">                    T.s[i-1][j-1]=k-1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> T;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">print</span>(Matrix A)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;A.rows;i++)</span><br><span class="line">    &#123;</span><br><span class="line">         <span class="keyword">for</span>(int j=0;j&lt;A.columns;j++)</span><br><span class="line">            cout&lt;&lt;A.matrix[i][j]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">            cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int p[n]=&#123;5,10,3,12,5,50,6&#125;;</span><br><span class="line">    Matrix_Chain T=Matrix_Chain_Order(p);</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;n-1;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;n-1;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(T.m[i][j]&lt;0)</span><br><span class="line">              cout&lt;&lt;<span class="string">"-1"</span>&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line">            <span class="keyword">else</span> cout&lt;&lt;T.m[i][j]&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运算结果：</p>
+<p><img src="/2017/02/02/20170202/10.jpg" alt="10"></p>
+<h3 id="矩阵链总乘法"><a href="#矩阵链总乘法" class="headerlink" title="矩阵链总乘法"></a>矩阵链总乘法</h3><p>矩阵链总乘法的递归表示：</p>
+<p><img src="/2017/02/02/20170202/11.jpg" alt="11"></p>
+<p>递归运算的核心：递归进行到最底层的时候，算法的运行情况？<br>这里的运算是矩阵乘法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(j==i+1)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">return</span> Matrix_Mutiply(A[i],A[j]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>相当于二路归并排序，递归进行到最末端时候的情况。A[i]*A[i+1]<br>在每一次的递归过程中，划分的下标信息，是存储在S[1,…,n]中的，我们在函数中要传递该参数。</p>
+<p>具体实现过程：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;ctime&gt;</span></span><br><span class="line"><span class="comment">#include &lt;memory&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define n 7</span></span><br><span class="line"><span class="comment">#define INFINITY 0x7fffffff</span></span><br><span class="line"></span><br><span class="line">struct Matrix</span><br><span class="line">&#123;</span><br><span class="line">    int rows;  //表示行数</span><br><span class="line">    int columns;  //表示列数</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; matrix;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct Matrix_Chain</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; m;  //表示运算次数</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; s;  //划分方式</span><br><span class="line">    Matrix_Chain()</span><br><span class="line">    &#123;</span><br><span class="line">        m.resize(n-1);  //有n-1个括号</span><br><span class="line">        <span class="keyword">for</span>(int k=0;k&lt;n-1;k++)</span><br><span class="line">        &#123;</span><br><span class="line">            m[k].resize(n-1);    //最后输出的是一个对角阵</span><br><span class="line">                                 //辅助表m[1...n-1, 1...n-1]来保存代价</span><br><span class="line">                                 //s[1...n-1,2...n]记录最优值m[i,j]对应的分割点k</span><br><span class="line">        &#125;</span><br><span class="line">        s.resize(n-1);</span><br><span class="line">        <span class="keyword">for</span>(int t=0;t&lt;n-1;t++)</span><br><span class="line">        &#123;</span><br><span class="line">            s[t].resize(n-1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Matrix init(Matrix &amp;A,int r,int c)  //对A的矩阵具体值的初始化</span><br><span class="line">&#123;</span><br><span class="line">    A.rows=r;</span><br><span class="line">    A.columns=c;</span><br><span class="line">    A.matrix.resize(A.rows);</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;A.rows;i++)</span><br><span class="line">        A.matrix[i].resize(A.columns);</span><br><span class="line"></span><br><span class="line">    srand((unsigned)time(0));</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;A.rows;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;A.columns;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            A.matrix[i][j]=rand()%n+1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> A;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">print</span>(Matrix A)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;A.rows;i++)</span><br><span class="line">    &#123;</span><br><span class="line">         <span class="keyword">for</span>(int j=0;j&lt;A.columns;j++)</span><br><span class="line">            cout&lt;&lt;A.matrix[i][j]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">            cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Matrix Matrix_Mutiply(Matrix A,Matrix B)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(A.columns!=B.rows)</span><br><span class="line">    &#123;</span><br><span class="line">        Matrix D;</span><br><span class="line">        init(D,1,1);</span><br><span class="line">        D.matrix[0][0]=0;</span><br><span class="line">        cerr&lt;&lt;<span class="string">"incompatible dimensions"</span>&lt;&lt;endl;</span><br><span class="line">        <span class="built_in">return</span> D;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Matrix C;</span><br><span class="line">        init(C,A.rows,B.columns);</span><br><span class="line">        <span class="keyword">for</span>(int i=0;i&lt;A.rows;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(int j=0;j&lt;B.columns;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                C.matrix[i][j]=0;</span><br><span class="line">                <span class="keyword">for</span>(int k=0;k&lt;A.columns;k++)</span><br><span class="line">                   C.matrix[i][j]=C.matrix[i][j]+A.matrix[i][k]*B.matrix[k][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">return</span> C;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Matrix_Chain Matrix_Chain_Order(int p[])  //这里的i j统一表示是：数组中的第几个数？</span><br><span class="line">&#123;                                         //所以，数组下标是T.m[i-1][j-1]</span><br><span class="line">    Matrix_Chain T;</span><br><span class="line">    int len=n-1;    //辅助表m[k,k]来保存代价，其中k=n-1，n为矩阵链长度</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;len;i++) //s[k,k]用来保存最优值m[i,j]对应的分割点</span><br><span class="line">    &#123;</span><br><span class="line">        T.m[i][i]=0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(int l=2;l&lt;=len;l++)  //l表示矩阵链长度</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;=len<span class="_">-l</span>+1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int j=i+l-1;</span><br><span class="line">            T.m[i-1][j-1]=INFINITY;   //用来计算[i,i+1..k] [k+1..,j-1,j]这样划分的运算代价</span><br><span class="line">            <span class="keyword">for</span>(int k=i;k&lt;j;k++)     //循环中的i表示第几个数，T.m[i]中的i表示数组下标</span><br><span class="line">            //千万注意，这里k从i开始！</span><br><span class="line">            &#123;</span><br><span class="line">                int q=T.m[i-1][k-1]+T.m[k][j-1]+p[i-1]*p[k]*p[j];</span><br><span class="line">                <span class="keyword">if</span>(q&lt;T.m[i-1][j-1])</span><br><span class="line">                &#123;</span><br><span class="line">                    T.m[i-1][j-1]=q;</span><br><span class="line">                    T.s[i-1][j-1]=k-1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> T;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//矩阵链总乘法，相当于二路归并</span><br><span class="line">//在二路归并排序中，递归处理，让区间的长度从l逐渐减小到0</span><br><span class="line">//递归到尾端的时候，是两个数相乘A[i]*A[j] (j==i+1)</span><br><span class="line"></span><br><span class="line">//函数参数：矩阵链乘法中，1、传递A[]矩阵的原始数据，2、括号的划分情况，存储在数组T.s[]中</span><br><span class="line">Matrix Matrix_Chain_Multiply(Matrix A[],Matrix_Chain T,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(j==i)</span><br><span class="line">      <span class="built_in">return</span> A[i];</span><br><span class="line">    <span class="keyword">if</span>(j==i+1)</span><br><span class="line">      <span class="built_in">return</span> Matrix_Mutiply(A[i],A[j]);</span><br><span class="line">    Matrix t1=Matrix_Chain_Multiply(A,T,i,T.s[i][j]);  //矩阵T.s[i][j]表示A[i...j]的划分方式</span><br><span class="line">    Matrix t2=Matrix_Chain_Multiply(A,T,T.s[i][j]+1,j);</span><br><span class="line">    <span class="built_in">return</span> Matrix_Mutiply(t1,t2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//同理，打印输出矩阵链乘法也是如此：</span><br><span class="line">void Print_Optimal_Parents(Matrix_Chain T,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(i==j)</span><br><span class="line">      cout&lt;&lt;<span class="string">"A"</span>&lt;&lt;i&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"("</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">        Print_Optimal_Parents(T,i,T.s[i][j]);</span><br><span class="line">        Print_Optimal_Parents(T,T.s[i][j]+1,j);</span><br><span class="line">        cout&lt;&lt;<span class="string">")"</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Matrix <span class="built_in">test</span>;</span><br><span class="line">    init(<span class="built_in">test</span>,4,5);</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">test</span>);</span><br><span class="line">    cout&lt;&lt;<span class="string">"Program begins: "</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    int p[n]=&#123;5,10,3,12,5,50,6&#125;;</span><br><span class="line">    Matrix_Chain T=Matrix_Chain_Order(p);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;n-1;i++)   //矩阵的dimension，等于矩阵链规模n-1</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;n-1;j++)  //原矩阵对应的值A[i....j]=A[0...n-2]</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(T.m[i][j]&lt;0)</span><br><span class="line">              cout&lt;&lt;<span class="string">"-1"</span>&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">              cout&lt;&lt;T.m[i][j]&lt;&lt;<span class="string">"\t"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Print_Optimal_Parents(T,0,n-2);</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;<span class="string">"Concret Implement:"</span>&lt;&lt;<span class="string">" "</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    Matrix A[n];   //这里的A存放的是指向Matrix数组第一个元素的指针</span><br><span class="line">    //A[]的dimension的值,具体一点为p(i-1)*p(i)</span><br><span class="line">    <span class="keyword">for</span>(int j=1;j&lt;n;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        Matrix t;</span><br><span class="line">        init(t,p[j-1],p[j]);    //A[rows*columns]---&gt;p[j-1]*p[j]</span><br><span class="line">        A[j-1]=t;    //p[]仅仅表示A[]的维度，具体的值用init初始化</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">        <span class="built_in">print</span>(A[j-1]);</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Matrix result=Matrix_Chain_Multiply(A,T,0,n-2);</span><br><span class="line">    <span class="built_in">print</span>(result);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>算法运行情况：</p>
+<p><img src="/2017/02/02/20170202/12.jpg" alt="12"></p>
+<p><img src="/2017/02/02/20170202/13.jpg" alt="13"></p>
+<h3 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h3><p>15.2-3 用代入法证明递归公式(15.6)的结果是：$\Omega(2^n)$<br>$n=2\qquad\quad P(2)=p^2(1)=1$<br>$n=3\qquad\quad P(3)=2P(1)P(2)$<br>$n=4\qquad\quad P(4)=2^2P^2(1)P(2)+P^2(2)$<br>$n=5\qquad\quad P(5)=2^3P^3(1)P(2)+(2+2^2)P(1)P^2(2)$<br>$\cdots\cdots$</p>
+<p>$P(n)=2^{[n/2]+1}P^{[n/2]+1}(1)P(2)+(2+2^2+\cdots+2^{[n/2]})P(1)P^2(2)$<br>由等比数列的求和公式，可以推出：<br>$P(n)=\Omega(2^n)$</p>
+<p>15.2-4 对输入链长度为n的矩阵链乘法问题，包含多少个顶点？包含多少条边？这些边分别连接哪些顶点？<br>值得注意的是，矩阵链不等于二叉树，子问题就对应矩阵中的每个点。</p>
+<p>如下图所示：</p>
+<p><img src="/2017/02/02/20170202/14.jpg" alt="14"></p>
+<p>子问题图包含$n^2/2=O(n^2)$个顶点。<br>边数？第i层的边数为$i(i-1)$</p>
+<p>总边数为$\sum_{i=1}^{i=n}i(i-1)=O(n^3)$</p>
+<p>15.2-5 计算其他表项的时候，访问m[i,j]，主要的时间代价是由<br>$q=m[i,k]+m[k+1,j]+p_{i-1}p_kp_j$ 产生的，每一次访问都对m[]调用2次。</p>
+<p>总的遍历循环次数，为k可以取到的值的总数，即为矩阵链长度length<br>令$l=length$<br>$\sum_{i=1}^n\sum_{j=1}^nR(i,j)=\sum_{l=2}^{l=n}\sum_{i=1}^{n-l+1}2(l-1)=2\sum_{l=2}^n(n-(l-1))(l-1)=2\sum_{t=1}^{n-1}(n-t)t$<br>$=O(2\frac{n(n-1)(2n-1)}{6})=\frac{n^3-n}{3}$</p>
+<p>其实本质上还是这张图：</p>
+<p><img src="/2017/02/02/20170202/08.jpg" alt="08"></p>
+<p>图中红色线段长度表示$l$，即$\sum_{l=1}{l=n}$，每一个红色线段对应两个m[]点，在每一层，有$l-1$个三角形的点<br>所以，总代价是：<br>$\sum_{l=2}^{l=n}2 \times l(l-1)=2 \times \frac{n(n-1)(2n-1)}{6}=O(\frac{n^3-n}{3})$</p>
+<p>15.2-6 对n个元素的表达式进行完全括号化，恰好需要n-1对括号</p>
+<p>数学归纳法，k个元素要k-1对括号，当元素增加到k+1时，保持k-1对括号不变，再添加新的一个元素，括号数为k</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Zhangmin Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/02/02/20170202/" target="_blank" title="动态规划概论">http://www.fogsail.net/2017/02/02/20170202/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-programming/">dynamic programming</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/18/20170218/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          最长公共子序列
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/30/20170130/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">约瑟夫环</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#钢条切割问题"><span class="nav-number">1.</span> <span class="nav-text">钢条切割问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法运行时间分析"><span class="nav-number">1.1.</span> <span class="nav-text">算法运行时间分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子问题图与重构解"><span class="nav-number">1.2.</span> <span class="nav-text">子问题图与重构解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">1.3.</span> <span class="nav-text">其他问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵链乘法"><span class="nav-number">2.</span> <span class="nav-text">矩阵链乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵链乘法的运算过程"><span class="nav-number">2.1.</span> <span class="nav-text">矩阵链乘法的运算过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算最优代价"><span class="nav-number">2.2.</span> <span class="nav-text">计算最优代价</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵链总乘法"><span class="nav-number">2.3.</span> <span class="nav-text">矩阵链总乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题解答"><span class="nav-number">2.4.</span> <span class="nav-text">问题解答</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Zhangmin Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

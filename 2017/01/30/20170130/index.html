@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>约瑟夫环 | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="data_structure">
+  
+  
+  
+  
+  <meta name="description" content="Josephus问题的定义如下：假设n个人排成环形，且有以正整数m&amp;lt;=n。从某个制定的人开始，沿环报数，每遇到第m个人就让其出列，且报数进行下去。这个过程一直进行到所有人都出列为止。每个人出列的次序定义了整数1，2，…，n的(n, m)-Josephus排列。例如，(7,3)-Josephus排列为。 a)假设m为整数。请描述一个O(n)时间的算法，使之对给定的整数n，输出(n, m)-Jo">
+<meta name="keywords" content="data_structure">
+<meta property="og:type" content="article">
+<meta property="og:title" content="约瑟夫环">
+<meta property="og:url" content="http://www.fogsail.net/2017/01/30/20170130/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="Josephus问题的定义如下：假设n个人排成环形，且有以正整数m&amp;lt;=n。从某个制定的人开始，沿环报数，每遇到第m个人就让其出列，且报数进行下去。这个过程一直进行到所有人都出列为止。每个人出列的次序定义了整数1，2，…，n的(n, m)-Josephus排列。例如，(7,3)-Josephus排列为。 a)假设m为整数。请描述一个O(n)时间的算法，使之对给定的整数n，输出(n, m)-Jo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2017/01/30/20170130/01.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/01/30/20170130/02.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/01/30/20170130/03.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/01/30/20170130/04.jpg">
+<meta property="og:updated_time" content="2018-03-02T17:06:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="约瑟夫环">
+<meta name="twitter:description" content="Josephus问题的定义如下：假设n个人排成环形，且有以正整数m&amp;lt;=n。从某个制定的人开始，沿环报数，每遇到第m个人就让其出列，且报数进行下去。这个过程一直进行到所有人都出列为止。每个人出列的次序定义了整数1，2，…，n的(n, m)-Josephus排列。例如，(7,3)-Josephus排列为。 a)假设m为整数。请描述一个O(n)时间的算法，使之对给定的整数n，输出(n, m)-Jo">
+<meta name="twitter:image" content="http://www.fogsail.net/2017/01/30/20170130/01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2017/01/30/20170130/",
+        "appid": "1593711792635024",
+        "title": "约瑟夫环",
+        "images": [
+        "http://www.fogsail.net/2017/01/30/20170130/01.png",
+        "http://www.fogsail.net/2017/01/30/20170130/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2017-01-30T05:27:00" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20170130" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      约瑟夫环
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/01/30/20170130/" class="article-date">
+	  <time datetime="2017-01-29T21:27:00.000Z" itemprop="datePublished">2017-01-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/data-structure/">data_structure</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Josephus问题的定义如下：假设n个人排成环形，且有以正整数m&lt;=n。从某个制定的人开始，沿环报数，每遇到第m个人就让其出列，且报数进行下去。这个过程一直进行到所有人都出列为止。每个人出列的次序定义了整数1，2，…，n的(n, m)-Josephus排列。例如，(7,3)-Josephus排列为<3,6,2,7,5,1,4>。</3,6,2,7,5,1,4></p>
+<p>a)假设m为整数。请描述一个O(n)时间的算法，使之对给定的整数n，输出(n, m)-Josephus排列。<br>b)假设m不是个常数。请描述一个O(nlgn)时间的算法，使给定的整数n和m，输出(n, m)-Josephus排列。</p>
+<a id="more"></a>
+<h2 id="递归求解约瑟夫环"><a href="#递归求解约瑟夫环" class="headerlink" title="递归求解约瑟夫环"></a>递归求解约瑟夫环</h2><p>约瑟夫序列从0,1,2…..,N-1中报数为M-1的出列，从M开始又重新从1开始报数，这可以用典型的递归来求解，递归的具体过程如下图所示：</p>
+<p><img src="/2017/01/30/20170130/01.jpg" alt="01"></p>
+<p><img src="/2017/01/30/20170130/02.jpg" alt="02"></p>
+<p>不妨用$f(i)$表示问题规模$size=i$的时候，数的下标的排列，值得注意的是，从$size=i$问题规模递减为$size=i-1$的时候，同一个数的下标发生变化，其实是对应函数的映射，不妨用$f(i)$表示这种映射。</p>
+<p>如上图所示，在Josephus排列中，满足<br>$f(i)=(f(i-1)+k)\ mod\ i$</p>
+<p>根据这种算法，可以使用递归求解：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int N;</span><br><span class="line">  int M;</span><br><span class="line">  cin&gt;&gt;N;</span><br><span class="line">  cin&gt;&gt;M;</span><br><span class="line">  int result=0;</span><br><span class="line">  <span class="keyword">for</span>(int i=2; i&lt;=N;i++)</span><br><span class="line">    result=(result+M)%i;</span><br><span class="line">   //值得注意的是，这里的i表示规模，递推关系</span><br><span class="line">   //表示从i递推到i-1，问题规模数组大小</span><br><span class="line">   //最小就为1，所以i的初值为2</span><br><span class="line">  std::cout &lt;&lt; <span class="string">"最后输出的元素是"</span> &lt;&lt;result+1&lt;&lt;endl;</span><br><span class="line">  <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>递归算法的局限性：用这样的递归算法，无法获得一个Josephus的(n,m)排列，我们只知道最后一个出队的人，在初始时候的下标，并不知道所有的人，分别什么时候出队。</p>
+<h2 id="使用循环链表输出"><a href="#使用循环链表输出" class="headerlink" title="使用循环链表输出"></a>使用循环链表输出</h2><p>不删除结点的时候，我们需要给每一个节点加上status属性，判断这个结点是否已经处理过？<br>或者就采用最普通的删除结点的方式来处理。每当完成报数的时候，删除节点让报数的人退出Josephus环。</p>
+<p>这里给出两种实现函数，XXX_stus用status属性判断是否出队，但不删除节点，不带_stus的函数每隔m删除一个人。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define n 30</span></span><br><span class="line"><span class="comment">#define m 3</span></span><br><span class="line"><span class="comment">#define LEN sizeof(struct circular_list)</span></span><br><span class="line"><span class="comment">#define LEN_status sizeof(struct circular_list_status)</span></span><br><span class="line"></span><br><span class="line">struct circular_list</span><br><span class="line">&#123;</span><br><span class="line">  int key;  //存储数据</span><br><span class="line">  circular_list *next;</span><br><span class="line">&#125;;</span><br><span class="line">struct circular_list_status</span><br><span class="line">&#123;</span><br><span class="line">  int key;</span><br><span class="line">  bool status;  //用来存储该节点的状态，出队没有？</span><br><span class="line">  circular_list_status *next;</span><br><span class="line">  circular_list(int k,circular_list *init):key(k),status(TRUE),next(init)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct circular_list *tail=NULL;</span><br><span class="line">struct circular_list_status *tail_status=NULL;</span><br><span class="line"></span><br><span class="line">circular_list *insert(circular_list *head, int k)</span><br><span class="line">&#123;</span><br><span class="line">  circular_list *z=new circular_list[LEN];</span><br><span class="line">  z-&gt;key=k;</span><br><span class="line">  <span class="keyword">if</span>(head==NULL)</span><br><span class="line">  &#123;</span><br><span class="line">    head=tail=z;</span><br><span class="line">    head-&gt;next=tail;  //自循环</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    //插入表尾</span><br><span class="line">    tail-&gt;next=z;</span><br><span class="line">    z-&gt;next=head;</span><br><span class="line">    tail=z;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">circular_list_status *insert_stus(circular_list_status *head,int k)</span><br><span class="line">&#123;</span><br><span class="line">  circular_list_status *z=new circular_list_status[LEN_status];</span><br><span class="line">  z-&gt;key=k;</span><br><span class="line">  z-&gt;status=TRUE;</span><br><span class="line">  <span class="keyword">if</span>(head==NULL)</span><br><span class="line">  &#123;</span><br><span class="line">    head=tail=z;</span><br><span class="line">    head-&gt;next=tail;  //自循环</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    //插入表尾</span><br><span class="line">    tail-&gt;next=z;</span><br><span class="line">    z-&gt;next=head;</span><br><span class="line">    tail=z;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">circular_list *delete(circular_list *head, circular_list *z)</span><br><span class="line">&#123;</span><br><span class="line">  circular_list *p=head;</span><br><span class="line">  //先是要寻找到z这个结点的位置</span><br><span class="line">  <span class="keyword">while</span>(p-&gt;next!=z)  //要删除的是p-&gt;next这个节点</span><br><span class="line">    p=p-&gt;next;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(head==tail)</span><br><span class="line">    p-&gt;next=NULL;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span>(p-&gt;next==head)</span><br><span class="line">      head=p-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;next==tail)</span><br><span class="line">      tail=p;</span><br><span class="line">    p-&gt;next=p-&gt;next-&gt;next;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> p-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">circular_list_status *delete_stus(circular_list_status *head, circular_list_status *z)</span><br><span class="line">&#123;</span><br><span class="line">  circular_list_status *p=head;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(p-&gt;next!=z)  //要删除的是p-&gt;next这个节点</span><br><span class="line">    p=p-&gt;next;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(head==tail)</span><br><span class="line">    p-&gt;next=NULL;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span>(p-&gt;next==head)</span><br><span class="line">      head=p-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;next==tail)</span><br><span class="line">      tail=p;</span><br><span class="line">    p-&gt;next=p-&gt;next-&gt;next;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> p-&gt;next;   //返回的值，是更新后的p-&gt;next</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Josephus_n_m(circular_list_status *head, int n,int m)</span><br><span class="line">&#123;</span><br><span class="line">  struct circular_list_status *p=head;</span><br><span class="line">  //p作为遍历指针</span><br><span class="line">  int count=0;</span><br><span class="line">  <span class="keyword">while</span>(p &amp;&amp; count&lt;=n)</span><br><span class="line">  &#123;</span><br><span class="line">    int i=0;</span><br><span class="line">    <span class="keyword">while</span>(i!=m-1)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(p-&gt;status==TRUE)</span><br><span class="line">      &#123;</span><br><span class="line">        p=p-&gt;next;</span><br><span class="line">        i++;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> p=p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //循环到最后，i报数报M-1</span><br><span class="line">    p-&gt;status=<span class="literal">false</span>;</span><br><span class="line">    count++;</span><br><span class="line">    p=p-&gt;next;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Josephus_link_imple(circular_list *head,int m)</span><br><span class="line">&#123;</span><br><span class="line">  circular_list *p=head;</span><br><span class="line">  <span class="keyword">while</span>(p)</span><br><span class="line">  &#123;</span><br><span class="line">    int i=0;</span><br><span class="line">    <span class="keyword">while</span>(i!=m-1)</span><br><span class="line">    &#123;</span><br><span class="line">      p=p-&gt;next;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">    circular_list *z=p;</span><br><span class="line">    cout&lt;&lt;z-&gt;key&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    p=delete(head,z);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int a[n]=&#123;0&#125;</span><br><span class="line">  <span class="keyword">for</span>(int i=0;i&lt;n;i++)</span><br><span class="line">    a[i]=i+1;</span><br><span class="line"></span><br><span class="line">  int j=0;</span><br><span class="line">  circular_list *head=NULL;</span><br><span class="line">  <span class="keyword">while</span>(j!=n)</span><br><span class="line">  &#123;</span><br><span class="line">    head=insert(head,a[j]);</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  circular_list *p=head;</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    cout&lt;&lt;p-&gt;key;</span><br><span class="line">    p=p-&gt;next;</span><br><span class="line">    /* code */</span><br><span class="line">  &#125; <span class="keyword">while</span>(p!=head);</span><br><span class="line">  cout&lt;&lt;endl;</span><br><span class="line">  Josephus_link_imple(head,m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法分析：时间复杂度是$O(mn)=O(n)$</p>
+<p>是两个循环的嵌套，在m值不大的情况下可以使用该算法实现。</p>
+<h2 id="使用顺序统计树实现"><a href="#使用顺序统计树实现" class="headerlink" title="使用顺序统计树实现"></a>使用顺序统计树实现</h2><p><strong>假设m不是一个常数，用$O(nlgn)$的算法实现</strong></p>
+<p>这里采用顺序统计树来存储Josephus环中的点，通过映射关系查找每次需要删除的节点的坐标并执行删除。<br>映射关系如下图所示：</p>
+<p><img src="/2017/01/30/20170130/03.jpg" alt="03"></p>
+<p>相关的递推表示为：</p>
+<script type="math/tex; mode=display">t=1</script><script type="math/tex; mode=display">k=(t+m-1)\ mod\ i</script><script type="math/tex; mode=display">t=k</script><h3 id="主要的实现函数"><a href="#主要的实现函数" class="headerlink" title="主要的实现函数"></a>主要的实现函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">void Josephus_imple(os_tree *T, int m, int n)</span><br><span class="line">&#123;</span><br><span class="line">  os_node *x=T-&gt;root;</span><br><span class="line">  int k=0, i=n;</span><br><span class="line">  int t=1;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(T-&gt;root!=NULL &amp;&amp; i&gt;0)</span><br><span class="line">  &#123;</span><br><span class="line">    k=(t+m-1)%i;</span><br><span class="line">    //k就是我们需要删除的点，注意到我们对一个点执行删除之后</span><br><span class="line">    //这个点原来的下标是k，删除了之后k+1就自动补到k的位置上</span><br><span class="line">    //这样新的k重新编号的话就是1，相当于原来的t=1</span><br><span class="line">    <span class="keyword">if</span>(k==0)</span><br><span class="line">      k=i;</span><br><span class="line">    os_node *del=os_select(T,k);</span><br><span class="line">    //这里del表示要删除的结点</span><br><span class="line">    cout&lt;&lt;del-&gt;key&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    //输出节点</span><br><span class="line"></span><br><span class="line">    RB_delete(del);</span><br><span class="line"></span><br><span class="line">    t=k;</span><br><span class="line">    i--;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里采用的数据结构是一种顺序统计量，能够计算出rank值。但值得注意的是，在顺序统计量中，计算一个节点的rank值的函数的写法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int Interative_os_rank(os_tree *T,os_node *x)</span><br><span class="line">//确定x这个节点的顺序统计树的rank</span><br><span class="line">&#123;</span><br><span class="line">  int r=x-&gt;left-&gt;size+1;</span><br><span class="line">  os_node *y=x;     //沿左脊柱上升，r=x-&gt;left-&gt;size+1</span><br><span class="line">  <span class="keyword">while</span>(y!=T-&gt;root)   //如果是沿着右脊柱上升？y-&gt;size=y-&gt;left-&gt;size+1+sum&#123;y-&gt;parent-&gt;size&#125;</span><br><span class="line">  &#123;                  //沿左脊柱上升，r保持不变；一旦拐弯到了右脊柱，要关注y-&gt;parent-&gt;left-&gt;size+1</span><br><span class="line">    <span class="keyword">if</span>(y==y-&gt;parent-&gt;right)</span><br><span class="line">      r=r+y-&gt;parent-&gt;left-&gt;size+1;</span><br><span class="line"></span><br><span class="line">    y=y-&gt;parent;</span><br><span class="line">    //不管是左脊柱还是右脊柱，都要沿树上升</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> r;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>特别说明，当函数沿左脊柱上升的时候，r的值是r=x-&gt;left-&gt;size+1,但是，沿右脊柱，情形就变成了r=r+y-&gt;parent-&gt;left-&gt;size+1，具体的说明请看下图：</p>
+<p><img src="/2017/01/30/20170130/04.jpg" alt="04"></p>
+<p>**</p>
+<h3 id="O-lgn-算法的实现"><a href="#O-lgn-算法的实现" class="headerlink" title="$O(lgn)$算法的实现"></a>$O(lgn)$算法的实现</h3><h4 id="os-tree-h"><a href="#os-tree-h" class="headerlink" title="os_tree.h"></a>os_tree.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#define RED 0</span></span><br><span class="line"><span class="comment">#define BLACK 1</span></span><br><span class="line"><span class="comment">#define NIL -1</span></span><br><span class="line"><span class="comment">#define LEN sizeof(struct os_node)</span></span><br><span class="line"><span class="comment">#define LENTREE sizeof(struct os_tree)</span></span><br><span class="line"></span><br><span class="line">struct os_node</span><br><span class="line">&#123;</span><br><span class="line">  os_node *left;</span><br><span class="line">  os_node *right;</span><br><span class="line">  os_node *parent;</span><br><span class="line">  int key;</span><br><span class="line">  int color;</span><br><span class="line">  int size;  //用于顺序统计量</span><br><span class="line"></span><br><span class="line">  os_node(os_node *init,int num)</span><br><span class="line">  :left(init),right(init),parent(init),key(num),color(RED),size(0)&#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct os_tree</span><br><span class="line">&#123;</span><br><span class="line">  os_node *root;</span><br><span class="line">  os_node *nil;</span><br><span class="line">  os_tree()</span><br><span class="line">  &#123;</span><br><span class="line">    nil=new os_node(NULL,NIL);</span><br><span class="line">    root=nil;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="rotate-h"><a href="#rotate-h" class="headerlink" title="rotate.h"></a>rotate.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "os_tree.h"</span></span><br><span class="line"></span><br><span class="line">void left_rotate(os_tree *T,os_node *x)</span><br><span class="line">&#123;</span><br><span class="line">  os_node *y=x-&gt;right;  //左孩子结点</span><br><span class="line">  x-&gt;right=y-&gt;left;</span><br><span class="line">  //这一部处理的是加在x，y之间的“内结点”，y-&gt;left原先</span><br><span class="line">  //夹在x-&gt;left和y-&gt;right之间，旋转之后子树的相对顺序不变，最外边的结点是</span><br><span class="line">  //x-&gt;left和y-&gt;right，注意是围绕x和y进行的旋转，所以子树的相对位置保持不变</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(y!=T-&gt;nil &amp;&amp; y-&gt;left!=T-&gt;nil)</span><br><span class="line">    y-&gt;left-&gt;parent=x;</span><br><span class="line">  //旋转之后需要重新更新parent结点信息</span><br><span class="line"></span><br><span class="line">  y-&gt;parent=x-&gt;parent;  //这个时候y作为子树的根了，y要连到祖先中！</span><br><span class="line">  <span class="keyword">if</span>(x-&gt;parent==T-&gt;nil)</span><br><span class="line">    T-&gt;root=y;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(x-&gt;parent-&gt;left==x)</span><br><span class="line">     x-&gt;parent-&gt;left=y;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">      x-&gt;parent-&gt;right=y;</span><br><span class="line"></span><br><span class="line">   //保证x与祖先结点相连接</span><br><span class="line"></span><br><span class="line">   //最后处理x和y的关系</span><br><span class="line">   y-&gt;left=x;</span><br><span class="line">   x-&gt;parent=y;</span><br><span class="line"></span><br><span class="line">   //顺序统计树新增部分</span><br><span class="line">   y-&gt;size=x-&gt;size;</span><br><span class="line">   //旋转之后，y代替原来x的位置，而x的位置在树的高处</span><br><span class="line">   //直接将原来x的size值赋值给y就可以了</span><br><span class="line">   x-&gt;size=x-&gt;left-&gt;size+x-&gt;right-&gt;size+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//右旋，对称的代码</span><br><span class="line">void right_rotate(os_tree *T,os_node *x)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  //只需要把上述代码的相对位置，right和left互换就可以了</span><br><span class="line">   os_node *y=x-&gt;left;</span><br><span class="line">   x-&gt;left=y-&gt;right;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span>(y!=T-&gt;nil &amp;&amp; y-&gt;right!=T-&gt;nil)</span><br><span class="line">     y-&gt;right-&gt;parent=x;</span><br><span class="line">   //旋转之后需要重新更新parent结点信息</span><br><span class="line"></span><br><span class="line">   y-&gt;parent=x-&gt;parent;</span><br><span class="line">   <span class="keyword">if</span>(x-&gt;parent==T-&gt;nil)</span><br><span class="line">     T-&gt;root=y;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(x-&gt;parent-&gt;left==x)</span><br><span class="line">      x-&gt;parent-&gt;left=y;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">       x-&gt;parent-&gt;right=y;</span><br><span class="line"></span><br><span class="line">    //保证x与祖先结点相连接</span><br><span class="line"></span><br><span class="line">    //最后处理x和y的关系</span><br><span class="line">    y-&gt;right=x;</span><br><span class="line">    x-&gt;parent=y;</span><br><span class="line"></span><br><span class="line">    y-&gt;size=x-&gt;size;</span><br><span class="line">    x-&gt;size=x&gt;left-&gt;size+x-&gt;right-&gt;size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="delete-h"><a href="#delete-h" class="headerlink" title="delete.h"></a>delete.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "os_tree.h"</span></span><br><span class="line"><span class="comment">#include "rotate.h"</span></span><br><span class="line"><span class="comment">#include "succ_and_other.h"</span></span><br><span class="line"></span><br><span class="line">//删除调整，这个时候x有两重黑色</span><br><span class="line">void RB_delete_fixup(os_tree *T, os_node *x)</span><br><span class="line">&#123;</span><br><span class="line">  os_node *w=T-&gt;nil;</span><br><span class="line">  <span class="keyword">while</span> (x!=T-&gt;root &amp;&amp; x-&gt;color==BLACK)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span>(x==x-&gt;parent-&gt;left)</span><br><span class="line">    &#123;</span><br><span class="line">      w=x-&gt;parent-&gt;right;   //w为x的兄弟结点</span><br><span class="line">      <span class="keyword">if</span>(w-&gt;color==RED)</span><br><span class="line">      &#123;</span><br><span class="line">        w-&gt;color=BLACK;    //将这种情况划归为下面一种情况</span><br><span class="line">        w-&gt;parent-&gt;color=RED;</span><br><span class="line">        left_rotate(T,x-&gt;parent);</span><br><span class="line">        w=x-&gt;parent-&gt;right;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(w-&gt;left-&gt;color==BLACK &amp;&amp; w-&gt;right-&gt;color==BLACK)</span><br><span class="line">      &#123;</span><br><span class="line">        w-&gt;color=RED;</span><br><span class="line">        x=x-&gt;parent;      //x和w的黑色沿树上升，注意到x有双重黑色，所以x的颜色不变</span><br><span class="line">      &#125;                  //变得是w，x-&gt;parent的颜色</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">if</span>(w-&gt;right-&gt;color==BLACK)</span><br><span class="line">        &#123;</span><br><span class="line">          w-&gt;left-&gt;color=BLACK;</span><br><span class="line">          w-&gt;color=RED;         //同样，内节点变为外节点</span><br><span class="line">          right_rotate(T,w);</span><br><span class="line">          w=x-&gt;parent-&gt;right;</span><br><span class="line">        &#125;</span><br><span class="line">        w-&gt;color=x-&gt;parent-&gt;color;   //这里x-&gt;parent的颜色不确定，但是w的颜色是黑色</span><br><span class="line">        //x有双重黑色，通过改变颜色加上旋转，可以将双重黑色表现在图中，这样完成了红黑树的局部平衡</span><br><span class="line">        x-&gt;parent-&gt;color=BLACK;</span><br><span class="line">        w-&gt;right-&gt;color=BLACK;</span><br><span class="line">        left_rotate(T,x-&gt;parent);</span><br><span class="line">        //红黑树局部平衡了</span><br><span class="line">        x=T-&gt;root;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      w=x-&gt;parent-&gt;left;</span><br><span class="line">      <span class="keyword">if</span>(w-&gt;color==RED)</span><br><span class="line">      &#123;</span><br><span class="line">        w-&gt;color=BLACK;</span><br><span class="line">        x-&gt;parent-&gt;color=RED;</span><br><span class="line">        right_rotate(T,x-&gt;parent);</span><br><span class="line">        w=x-&gt;parent-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(w-&gt;left-&gt;color==BLACK &amp;&amp; w-&gt;right-&gt;color==BLACK)</span><br><span class="line">    &#123;</span><br><span class="line">      w-&gt;color=RED;</span><br><span class="line">      x=x-&gt;parent;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(w-&gt;left-&gt;color==BLACK)</span><br><span class="line">      &#123;</span><br><span class="line">        w-&gt;right-&gt;color=BLACK;</span><br><span class="line">        w-&gt;color=RED;</span><br><span class="line">        left_rotate(T,w);</span><br><span class="line">        w=x-&gt;parent-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line">      w-&gt;color=x-&gt;parent-&gt;color;</span><br><span class="line">      x-&gt;parent-&gt;color=BLACK;</span><br><span class="line">      w-&gt;left-&gt;color=BLACK;</span><br><span class="line">      right_rotate(T,x-&gt;parent);</span><br><span class="line"></span><br><span class="line">      x=T-&gt;root;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  x-&gt;color=BLACK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void transplant(os_tree *T, os_node *u, os_node *v)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(u-&gt;parent==T-&gt;nil)</span><br><span class="line">    T-&gt;root=v;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(u==u-&gt;parent-&gt;left)</span><br><span class="line">    u-&gt;parent-&gt;left=v;</span><br><span class="line">  <span class="keyword">else</span> u-&gt;parent-&gt;right=v;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(v!=T-&gt;nil)</span><br><span class="line">    v-&gt;parent=u-&gt;parent;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void RB_delete(os_tree *T, os_node *z)</span><br><span class="line">&#123;</span><br><span class="line">  os_node *y=z, *x;</span><br><span class="line">  int y_original_color=y-&gt;color;</span><br><span class="line">  os_node *par=z-&gt;parent;  //par作为被删除节点的双亲</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(z-&gt;left==T-&gt;nil)</span><br><span class="line">  &#123;</span><br><span class="line">    //删除一个节点的时候，size会发生变化</span><br><span class="line">    <span class="keyword">while</span>(par!=T-&gt;nil)</span><br><span class="line">    &#123;</span><br><span class="line">      //删除节点后，z的双亲的size值会减小</span><br><span class="line">      par-&gt;size--;</span><br><span class="line">      par=par-&gt;parent;  //自底向上遍历，所有的节点的size都减小</span><br><span class="line">    &#125;</span><br><span class="line">    x=z-&gt;right;</span><br><span class="line">    transplant(T,z,z-&gt;right);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(z-&gt;right==T-&gt;nil)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">while</span>(par!=T-&gt;nil)</span><br><span class="line">    &#123;</span><br><span class="line">      //删除节点后，z的双亲的size值会减小</span><br><span class="line">      par-&gt;size--;</span><br><span class="line">      par=par-&gt;parent;  //自底向上遍历，所有的节点的size都减小</span><br><span class="line">    &#125;</span><br><span class="line">    x=z-&gt;left;</span><br><span class="line">    transplant(T,z,z-&gt;left);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    y=tree_minimum(T,z-&gt;right);   //这里是查找z的后继，为y，用y来代替z的位置</span><br><span class="line">    y_original_color=y-&gt;color;</span><br><span class="line">    os_node *par=y-&gt;parent;</span><br><span class="line">    //这里用y嫁接到z处，原先y位置往上所有的节点相当于</span><br><span class="line">    //少了一个y结点，所以par往上遍历的过程中所有的size都为size--</span><br><span class="line"></span><br><span class="line">    //特别地，当用y来代替z的时候，并不是y-&gt;size=z-&gt;size</span><br><span class="line">    //因为子树中少了一个y，所以size-1</span><br><span class="line"></span><br><span class="line">    //特别注意，实际上，从y结点到z节点之间的节点，少了一个y</span><br><span class="line">    //从z节点往上，少了一个z，由于size结点是不包括当前节点的</span><br><span class="line">    //所以y-&gt;size=z-&gt;size-1</span><br><span class="line"></span><br><span class="line">    /*y-&gt;size=z-&gt;size-1;</span><br><span class="line">    <span class="keyword">while</span>(par!=T-&gt;nil)</span><br><span class="line">    &#123;</span><br><span class="line">      //删除节点后，z的双亲的size值会减小</span><br><span class="line">      par-&gt;size--;</span><br><span class="line">      par=par-&gt;parent;  //自底向上遍历，所有的节点的size都减小</span><br><span class="line">    &#125;*/</span><br><span class="line">    //还有一种方法：完成transplant之后自底向上调整！</span><br><span class="line">    x=y-&gt;right;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(y-&gt;parent==z)</span><br><span class="line">    &#123;</span><br><span class="line">      x-&gt;parent=y;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      transplant(T,y,y-&gt;right);</span><br><span class="line">      y-&gt;right=z-&gt;right;</span><br><span class="line">      y-&gt;right-&gt;parent=y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    transplant(T,z,y);</span><br><span class="line">    y-&gt;left=z-&gt;left;</span><br><span class="line">    y-&gt;left-&gt;parent=y;</span><br><span class="line">    y-&gt;color=z-&gt;color;</span><br><span class="line"></span><br><span class="line">    //这里进行size属性的维护</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(par!=T-&gt;nil)</span><br><span class="line">    &#123;</span><br><span class="line">      //删除节点后，z的双亲的size值会减小</span><br><span class="line">      par-&gt;size--;</span><br><span class="line">      par=par-&gt;parent;  //自底向上遍历，所有的节点的size都减小</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(y_original_color==BLACK)</span><br><span class="line">     RB_delete_fixup(T,x);   //x为y的孩子结点，y的删除会影响x的相关性质</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="insert-h"><a href="#insert-h" class="headerlink" title="insert.h"></a>insert.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "os_tree.h"</span></span><br><span class="line"><span class="comment">#include "rotate.h"</span></span><br><span class="line"></span><br><span class="line">void RB_insert_fixup(os_tree *T, os_node *z);</span><br><span class="line"></span><br><span class="line">void RB_insert(os_tree *T, os_node *z)</span><br><span class="line">&#123;</span><br><span class="line">  os_node *y=T-&gt;nil;</span><br><span class="line">  //y作为遍历指针的双亲</span><br><span class="line">  RB_node *x=T-&gt;root;</span><br><span class="line">  <span class="keyword">while</span>(x!=T-&gt;nil)</span><br><span class="line">  &#123;</span><br><span class="line">    y=x;</span><br><span class="line">    <span class="keyword">if</span>(z-&gt;key&lt;x-&gt;key)</span><br><span class="line">      x-&gt;x-&gt;left;</span><br><span class="line">    <span class="keyword">else</span> x=x-&gt;right;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  z-&gt;parent=y;</span><br><span class="line">  //y作为遍历指针x的母结点，x遍历寻找合适的插入位置</span><br><span class="line">  <span class="keyword">if</span>(y==T-&gt;nil)</span><br><span class="line">    T-&gt;root=z;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(z-&gt;key&lt;y-&gt;key)</span><br><span class="line">    y-&gt;left=z;</span><br><span class="line">  <span class="keyword">else</span> y-&gt;right=z;</span><br><span class="line"></span><br><span class="line">  z-&gt;left=T-&gt;nil;</span><br><span class="line">  z-&gt;right=T-&gt;nil;</span><br><span class="line">  z-&gt;parent=RED;</span><br><span class="line"></span><br><span class="line">  //新插入节点的信息</span><br><span class="line">  z-&gt;size=1;</span><br><span class="line">  z-&gt;left-&gt;size=0;</span><br><span class="line">  z-&gt;right-&gt;size=0;</span><br><span class="line"></span><br><span class="line">  RB_insert_fixup(T,z);   //最后插入的结点是红色的，与此同时进行红黑树性质的调整</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void RB_insert_fixup(os_tree *T,os_node *z)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">while</span>(z-&gt;parent-&gt;color==RED)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span>(z-&gt;parent==z-&gt;parent-&gt;parent-&gt;left)</span><br><span class="line">    &#123;</span><br><span class="line">      os_node *y=z-&gt;parent-&gt;parent-&gt;right;  //设置叔结点</span><br><span class="line">      <span class="keyword">if</span>(y-&gt;color==RED)</span><br><span class="line">      &#123;</span><br><span class="line">        z-&gt;parent-&gt;color=BLACK;   //父节点的黑色可以下放给两个结点</span><br><span class="line">        y-&gt;color=BLACK;</span><br><span class="line">        z-&gt;parent-&gt;parent-&gt;color=RED;</span><br><span class="line">        z=z-&gt;parent-&gt;parent;   //z沿树上升</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">if</span>(z==z-&gt;parent-&gt;right)   //内结点先旋转成外节点</span><br><span class="line">        &#123;</span><br><span class="line">          z=z-&gt;parent;</span><br><span class="line">          left_rotate(T,z);</span><br><span class="line">        &#125;</span><br><span class="line">        z-&gt;parent-&gt;color=BLACK;    //改变颜色之后，z的兄弟结点和z颜色相同</span><br><span class="line">        z-&gt;parent-&gt;parent-&gt;color=RED;  //红黑树局部恢复平衡</span><br><span class="line">        right_rotate(T,z-&gt;parent-&gt;parent);  //这个技巧是：改变颜色之后，然后旋转，这样不破坏红黑树性质</span><br><span class="line">      &#125;                                     //与此同时，结点沿树上升</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      os_node *y=z-&gt;parent-&gt;parent-&gt;left;</span><br><span class="line">      <span class="keyword">if</span>(y-&gt;color==RED)</span><br><span class="line">      &#123;</span><br><span class="line">        z-&gt;parent-&gt;color=BLACK;</span><br><span class="line">        y-&gt;color=BLACK;</span><br><span class="line">        z-&gt;parent-&gt;parent-&gt;color=RED;</span><br><span class="line">        z=z-&gt;parent-&gt;parent;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">if</span>(z==z-&gt;parent-&gt;left)</span><br><span class="line">        &#123;</span><br><span class="line">          z=z-&gt;parent;</span><br><span class="line">          right_rotate(T,z);</span><br><span class="line">        &#125;</span><br><span class="line">        z-&gt;parent-&gt;color=BLACK;</span><br><span class="line">        z-&gt;parent-&gt;parent-&gt;color=RED;</span><br><span class="line">        left_rotate(T,z-&gt;parent-&gt;parent);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  T-&gt;root-&gt;color=BLACK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="succ-and-other-h"><a href="#succ-and-other-h" class="headerlink" title="succ_and_other.h"></a>succ_and_other.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "os_tree.h"</span></span><br><span class="line"></span><br><span class="line">os_node *tree_maxinum(os_tree *T, os_node *x)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">while</span>(x!=T-&gt;nil &amp;&amp; x-&gt;right!=T-&gt;nil)</span><br><span class="line">    x=x-&gt;right;</span><br><span class="line">  <span class="built_in">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">os_node *tree_minimum(os_tree *T,os_node *x)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">while</span> (x-&gt;left!=T-&gt;nil) &#123;</span><br><span class="line">    x=x-&gt;left;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">os_node *tree_successor(os_tree *T, os_node *x)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(x-&gt;right!=T-&gt;nil)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">return</span> tree_minimum(x-&gt;right);</span><br><span class="line">  &#125;</span><br><span class="line">  os_node *y=x-&gt;parent;  //后继在根节点处</span><br><span class="line">  <span class="keyword">while</span>(y!=T-&gt;nil &amp;&amp; x==y-&gt;right)</span><br><span class="line">  &#123;</span><br><span class="line">    x=y;</span><br><span class="line">    y=y-&gt;parent;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">os_node *tree_predecessor(os_tree *T, os_node *x)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(x-&gt;left!=T-&gt;nil)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">return</span> tree_maxinum(x-&gt;left);</span><br><span class="line">  &#125;</span><br><span class="line">  os_node *y=x-&gt;parent;</span><br><span class="line">  <span class="keyword">while</span>(y!=T-&gt;nil &amp;&amp; x==y-&gt;left)</span><br><span class="line">  &#123;</span><br><span class="line">    x=y;</span><br><span class="line">    y=y-&gt;parent;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">os_node *Iterative_tree_search(os_tree *T,os_node *x, int k)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">while</span>(x!=T-&gt;nil &amp;&amp; k!=x-&gt;key)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span>(k&lt;x-&gt;key)</span><br><span class="line">      x=x-&gt;left;</span><br><span class="line">    <span class="keyword">else</span> x=x-&gt;right;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void in_order_traverse(os_tree *T, os_node *p)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(p!=T-&gt;nil)</span><br><span class="line">  &#123;</span><br><span class="line">    in_order_traverse(p-&gt;left);</span><br><span class="line">    cout&lt;&lt;p-&gt;key&lt;&lt;<span class="string">" "</span>&lt;&lt;p-&gt;color&lt;&lt;<span class="string">" "</span>&lt;&lt;p-&gt;size&lt;&lt;endl;</span><br><span class="line">    in_order_traverse(p-&gt;right);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">os_node *os_select_rank(os_tree *T, os_node *x, int i)</span><br><span class="line">&#123;</span><br><span class="line">  int r=x-&gt;left-&gt;size+1;</span><br><span class="line">  <span class="keyword">if</span>(i==r)</span><br><span class="line">    <span class="built_in">return</span> x;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(i&lt;r)</span><br><span class="line">     <span class="built_in">return</span> os_select_rank(T,x-&gt;left,i);</span><br><span class="line">  <span class="keyword">else</span> <span class="built_in">return</span> os_select_rank(T,x-&gt;right,i-r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Interative_os_rank(os_tree *T,os_node *x)</span><br><span class="line">//确定x这个节点的顺序统计树的rank</span><br><span class="line">&#123;</span><br><span class="line">  int r=x-&gt;left-&gt;size+1;</span><br><span class="line">  os_node *y=x;     //沿左脊柱上升，r=x-&gt;left-&gt;size+1</span><br><span class="line">  <span class="keyword">while</span>(y!=T-&gt;root)   //如果是沿着右脊柱上升？y-&gt;size=y-&gt;left-&gt;size+1+sum&#123;y-&gt;parent-&gt;size&#125;</span><br><span class="line">  &#123;                  //沿左脊柱上升，r保持不变；一旦拐弯到了右脊柱，要关注y-&gt;parent-&gt;left-&gt;size+1</span><br><span class="line">    <span class="keyword">if</span>(y==y-&gt;parent-&gt;right)</span><br><span class="line">      r=r+y-&gt;parent-&gt;left-&gt;size+1;</span><br><span class="line"></span><br><span class="line">    y=y-&gt;parent;</span><br><span class="line">    //不管是左脊柱还是右脊柱，都要沿树上升</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> r;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Josephus-circle-h"><a href="#Josephus-circle-h" class="headerlink" title="Josephus_circle.h"></a>Josephus_circle.h</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "delete.h"</span></span><br><span class="line"><span class="comment">#include "succ_and_other.h"</span></span><br><span class="line"></span><br><span class="line">void Josephus_imple(os_tree *T, int m, int n)</span><br><span class="line">&#123;</span><br><span class="line">  os_node *x=T-&gt;root;</span><br><span class="line">  int k=0, i=n;</span><br><span class="line">  int t=1;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(T-&gt;root!=NULL &amp;&amp; i&gt;0)</span><br><span class="line">  &#123;</span><br><span class="line">    k=(t+m-1)%i;</span><br><span class="line">    //k就是我们需要删除的点，注意到我们对一个点执行删除之后</span><br><span class="line">    //这个点原来的下标是k，删除了之后k+1就自动补到k的位置上</span><br><span class="line">    //这样新的k重新编号的话就是1，相当于原来的t=1</span><br><span class="line">    <span class="keyword">if</span>(k==0)</span><br><span class="line">      k=i;</span><br><span class="line">    os_node *del=os_select(T,k);</span><br><span class="line">    //这里del表示要删除的结点</span><br><span class="line">    cout&lt;&lt;del-&gt;key&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    //输出节点</span><br><span class="line"></span><br><span class="line">    RB_delete(del);</span><br><span class="line"></span><br><span class="line">    t=k;</span><br><span class="line">    i--;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "Josephus_circle.h"</span></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include "time.h"</span></span><br><span class="line"><span class="comment">#include "os_tree.h"</span></span><br><span class="line"><span class="comment">#include "delete.h"</span></span><br><span class="line"><span class="comment">#include "insert.h"</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  srand((unsigned)time(NULL));</span><br><span class="line">  int m=0,n=0;</span><br><span class="line">  cout&lt;&lt;<span class="string">"输入Josephus排列的m和n值"</span>&lt;&lt;endl;</span><br><span class="line">  cout&lt;&lt;<span class="string">"m="</span>;</span><br><span class="line">  cin&gt;&gt;m;</span><br><span class="line">  cout&lt;&lt;<span class="string">"n="</span>;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line"></span><br><span class="line">  int *array_jose=new int [n];</span><br><span class="line">  //对数组进行赋值和初始化</span><br><span class="line">  <span class="keyword">for</span>(int j=0;j&lt;n;j++)</span><br><span class="line">  &#123;</span><br><span class="line">    array_jose[j]=j+1;</span><br><span class="line">    cout&lt;&lt;array_jose[j]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  cout&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">  os_node *nilnode=new os_node [LEN];</span><br><span class="line">  os_tree *T=new os_tree [LENTREE];</span><br><span class="line">  os_node *newroot=new os_node [LEN];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  nilnode-&gt;key=-1;</span><br><span class="line">  nilnode-&gt;color=BLACK;</span><br><span class="line">  T-&gt;nil=nilnode;</span><br><span class="line"></span><br><span class="line">  int i=0;</span><br><span class="line">  newroot-&gt;key=array_jose[i++];</span><br><span class="line">  RB_insert(T,newroot);</span><br><span class="line">  T-&gt;root=newroot;</span><br><span class="line">  <span class="keyword">while</span>(i!=n)</span><br><span class="line">  &#123;</span><br><span class="line">    os_node *z=new os_node[LEN];</span><br><span class="line">    z-&gt;key=array_jose[i];</span><br><span class="line">    RB_insert(T,z);</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  in_order_traverse(T,T-&gt;root);</span><br><span class="line">  cout&lt;&lt;<span class="string">"Josephus排列"</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">  Josephus_imple(T,m,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Zhangmin Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/01/30/20170130/" target="_blank" title="约瑟夫环">http://www.fogsail.net/2017/01/30/20170130/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/">data_structure</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/02/20170202/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          动态规划概论
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/29/20170129/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">聊聊红黑树</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归求解约瑟夫环"><span class="nav-number">1.</span> <span class="nav-text">递归求解约瑟夫环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用循环链表输出"><span class="nav-number">2.</span> <span class="nav-text">使用循环链表输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用顺序统计树实现"><span class="nav-number">3.</span> <span class="nav-text">使用顺序统计树实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要的实现函数"><span class="nav-number">3.1.</span> <span class="nav-text">主要的实现函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-lgn-算法的实现"><span class="nav-number">3.2.</span> <span class="nav-text">$O(lgn)$算法的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#os-tree-h"><span class="nav-number">3.2.1.</span> <span class="nav-text">os_tree.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rotate-h"><span class="nav-number">3.2.2.</span> <span class="nav-text">rotate.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete-h"><span class="nav-number">3.2.3.</span> <span class="nav-text">delete.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#insert-h"><span class="nav-number">3.2.4.</span> <span class="nav-text">insert.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#succ-and-other-h"><span class="nav-number">3.2.5.</span> <span class="nav-text">succ_and_other.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Josephus-circle-h"><span class="nav-number">3.2.6.</span> <span class="nav-text">Josephus_circle.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数"><span class="nav-number">3.2.7.</span> <span class="nav-text">主函数</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Zhangmin Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

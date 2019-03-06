@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>译码算法 | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithmdynamic programming">
+  
+  
+  
+  
+  <meta name="description" content="我们可以通过在有向图$G=(V,E)$中使用动态规划的算法来实现语音识别功能。对每条边$(u,v) \in E$打上一个声音标签$\sigma (u,v)$，该声音来自于有限声音集$\sum$ 。图中从特定的顶点$v_0 \in V$开始的每条路径都对应模型产生一个可能的声音序列。对于一条有向路径，我们定义标签为路径中边的标签的简单连结。">
+<meta name="keywords" content="algorithm,dynamic programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="译码算法">
+<meta property="og:url" content="http://www.fogsail.net/2017/04/16/20170416/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="我们可以通过在有向图$G=(V,E)$中使用动态规划的算法来实现语音识别功能。对每条边$(u,v) \in E$打上一个声音标签$\sigma (u,v)$，该声音来自于有限声音集$\sum$ 。图中从特定的顶点$v_0 \in V$开始的每条路径都对应模型产生一个可能的声音序列。对于一条有向路径，我们定义标签为路径中边的标签的简单连结。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2017/04/16/20170416/01.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/04/16/20170416/02.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/04/16/20170416/03.jpg">
+<meta property="og:updated_time" content="2018-03-02T18:15:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="译码算法">
+<meta name="twitter:description" content="我们可以通过在有向图$G=(V,E)$中使用动态规划的算法来实现语音识别功能。对每条边$(u,v) \in E$打上一个声音标签$\sigma (u,v)$，该声音来自于有限声音集$\sum$ 。图中从特定的顶点$v_0 \in V$开始的每条路径都对应模型产生一个可能的声音序列。对于一条有向路径，我们定义标签为路径中边的标签的简单连结。">
+<meta name="twitter:image" content="http://www.fogsail.net/2017/04/16/20170416/01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2017/04/16/20170416/",
+        "appid": "1593711792635024",
+        "title": "译码算法",
+        "images": [
+        "http://www.fogsail.net/2017/04/16/20170416/01.png",
+        "http://www.fogsail.net/2017/04/16/20170416/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2017-04-16T03:20:00" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20170416" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      译码算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/04/16/20170416/" class="article-date">
+	  <time datetime="2017-04-16T07:20:00.000Z" itemprop="datePublished">2017-04-16</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们可以通过在有向图$G=(V,E)$中使用动态规划的算法来实现语音识别功能。<br>对每条边$(u,v) \in E$打上一个声音标签$\sigma (u,v)$，该声音来自于有限声音集$\sum$ 。图中从特定的顶点$v_0 \in V$开始的每条路径都对应模型产生一个可能的声音序列。对于一条有向路径，我们定义标签为路径中边的标签的简单连结。</p>
+<a id="more"></a>
+<h2 id="寻找特定的声音序列"><a href="#寻找特定的声音序列" class="headerlink" title="寻找特定的声音序列"></a>寻找特定的声音序列</h2><p>对给定的带标签的图$G$，特定顶点$v_0$以及$\sum$上的声音序列$\sigma=&lt;\sigma _1,\sigma _2,\sigma_3, \cdots, \sigma_k&gt;$<br>返回从$G$中从$V_0$开始的一条路径，$s$为该路径的标签（如果存在这样的路径）。否则，返回NO-SUCH-PATH</p>
+<h3 id="viterbi-graph-h"><a href="#viterbi-graph-h" class="headerlink" title="viterbi_graph.h"></a>viterbi_graph.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"><span class="comment">#include &lt;ctime&gt;</span></span><br><span class="line"><span class="comment">#include "stdlib.h"</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define MAXVEX 100</span></span><br><span class="line"></span><br><span class="line">enum color&#123;WHITE,GRAY,BLACK&#125;;</span><br><span class="line">enum which_edge&#123;NONE,TREE,BACK,FORWARD,CROSS&#125;;</span><br><span class="line"></span><br><span class="line">typedef int status;</span><br><span class="line">typedef string VertexType;</span><br><span class="line">typedef int EdgeType;</span><br><span class="line"></span><br><span class="line">typedef struct EdgeNode</span><br><span class="line">&#123;</span><br><span class="line">    int Edgestart;</span><br><span class="line">    int Edgeend;  //邻接点域，储存该顶点对应的下标</span><br><span class="line">    EdgeType weight;  //用于存储权值</span><br><span class="line"></span><br><span class="line">    int <span class="built_in">type</span>;</span><br><span class="line">    struct EdgeNode *next;  //下一个邻接点</span><br><span class="line">&#125;EdgeNode;</span><br><span class="line"></span><br><span class="line">typedef struct VertexNode  //顶点表结点</span><br><span class="line">&#123;</span><br><span class="line">    VertexType data;  //顶点域，存储顶点信息</span><br><span class="line"></span><br><span class="line">    int color;</span><br><span class="line">    int touch,finish;   //访问开始时间和结束时间</span><br><span class="line">    EdgeNode* FirstEdge;  //边表头指针</span><br><span class="line">    int parent; //指向遍历的父结点</span><br><span class="line">&#125;VertexNode,AdjList[MAXVEX];</span><br><span class="line"></span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">    AdjList adjList; //图的顶点表</span><br><span class="line">    int numNodes,numEdges;</span><br><span class="line">&#125;GraphAdjList;</span><br><span class="line"></span><br><span class="line">void CreateALGraph(GraphAdjList *G)</span><br><span class="line">&#123;</span><br><span class="line">    EdgeNode *e;</span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the number of vertexes and edges: "</span>&lt;&lt;endl;</span><br><span class="line">    cin&gt;&gt;G-&gt;numNodes&gt;&gt;G-&gt;numEdges;</span><br><span class="line"></span><br><span class="line">    //输入顶点表的信息</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;G-&gt;numNodes;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the data (information) of vertexes "</span>&lt;&lt;i+1&lt;&lt;endl;</span><br><span class="line">        cin&gt;&gt;G-&gt;adjList[i].data;</span><br><span class="line">        G-&gt;adjList[i].FirstEdge=NULL;</span><br><span class="line">        G-&gt;adjList[i].parent=-1;</span><br><span class="line"></span><br><span class="line">        G-&gt;adjList[i].color=WHITE;</span><br><span class="line">        G-&gt;adjList[i].touch=G-&gt;adjList[i].finish=-1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int beg,end;</span><br><span class="line">    <span class="keyword">for</span>(int k=0;k&lt;G-&gt;numEdges;k++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the serial number of edges (Vi,Vj) "</span>&lt;&lt;endl;</span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the vertex of beginning: "</span>;</span><br><span class="line">        cin&gt;&gt;beg;</span><br><span class="line"></span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the vertex of endding: "</span>;</span><br><span class="line">        cin&gt;&gt;end;</span><br><span class="line"></span><br><span class="line">        e=(EdgeNode *)malloc(sizeof(EdgeNode));</span><br><span class="line">        e-&gt;Edgeend=end;</span><br><span class="line">        e-&gt;Edgestart=beg;</span><br><span class="line">        e-&gt;weight=0;</span><br><span class="line">        e-&gt;<span class="built_in">type</span>=NONE;</span><br><span class="line">        e-&gt;next=G-&gt;adjList[beg].FirstEdge;</span><br><span class="line">        G-&gt;adjList[beg].FirstEdge=e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="graph-algorithm-h"><a href="#graph-algorithm-h" class="headerlink" title="graph_algorithm.h"></a>graph_algorithm.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "viterbi_graph.h"</span></span><br><span class="line"></span><br><span class="line">int path_time=0;</span><br><span class="line">int path_exist=0;</span><br><span class="line">int path_print_signal=0;</span><br><span class="line"></span><br><span class="line">void print_graph(GraphAdjList *G)</span><br><span class="line">&#123;</span><br><span class="line">    EdgeNode *cur_edge;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;G-&gt;numNodes;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"The start is "</span>&lt;&lt;G-&gt;adjList[i].data&lt;&lt;endl;</span><br><span class="line">        cout&lt;&lt;G-&gt;adjList[i].data;</span><br><span class="line">        <span class="keyword">if</span>(G-&gt;adjList[i].FirstEdge)</span><br><span class="line">            cout&lt;&lt;<span class="string">" adjust end is: "</span>;</span><br><span class="line">        <span class="keyword">for</span>(cur_edge=G-&gt;adjList[i].FirstEdge;cur_edge;cur_edge=cur_edge-&gt;next)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;cur_edge-&gt;Edgeend&lt;&lt;<span class="string">"  "</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void DFS_visit(GraphAdjList *G,int start,int end)</span><br><span class="line">&#123;</span><br><span class="line">    G-&gt;adjList[start].color=GRAY;</span><br><span class="line">    path_time++;</span><br><span class="line">    G-&gt;adjList[start].touch=path_time;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(EdgeNode *cur_e=G-&gt;adjList[start].FirstEdge;cur_e;cur_e=cur_e-&gt;next)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(cur_e-&gt;Edgeend==end)</span><br><span class="line">        &#123;</span><br><span class="line">            path_exist=1;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(path_exist==1)</span><br><span class="line">            <span class="built_in">return</span>;</span><br><span class="line">        int cur_end=cur_e-&gt;Edgeend;</span><br><span class="line">        <span class="keyword">if</span>(G-&gt;adjList[cur_end].color==WHITE)</span><br><span class="line">        &#123;</span><br><span class="line">            G-&gt;adjList-&gt;parent=start;</span><br><span class="line">            DFS_visit(G,cur_end,end);</span><br><span class="line">            cur_e-&gt;<span class="built_in">type</span>=TREE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(G-&gt;adjList[cur_end].color==GRAY)</span><br><span class="line">        &#123;</span><br><span class="line">            cur_e-&gt;<span class="built_in">type</span>=BACK;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(G-&gt;adjList[cur_end].color==BLACK)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(G-&gt;adjList[start].touch&lt;G-&gt;adjList[end].touch)</span><br><span class="line">                cur_e-&gt;<span class="built_in">type</span>=FORWARD;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cur_e-&gt;<span class="built_in">type</span>=CROSS;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //G-&gt;adjList[start] has finished</span><br><span class="line">    G-&gt;adjList[start].color=BLACK;</span><br><span class="line">    path_time++;</span><br><span class="line">    G-&gt;adjList[start].finish=path_time;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void DFS(GraphAdjList *G,int start,int end)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int u=0;u&lt;G-&gt;numNodes;u++)</span><br><span class="line">    &#123;</span><br><span class="line">        G-&gt;adjList[u].color=WHITE;</span><br><span class="line">        G-&gt;adjList[u].parent=-1;</span><br><span class="line">    &#125;</span><br><span class="line">    path_time=0;</span><br><span class="line">    <span class="keyword">if</span>(G-&gt;adjList[start].color==WHITE)</span><br><span class="line">        DFS_visit(G,start,end);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void path_print(GraphAdjList *G,int start,int end)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(path_exist==1)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">" "</span>&lt;&lt;start;</span><br><span class="line">        <span class="keyword">for</span>(EdgeNode *e_ptr=G-&gt;adjList[start].FirstEdge;e_ptr;e_ptr=e_ptr-&gt;next)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(e_ptr-&gt;Edgeend==end)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">" "</span>&lt;&lt;end;</span><br><span class="line">                path_print_signal=1;</span><br><span class="line">                <span class="built_in">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(path_print_signal==0)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(EdgeNode *e_ptr=G-&gt;adjList[start].FirstEdge;e_ptr;e_ptr=e_ptr-&gt;next)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(e_ptr-&gt;<span class="built_in">type</span>==TREE)</span><br><span class="line">                    path_print(G,e_ptr-&gt;Edgeend,end);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"The path is not exist"</span>&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="viterbi-algorithm-cpp"><a href="#viterbi-algorithm-cpp" class="headerlink" title="viterbi_algorithm.cpp"></a>viterbi_algorithm.cpp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "graph_algorithm.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    GraphAdjList G;</span><br><span class="line">    CreateALGraph(&amp;G);</span><br><span class="line"></span><br><span class="line">    print_graph(&amp;G);</span><br><span class="line"></span><br><span class="line">    int start,end;</span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the start of the edge : "</span>&lt;&lt;endl;</span><br><span class="line">    cin&gt;&gt;start;</span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the end of the edge : "</span>&lt;&lt;endl;</span><br><span class="line">    cin&gt;&gt;end;</span><br><span class="line">    DFS(&amp;G,start,end);</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;path_exist&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;G.adjList[start].color&lt;&lt;<span class="string">" "</span>&lt;&lt;G.adjList[start].touch&lt;&lt;<span class="string">" "</span>&lt;&lt;G.adjList[start].finish&lt;&lt;<span class="string">" "</span>&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;G.adjList[end].color&lt;&lt;<span class="string">" "</span>&lt;&lt;G.adjList[end].touch&lt;&lt;<span class="string">" "</span>&lt;&lt;G.adjList[end].finish&lt;&lt;<span class="string">" "</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;<span class="string">"The path is :"</span>&lt;&lt;endl;</span><br><span class="line">    path_print(&amp;G,start,end);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="算法运行结果"><a href="#算法运行结果" class="headerlink" title="算法运行结果"></a>算法运行结果</h3><p><img src="/2017/04/16/20170416/01.jpg" alt="01"></p>
+<h2 id="随机游动"><a href="#随机游动" class="headerlink" title="随机游动"></a>随机游动</h2><p>假定每条边$(u,v) /in E$都关联一个非负概率$p(u,v)$，它表示从顶点$u$开始，经过边$(u,v)$，产生对应的声音的概率。任何一个顶点射出的概率之和均为1。</p>
+<p>一条路径上的概率定义为路径上所有边的概率之积。</p>
+<h3 id="状态转移函数"><a href="#状态转移函数" class="headerlink" title="状态转移函数"></a>状态转移函数</h3><p><img src="/2017/04/16/20170416/02.jpg" alt="02"></p>
+<p>可以看出：从$v_1$到$v_4$，最大的概率值为$0.8 \times 1=0.8$</p>
+<p>动态规划能够实现的状态转移函数如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">answer=e-&gt;probability*DFS_compute(G,e-&gt;e_end,end);</span><br><span class="line">//计算从G-&gt;adjlist[beg]出发的每一条边，找出最大值</span><br><span class="line"><span class="keyword">if</span>(answer&gt;G-&gt;adjlist[beg].res)</span><br><span class="line">&#123;</span><br><span class="line">    G-&gt;adjlist[beg].res=answer;</span><br><span class="line">    G-&gt;adjlist[beg].direction=e-&gt;e_end;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="probability-graph-h"><a href="#probability-graph-h" class="headerlink" title="probability_graph.h"></a>probability_graph.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include "stdlib.h"</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define MAXVEX 100</span></span><br><span class="line"></span><br><span class="line">typedef int status;</span><br><span class="line">typedef string VertexType;</span><br><span class="line">typedef double EdgeType;</span><br><span class="line"></span><br><span class="line">typedef struct Edge</span><br><span class="line">&#123;</span><br><span class="line">    int e_start;</span><br><span class="line">    int e_end;  //邻接点域</span><br><span class="line">    EdgeType probability;  //用于存储权值，即边的概率</span><br><span class="line"></span><br><span class="line">    struct Edge *next;</span><br><span class="line">&#125;Edge;</span><br><span class="line"></span><br><span class="line">typedef struct Vertex</span><br><span class="line">&#123;</span><br><span class="line">    VertexType data;</span><br><span class="line">    Edge* head; //边表头指针</span><br><span class="line"></span><br><span class="line">    int direction;  //用于指明节点下一步该往哪里走</span><br><span class="line">    double res;  //用于储存最后的结果，初始化为-1</span><br><span class="line">    //direction和res要联动</span><br><span class="line">&#125;Vertex,adjvertex[MAXVEX];</span><br><span class="line"></span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    adjvertex adjlist; //图的顶点表</span><br><span class="line">    int numNodes,numEdges;</span><br><span class="line">&#125;GraphAdj;</span><br><span class="line"></span><br><span class="line">void CreateGraph(GraphAdj *G)</span><br><span class="line">&#123;</span><br><span class="line">    Edge *e;</span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the number of vertexes and edges: "</span>&lt;&lt;endl;</span><br><span class="line">    cin&gt;&gt;G-&gt;numNodes&gt;&gt;G-&gt;numEdges;</span><br><span class="line"></span><br><span class="line">    //输入顶点表信息</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;G-&gt;numNodes;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the data (information) of vertexes "</span>&lt;&lt;i+1&lt;&lt;endl;</span><br><span class="line">        cin&gt;&gt;G-&gt;adjlist[i].data;</span><br><span class="line">        G-&gt;adjlist[i].head=NULL;</span><br><span class="line">        G-&gt;adjlist[i].direction=-1;</span><br><span class="line">        G-&gt;adjlist[i].res=-1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int beg,end;</span><br><span class="line">    double prob;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int k=0;k&lt;G-&gt;numEdges;k++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the serial number of Edges (Vi,Vj) "</span>&lt;&lt;endl;</span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the vertex of beginning: "</span>;</span><br><span class="line">        cin&gt;&gt;beg;</span><br><span class="line"></span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the vertex of endding: "</span>;</span><br><span class="line">        cin&gt;&gt;end;</span><br><span class="line"></span><br><span class="line">        cout&lt;&lt;<span class="string">"Input the probability of edge: "</span>;</span><br><span class="line">        cin&gt;&gt;prob;</span><br><span class="line"></span><br><span class="line">        e=(Edge *)malloc(sizeof(Edge));</span><br><span class="line">        e-&gt;e_start=beg;</span><br><span class="line">        e-&gt;e_end=end;</span><br><span class="line">        e-&gt;probability=prob;</span><br><span class="line"></span><br><span class="line">        e-&gt;next=G-&gt;adjlist[beg].head;</span><br><span class="line">        G-&gt;adjlist[beg].head=e;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="viterbi-probability-h"><a href="#viterbi-probability-h" class="headerlink" title="viterbi_probability.h"></a>viterbi_probability.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "probability_graph.h"</span></span><br><span class="line"></span><br><span class="line">double answer=1;</span><br><span class="line">double maxpath=0;</span><br><span class="line">int path_exist=0;</span><br><span class="line"></span><br><span class="line">int path_print_signal=0;</span><br><span class="line">int has_founded[MAXVEX];</span><br><span class="line"></span><br><span class="line">double DFS_compute(GraphAdj *G,int beg,int end);</span><br><span class="line"></span><br><span class="line">double max(double a,double b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">return</span> a&gt;b?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double DFSTraverse(GraphAdj *G,int beg,int end)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;G-&gt;numNodes;i++)</span><br><span class="line">        has_founded[i]=0;</span><br><span class="line"></span><br><span class="line">    maxpath=DFS_compute(G,beg,end);</span><br><span class="line">    <span class="built_in">return</span> maxpath;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double DFS_compute(GraphAdj *G,int beg,int end)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(beg==end)</span><br><span class="line">    &#123;</span><br><span class="line">        answer=1;</span><br><span class="line">        <span class="built_in">return</span> 1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(Edge *e=G-&gt;adjlist[beg].head;e;e=e-&gt;next)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(has_founded[beg]==1)</span><br><span class="line">        &#123;</span><br><span class="line">            answer=G-&gt;adjlist[e-&gt;e_start].res;</span><br><span class="line">            <span class="built_in">return</span> G-&gt;adjlist[e-&gt;e_start].res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(has_founded[beg]==0)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(e-&gt;e_end==end)</span><br><span class="line">            &#123;</span><br><span class="line">                path_exist=1;</span><br><span class="line">                answer=e-&gt;probability;</span><br><span class="line">                <span class="keyword">if</span>(answer&gt;G-&gt;adjlist[e-&gt;e_start].res)</span><br><span class="line">                &#123;</span><br><span class="line">                    G-&gt;adjlist[e-&gt;e_start].res=answer;</span><br><span class="line">                    G-&gt;adjlist[e-&gt;e_start].direction=e-&gt;e_end;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">return</span> G-&gt;adjlist[e-&gt;e_start].res;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            answer=e-&gt;probability*DFS_compute(G,e-&gt;e_end,end);</span><br><span class="line">            //计算从G-&gt;adjlist[beg]出发的每一条边，找出最大值</span><br><span class="line">            <span class="keyword">if</span>(answer&gt;G-&gt;adjlist[beg].res)</span><br><span class="line">            &#123;</span><br><span class="line">                G-&gt;adjlist[beg].res=answer;</span><br><span class="line">                G-&gt;adjlist[beg].direction=e-&gt;e_end;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;        </span><br><span class="line">    &#125;</span><br><span class="line">    //beg开始的answer已经全部计算完了</span><br><span class="line"></span><br><span class="line">    has_founded[beg]=1;</span><br><span class="line">    <span class="built_in">return</span> G-&gt;adjlist[beg].res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print_graph(GraphAdj *G)</span><br><span class="line">&#123;</span><br><span class="line">    Edge *cur_edge;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;G-&gt;numNodes;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">"The start is "</span>&lt;&lt;G-&gt;adjlist[i].data&lt;&lt;endl;</span><br><span class="line">        cout&lt;&lt;G-&gt;adjlist[i].data;</span><br><span class="line">        <span class="keyword">if</span>(G-&gt;adjlist[i].head)</span><br><span class="line">            cout&lt;&lt;<span class="string">" adjust end is: "</span>;</span><br><span class="line">        <span class="keyword">for</span>(cur_edge=G-&gt;adjlist[i].head;cur_edge;cur_edge=cur_edge-&gt;next)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;cur_edge-&gt;e_end&lt;&lt;<span class="string">"  "</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="viterbi-probability-cpp"><a href="#viterbi-probability-cpp" class="headerlink" title="viterbi_probability.cpp"></a>viterbi_probability.cpp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "viterbi_probability.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    GraphAdj G;</span><br><span class="line">    CreateGraph(&amp;G);</span><br><span class="line"></span><br><span class="line">    print_graph(&amp;G);</span><br><span class="line"></span><br><span class="line">    int start,end;</span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the start of the edge : "</span>&lt;&lt;endl;</span><br><span class="line">    cin&gt;&gt;start;</span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the end of the edge : "</span>&lt;&lt;endl;</span><br><span class="line">    cin&gt;&gt;end;</span><br><span class="line"></span><br><span class="line">    double result=DFSTraverse(&amp;G,start,end);</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;path_exist&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;result&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;<span class="string">"The max path is : "</span>&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;start&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">if</span>(path_exist==1)</span><br><span class="line">    &#123;</span><br><span class="line">        int pathID=G.adjlist[start].direction;</span><br><span class="line">        <span class="keyword">while</span>(pathID!=end)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;pathID&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">            pathID=G.adjlist[pathID].direction;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;end;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="算法运行结果-1"><a href="#算法运行结果-1" class="headerlink" title="算法运行结果"></a>算法运行结果</h3><p><img src="/2017/04/16/20170416/03.jpg" alt="03"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Zhangmin Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/04/16/20170416/" target="_blank" title="译码算法">http://www.fogsail.net/2017/04/16/20170416/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-programming/">dynamic programming</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/19/20170419/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          字符串拆分
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/05/20170405/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">有向无环图的最长简单路径</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#寻找特定的声音序列"><span class="nav-number">1.</span> <span class="nav-text">寻找特定的声音序列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#viterbi-graph-h"><span class="nav-number">1.1.</span> <span class="nav-text">viterbi_graph.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#graph-algorithm-h"><span class="nav-number">1.2.</span> <span class="nav-text">graph_algorithm.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#viterbi-algorithm-cpp"><span class="nav-number">1.3.</span> <span class="nav-text">viterbi_algorithm.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法运行结果"><span class="nav-number">1.4.</span> <span class="nav-text">算法运行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机游动"><span class="nav-number">2.</span> <span class="nav-text">随机游动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#状态转移函数"><span class="nav-number">2.1.</span> <span class="nav-text">状态转移函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#probability-graph-h"><span class="nav-number">2.2.</span> <span class="nav-text">probability_graph.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#viterbi-probability-h"><span class="nav-number">2.3.</span> <span class="nav-text">viterbi_probability.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#viterbi-probability-cpp"><span class="nav-number">2.4.</span> <span class="nav-text">viterbi_probability.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法运行结果-1"><span class="nav-number">2.5.</span> <span class="nav-text">算法运行结果</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Zhangmin Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

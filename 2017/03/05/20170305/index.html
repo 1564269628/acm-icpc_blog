@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>回文子序列与欧几里德旅行商 | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithmdynamic programming">
+  
+  
+  
+  
+  <meta name="description" content="回文子序列最长回文子序列是正序与逆序相同的非空字符串。例如，所有长度为1的字符串，civic，racecar，aibobphobia都是回文。设计算法，求给定输入字符串的最长回文子序列。例如，给定输入character，算法应该返回carac。算法的运行时间是怎么样的？">
+<meta name="keywords" content="algorithm,dynamic programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回文子序列与欧几里德旅行商">
+<meta property="og:url" content="http://www.fogsail.net/2017/03/05/20170305/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="回文子序列最长回文子序列是正序与逆序相同的非空字符串。例如，所有长度为1的字符串，civic，racecar，aibobphobia都是回文。设计算法，求给定输入字符串的最长回文子序列。例如，给定输入character，算法应该返回carac。算法的运行时间是怎么样的？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/05/20170305/01.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/05/20170305/02.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/05/20170305/03.png">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/05/20170305/04.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/05/20170305/05.PNG">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/05/20170305/06.jpg">
+<meta property="og:updated_time" content="2018-03-02T17:25:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="回文子序列与欧几里德旅行商">
+<meta name="twitter:description" content="回文子序列最长回文子序列是正序与逆序相同的非空字符串。例如，所有长度为1的字符串，civic，racecar，aibobphobia都是回文。设计算法，求给定输入字符串的最长回文子序列。例如，给定输入character，算法应该返回carac。算法的运行时间是怎么样的？">
+<meta name="twitter:image" content="http://www.fogsail.net/2017/03/05/20170305/01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2017/03/05/20170305/",
+        "appid": "1593711792635024",
+        "title": "回文子序列与欧几里德旅行商",
+        "images": [
+        "http://www.fogsail.net/2017/03/05/20170305/01.png",
+        "http://www.fogsail.net/2017/03/05/20170305/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2017-03-05T07:27:00" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20170305" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      回文子序列与欧几里德旅行商
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/03/05/20170305/" class="article-date">
+	  <time datetime="2017-03-04T23:27:00.000Z" itemprop="datePublished">2017-03-05</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="回文子序列"><a href="#回文子序列" class="headerlink" title="回文子序列"></a>回文子序列</h2><p>最长回文子序列是正序与逆序相同的非空字符串。例如，所有长度为1的字符串，civic，racecar，aibobphobia都是回文。设计算法，求给定输入字符串的最长回文子序列。例如，给定输入character，算法应该返回carac。算法的运行时间是怎么样的？</p>
+<a id="more"></a>
+<p>算法设计与分析：</p>
+<p>注意这里是回文子序列，而不是回文子串。求子串和子序列有一些不同，这里的方法用于求子序列。<br>字串的意义是：aaabbb，需要连续的字符相同。</p>
+<p>而子序列，是字母按照一定的排列顺序，保持回文的一致性就可以。</p>
+<p>实现过程：将原字符串反转，然后用LCS_length(),Print_LCS()计算出最长公共子序列即可。</p>
+<h3 id="palidrome-longest-h"><a href="#palidrome-longest-h" class="headerlink" title="palidrome_longest.h"></a>palidrome_longest.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string&gt;</span></span><br><span class="line"><span class="comment">#include &lt;locale&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define N 9                 //输入您要判断的字符串的字符数</span></span><br><span class="line">wchar_t b[N+1][N+1]=&#123;<span class="string">'S'</span>&#125;;  //表示起点start</span><br><span class="line">int c[N+1][N+1]=&#123;0&#125;;</span><br><span class="line">wchar_t northwest=L<span class="string">'\\'</span>, up=L<span class="string">'|'</span>, leftway=L<span class="string">'-'</span>;</span><br><span class="line">void LCS_length(char *x,char *y)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i1=0;i1&lt;N;i1++)</span><br><span class="line">      b[i1][0]=<span class="string">'S'</span>;</span><br><span class="line">    <span class="keyword">for</span>(int j1=0;j1&lt;N;j1++)</span><br><span class="line">      b[0][j1]=<span class="string">'S'</span>;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;N;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x[i]==y[j])</span><br><span class="line">            &#123;</span><br><span class="line">                c[i+1][j+1]=c[i][j]+1;</span><br><span class="line">                b[i+1][j+1]=northwest;     //Northwest往左上</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(c[i][j+1]&gt;=c[i+1][j])</span><br><span class="line">                //c[i-1][j-1] 过渡到 c[i][j]，需要将c[i-1][j]和c[i][j-1]比较大小</span><br><span class="line">                //取较大的那一个值</span><br><span class="line">                &#123;</span><br><span class="line">                    c[i+1][j+1]=c[i][j+1];</span><br><span class="line">                    b[i+1][j+1]=up;  //Up往上</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    c[i+1][j+1]=c[i+1][j];</span><br><span class="line">                    b[i+1][j+1]=leftway;  //Left往左</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void Print_lcs(char *x,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(i==0||j==0)</span><br><span class="line">      <span class="built_in">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(b[i][j]==northwest)</span><br><span class="line">    &#123;</span><br><span class="line">        Print_lcs(x,i-1,j-1);</span><br><span class="line">        cout&lt;&lt;x[i-1]&lt;&lt;<span class="string">" "</span>;     //当然，按y[j]输出也没有问题，因为是公共序列嘛！</span><br><span class="line">    &#125;                          //这里的下标是从i=0开始的，所以输出x[i-1]</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b[i][j]==up)</span><br><span class="line">          Print_lcs(x,i-1,j);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          Print_lcs(x,i,j-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">char *strReverse(char *str)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;N/2;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        swap(str[i],str[N-1-i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="palidrome-longest-cpp"><a href="#palidrome-longest-cpp" class="headerlink" title="palidrome_longest.cpp"></a>palidrome_longest.cpp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "palidrome_longest.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char x[N+1]=&#123;0&#125;;</span><br><span class="line">    char y[N+1]=&#123;0&#125;;</span><br><span class="line">    char c;</span><br><span class="line">    cout&lt;&lt;<span class="string">"get the string you need to judge: "</span>&lt;&lt;endl;</span><br><span class="line">    int i;</span><br><span class="line">    <span class="keyword">for</span>(i=1;i&lt;=N;i++)  //默认的字符串是从下标1开始的，这里我们可以让它从0开始</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;c;</span><br><span class="line">        y[i]=x[i]=c;</span><br><span class="line">    &#125;</span><br><span class="line">    x[i]=<span class="string">'\0'</span>;y[i]=<span class="string">'\0'</span>;</span><br><span class="line">    cout&lt;&lt;y&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">"x="</span>&lt;&lt;y&lt;&lt;endl;</span><br><span class="line">    strReverse(y);   //反转字符串</span><br><span class="line">    cout&lt;&lt;<span class="string">"y="</span>&lt;&lt;y&lt;&lt;endl;</span><br><span class="line">    LCS_length(x,y);</span><br><span class="line">    Print_lcs(x,N,N);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现结果"><a href="#实现结果" class="headerlink" title="实现结果"></a>实现结果</h3><p><img src="/2017/03/05/20170305/01.jpg" alt="01"></p>
+<h2 id="欧几里德旅行商问题"><a href="#欧几里德旅行商问题" class="headerlink" title="欧几里德旅行商问题"></a>欧几里德旅行商问题</h2><h3 id="算法分析图"><a href="#算法分析图" class="headerlink" title="算法分析图"></a>算法分析图</h3><p><img src="/2017/03/05/20170305/02.jpg" alt="02"></p>
+<p><img src="/2017/03/05/20170305/03.png" alt="03"></p>
+<h3 id="Eucilid-travel-h"><a href="#Eucilid-travel-h" class="headerlink" title="Eucilid_travel.h"></a>Eucilid_travel.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define N 7  //确定有几个点？</span></span><br><span class="line"></span><br><span class="line">struct travelnode</span><br><span class="line">&#123;</span><br><span class="line">    double x;</span><br><span class="line">    double y;</span><br><span class="line">&#125;T[N];</span><br><span class="line"></span><br><span class="line">//计算两个点之间的直线距离</span><br><span class="line">double distance(travelnode T[],int i,int j)  //T[]的下标，第几个数？1,2....N</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">return</span> sqrt((T[i].x-T[j].x)*(T[i].x-T[j].x)+(T[i].y-T[j].y)*(T[i].y-T[j].y));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Bitonic_Eucilid(travelnode T[])</span><br><span class="line">&#123;</span><br><span class="line">    double b[N+1][N+1]=&#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    //初始化b[1][2]，注意初始下标从1开始，1,2.....N</span><br><span class="line">    b[1][2]=distance(T,1,2);</span><br><span class="line">    <span class="keyword">for</span>(int j=3;j&lt;=N;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;j-1;i++)  //注意1&lt;=i&lt;=j-2</span><br><span class="line">        &#123;</span><br><span class="line">            b[i][j]=b[i][j-1]+distance(T,j-1,j); //巡路系统的初始化，递归求解</span><br><span class="line">            //length((start-&gt;j-1)+(start-&gt;i)+length(j-1,j))</span><br><span class="line">            //即b[i][j]=b[i][j-1]+distance(T,j-1,j) 这里distance(T,j-1,j)封闭了路径</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //注意：这里递归求解所得到的路径，b[i][j]不一定就是最短的欧几里德旅行商</span><br><span class="line">        //必须用min()维护旅行商信息</span><br><span class="line">        //用min()维护每一条线段[j-1,j]，保证从length(start-&gt;j-1)+length(start-&gt;k)+length(k,j)均是最小的</span><br><span class="line"></span><br><span class="line">        //如图所示：对每一个线段[j-1,j]的两端进行维护，保证最短的Eucilid巡回，即维护b[j-1][j]</span><br><span class="line">        //在维护的过程中b[j-1][j]=min(b[k][j-1]+distance(k,j))，封闭了[k,j]就获取了最佳路径</span><br><span class="line">        //因为j是在最远端，1&lt;=k&lt;=j-1&lt;j，j-1和k一定在回路的不同方向。由递归求解，已知b[k][j-1]</span><br><span class="line">        //最后封闭[k,j]即可年少有你</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //这一步确定了从start-&gt;i+start-&gt;j的路径，但是巡路并不是封闭的</span><br><span class="line">        //最后确定b[j-1][j]，即确定线段[j-1,j]，完成巡路封闭。</span><br><span class="line">        //这里b[j-1][j]要保证遍历1&lt;=k&lt;j-1中的最小路径，如图中所示</span><br><span class="line">        b[j-1][j]=INFINITY;</span><br><span class="line">        //对每一条线段[j-1,j]两端维护Eucilid巡回路径性质</span><br><span class="line">        <span class="keyword">for</span>(int k=1;k&lt;j-1;k++)</span><br><span class="line">        &#123;</span><br><span class="line">            double q=b[k][j-1]+distance(T,k,j); //最后封闭的线段长度[j-1,j]是固定的</span><br><span class="line">            //(start-&gt;j-1)+(start-&gt;k)+length(k,j)</span><br><span class="line">            //由于1&lt;=k&lt;j-1，k和j-1一定是分居在Eucilid旅行图的线段[j-1,j]的两侧</span><br><span class="line">            <span class="keyword">if</span>(q&lt;b[j-1][j])</span><br><span class="line">                b[j-1][j]=q;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    b[N][N]=b[N-1][N]+distance(T,N-1,N);</span><br><span class="line">    <span class="built_in">return</span> b[N][N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Eucilid-travel-cpp"><a href="#Eucilid-travel-cpp" class="headerlink" title="Eucilid_travel.cpp"></a>Eucilid_travel.cpp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "Eucilid_travel.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    travelnode T[N+1]=&#123;0&#125;;</span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the numbers in order : "</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;T[i].x&gt;&gt;T[i].y;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;Bitonic_Eucilid(T)&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="旅行商的重构解"><a href="#旅行商的重构解" class="headerlink" title="旅行商的重构解"></a>旅行商的重构解</h2><h3 id="Print函数的递归分析"><a href="#Print函数的递归分析" class="headerlink" title="Print函数的递归分析"></a>Print函数的递归分析</h3><p><img src="/2017/03/05/20170305/04.jpg" alt="04"></p>
+<p><img src="/2017/03/05/20170305/05.PNG" alt="05"></p>
+<p><strong>特别注意：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(s&lt;k)</span><br><span class="line">    print_eucilid(solution,s,val);</span><br></pre></td></tr></table></figure>
+<p><strong>或者是：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(s&gt;k)</span><br><span class="line">    print_eucilid(solution,val,k);</span><br></pre></td></tr></table></figure></p>
+<p><strong>如图中绿色线条所示：递归的过程，无论是$s-&gt;val$还是$val-&gt;s$，均是由较大坐标的点转向较小坐标的点。</strong><br><strong>二者的区别在于：s&lt;k的时候直接取得val=solution[s][k]的值，先输出val，再递归；</strong></p>
+<p><strong>而s&gt;k的时候，则先递归输出顺时针方向其余的点，再输出val=solution[k][s]的值。</strong><br><strong>注意这里是solution[k][s]</strong></p>
+<p>当然递归和$val$的输出的先后顺序，取决于你是按顺时针还是逆时针输出。</p>
+<h3 id="Eucilid-travel-constitute-h"><a href="#Eucilid-travel-constitute-h" class="headerlink" title="Eucilid_travel_constitute.h"></a>Eucilid_travel_constitute.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define N 7  //确定有几个点？</span></span><br><span class="line"></span><br><span class="line">struct travelnode</span><br><span class="line">&#123;</span><br><span class="line">    double x;</span><br><span class="line">    double y;</span><br><span class="line">&#125;T[N];</span><br><span class="line"></span><br><span class="line">//计算两个点之间的直线距离</span><br><span class="line">double distance(travelnode T[],int i,int j)  //T[]的下标，第几个数？1,2....N</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">return</span> sqrt((T[i].x-T[j].x)*(T[i].x-T[j].x)+(T[i].y-T[j].y)*(T[i].y-T[j].y));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">double Bitonic_Eucilid(travelnode T[],int solution[][N+1])</span><br><span class="line">&#123;</span><br><span class="line">    double b[N+1][N+1]=&#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    //初始化b[1][2]，注意初始下标从1开始，1,2.....N</span><br><span class="line">    b[1][2]=distance(T,1,2);</span><br><span class="line">    <span class="keyword">for</span>(int j=3;j&lt;=N;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;j-1;i++)  //注意1&lt;=i&lt;=j-2</span><br><span class="line">        &#123;</span><br><span class="line">            b[i][j]=b[i][j-1]+distance(T,j-1,j); //巡路系统的初始化，递归求解</span><br><span class="line">            //length((start-&gt;j-1)+(start-&gt;i)+length(j-1,j))</span><br><span class="line">            //即b[i][j]=b[i][j-1]+distance(T,j-1,j) 这里distance(T,j-1,j)封闭了路径</span><br><span class="line">            solution[i][j]=j-1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //注意：这里递归求解所得到的路径，b[i][j]不一定就是最短的欧几里德旅行商</span><br><span class="line">        //必须用min()维护旅行商信息</span><br><span class="line">        //用min()维护每一条线段[j-1,j]，保证从length(start-&gt;j-1)+length(start-&gt;k)+length(k,j)均是最小的</span><br><span class="line"></span><br><span class="line">        //如图所示：对每一个线段[j-1,j]的两端进行维护，保证最短的Eucilid巡回，即维护b[j-1][j]</span><br><span class="line">        //在维护的过程中b[j-1][j]=min(b[k][j-1]+distance(k,j))，封闭了[k,j]就获取了最佳路径</span><br><span class="line">        //因为j是在最远端，1&lt;=k&lt;=j-1&lt;j，j-1和k一定在回路的不同方向。由递归求解，已知b[k][j-1]</span><br><span class="line">        //最后封闭[k,j]即可</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //这一步确定了从start-&gt;i+start-&gt;j的路径，但是巡路并不是封闭的</span><br><span class="line">        //最后确定b[j-1][j]，即确定线段[j-1,j]，完成巡路封闭。</span><br><span class="line">        //这里b[j-1][j]要保证遍历1&lt;=k&lt;j-1中的最小路径，如图中所示</span><br><span class="line">        b[j-1][j]=INFINITY;</span><br><span class="line">        //对每一条线段[j-1,j]两端维护Eucilid巡回路径性质</span><br><span class="line">        <span class="keyword">for</span>(int k=1;k&lt;j-1;k++)</span><br><span class="line">        &#123;</span><br><span class="line">            double q=b[k][j-1]+distance(T,k,j); //最后封闭的线段长度[j-1,j]是固定的</span><br><span class="line"></span><br><span class="line">            //(start-&gt;j-1)+(start-&gt;k)+length(k,j)</span><br><span class="line">            //由于1&lt;=k&lt;j-1，k和j-1一定是分居在Eucilid旅行图的线段[j-1,j]的两侧</span><br><span class="line">            <span class="keyword">if</span>(q&lt;b[j-1][j])</span><br><span class="line">            &#123;</span><br><span class="line">                b[j-1][j]=q;</span><br><span class="line">                solution[j-1][j]=k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    b[N][N]=b[N-1][N]+distance(T,N-1,N);</span><br><span class="line">    solution[N][N]=N-1;</span><br><span class="line">    <span class="built_in">return</span> b[N][N];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print_eucilid(int solution[][N+1],int s,int k)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(s&lt;k)</span><br><span class="line">    &#123;</span><br><span class="line">        int val=solution[s][k];</span><br><span class="line">        cout&lt;&lt;val&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">        <span class="keyword">if</span>(val&gt;1)</span><br><span class="line">            print_eucilid(solution,s,val);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">    &#123;</span><br><span class="line">        int val=solution[k][s];</span><br><span class="line">        <span class="keyword">if</span>(val&gt;1)</span><br><span class="line">        &#123;</span><br><span class="line">            print_eucilid(solution,val,k);</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;val&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Eucilid-travel-constitute-cpp"><a href="#Eucilid-travel-constitute-cpp" class="headerlink" title="Eucilid_travel_constitute.cpp"></a>Eucilid_travel_constitute.cpp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "Eucilid_travel_constitute.h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    travelnode T[N+1]=&#123;0&#125;;</span><br><span class="line">    int solution[N+1][N+1]=&#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;<span class="string">"Input the numbers in order : "</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;T[i].x&gt;&gt;T[i].y;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;Bitonic_Eucilid(T,solution)&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;<span class="string">"The Eucilid travel is :"</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;N&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    print_eucilid(solution,N-1,N);</span><br><span class="line">    cout&lt;&lt;N-1&lt;&lt;<span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="算法运行结果"><a href="#算法运行结果" class="headerlink" title="算法运行结果"></a>算法运行结果</h3><p><img src="/2017/03/05/20170305/06.jpg" alt="06"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Zhangmin Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/03/05/20170305/" target="_blank" title="回文子序列与欧几里德旅行商">http://www.fogsail.net/2017/03/05/20170305/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-programming/">dynamic programming</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/06/20170307/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          整齐打印与编辑距离问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/18/20170218/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">最长公共子序列</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#回文子序列"><span class="nav-number">1.</span> <span class="nav-text">回文子序列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#palidrome-longest-h"><span class="nav-number">1.1.</span> <span class="nav-text">palidrome_longest.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#palidrome-longest-cpp"><span class="nav-number">1.2.</span> <span class="nav-text">palidrome_longest.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现结果"><span class="nav-number">1.3.</span> <span class="nav-text">实现结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#欧几里德旅行商问题"><span class="nav-number">2.</span> <span class="nav-text">欧几里德旅行商问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法分析图"><span class="nav-number">2.1.</span> <span class="nav-text">算法分析图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eucilid-travel-h"><span class="nav-number">2.2.</span> <span class="nav-text">Eucilid_travel.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eucilid-travel-cpp"><span class="nav-number">2.3.</span> <span class="nav-text">Eucilid_travel.cpp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#旅行商的重构解"><span class="nav-number">3.</span> <span class="nav-text">旅行商的重构解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Print函数的递归分析"><span class="nav-number">3.1.</span> <span class="nav-text">Print函数的递归分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eucilid-travel-constitute-h"><span class="nav-number">3.2.</span> <span class="nav-text">Eucilid_travel_constitute.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eucilid-travel-constitute-cpp"><span class="nav-number">3.3.</span> <span class="nav-text">Eucilid_travel_constitute.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法运行结果"><span class="nav-number">3.4.</span> <span class="nav-text">算法运行结果</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Zhangmin Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

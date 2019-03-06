@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>整齐打印与编辑距离问题 | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithmdynamic programming">
+  
+  
+  
+  
+  <meta name="description" content="整齐打印使用等宽字符打印一段文本。输入文本为n个单词的序列，单词长度为$l_1,l_2, \cdots l_n$个字符，将其打印在若干行上，每一行最多$Maxnum$个字符。如果某行包含第$i$到第$j(i \leq j)$个单词，行尾额外空格符的数量是$M-j+i-\sum_{k=i}^jl_k$，这个值必须是非负的。">
+<meta name="keywords" content="algorithm,dynamic programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="整齐打印与编辑距离问题">
+<meta property="og:url" content="http://www.fogsail.net/2017/03/06/20170307/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="整齐打印使用等宽字符打印一段文本。输入文本为n个单词的序列，单词长度为$l_1,l_2, \cdots l_n$个字符，将其打印在若干行上，每一行最多$Maxnum$个字符。如果某行包含第$i$到第$j(i \leq j)$个单词，行尾额外空格符的数量是$M-j+i-\sum_{k=i}^jl_k$，这个值必须是非负的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/01.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/02.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/03.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/04.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/05.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/06.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/07.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2017/03/06/20170307/08.jpg">
+<meta property="og:updated_time" content="2018-03-02T17:45:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="整齐打印与编辑距离问题">
+<meta name="twitter:description" content="整齐打印使用等宽字符打印一段文本。输入文本为n个单词的序列，单词长度为$l_1,l_2, \cdots l_n$个字符，将其打印在若干行上，每一行最多$Maxnum$个字符。如果某行包含第$i$到第$j(i \leq j)$个单词，行尾额外空格符的数量是$M-j+i-\sum_{k=i}^jl_k$，这个值必须是非负的。">
+<meta name="twitter:image" content="http://www.fogsail.net/2017/03/06/20170307/01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2017/03/06/20170307/",
+        "appid": "1593711792635024",
+        "title": "整齐打印与编辑距离问题",
+        "images": [
+        "http://www.fogsail.net/2017/03/06/20170307/01.png",
+        "http://www.fogsail.net/2017/03/06/20170307/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2017-03-06T02:00:00" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20170307" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      整齐打印与编辑距离问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/03/06/20170307/" class="article-date">
+	  <time datetime="2017-03-06T06:00:00.000Z" itemprop="datePublished">2017-03-06</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="整齐打印"><a href="#整齐打印" class="headerlink" title="整齐打印"></a>整齐打印</h2><p>使用等宽字符打印一段文本。输入文本为n个单词的序列，单词长度为$l_1,l_2, \cdots l_n$个字符，将其打印在若干行上，每一行最多$Maxnum$个字符。<br>如果某行包含第$i$到第$j(i \leq j)$个单词，行尾额外空格符的数量是$M-j+i-\sum_{k=i}^jl_k$，这个值必须是非负的。</p>
+<a id="more"></a>
+<p>算法分析：</p>
+<p><img src="/2017/03/06/20170307/01.jpg" alt="01"></p>
+<p><img src="/2017/03/06/20170307/02.jpg" alt="02"></p>
+<p><img src="/2017/03/06/20170307/03.jpg" alt="03"></p>
+<p>实现过程：</p>
+<h3 id="h"><a href="#h" class="headerlink" title=".h"></a>.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define infinity 0x7fffffff</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">int get_lines(int solution[],int j,string number[]);</span><br><span class="line"></span><br><span class="line">void (int length[],string number[],int n,int Maxnum)</span><br><span class="line">&#123;</span><br><span class="line">    int i,j;</span><br><span class="line"></span><br><span class="line">    //保存空格数</span><br><span class="line">    int **space;</span><br><span class="line">    space=new int *[n+1];</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        space[i]=new int [n+1];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //保存立方值</span><br><span class="line">    int **cube;</span><br><span class="line">    cube=new int *[n+1];</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cube[i]=new int [n+1];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //用于保存解决方案</span><br><span class="line">    int *solution=new int [n+1];</span><br><span class="line"></span><br><span class="line">    //初始化获取space[][]的值</span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        space[i][i]=Maxnum-length[i-1];  //这里space[i][]表示第几个数？length[i-1]对应的是下标</span><br><span class="line">        <span class="keyword">for</span>(int j=i+1;j&lt;=n;j++)</span><br><span class="line">            space[i][j]=space[i][j-1]-length[j-1]-1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //获取cube的值，整齐打印是依据cube的值来确定打印距离</span><br><span class="line">    <span class="keyword">for</span>(i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=1;j&lt;=n;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(space[i][j]&lt;0)</span><br><span class="line">                cube[i][j]=infinity;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j==n &amp;&amp; space[i][j]&gt;=0)</span><br><span class="line">                cube[i][j]=0;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cube[i][j]=space[i][j]*space[i][j]*space[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //动态规划过程，将结果存储在res数组中</span><br><span class="line">    int *res=new int [n+1];</span><br><span class="line">    res[0]=0;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int j=1;j&lt;=n;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        res[j]=infinity;</span><br><span class="line">        <span class="keyword">for</span>(int i=1;i&lt;=j;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(res[i-1]!=infinity &amp;&amp; cube[i][j]!=infinity &amp;&amp; (res[i-1]+cube[i][j]&lt;res[j]))</span><br><span class="line">            &#123;</span><br><span class="line">                res[j]=res[i-1]+cube[i][j];</span><br><span class="line">                solution[j]=i;    //i为当前行的第一个元素</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    get_lines(solution,n,number);</span><br><span class="line"></span><br><span class="line">    //释放内存</span><br><span class="line">    delete[] res;</span><br><span class="line"></span><br><span class="line">    delete[] solution;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=n;i++)</span><br><span class="line">        delete[] cube[i];</span><br><span class="line">    delete[] cube;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=n;i++)</span><br><span class="line">        delete[] space[i];</span><br><span class="line">    delete[] space;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int get_lines(int solution[],int j,string number[])  //j为当前行的最后一个元素下标</span><br><span class="line">&#123;</span><br><span class="line">    int k;</span><br><span class="line">    int i=solution[j];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(i==1)  //表示第一个元素</span><br><span class="line">        k=1;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        k=get_lines(solution,i-1,number)+1;  //递归</span><br><span class="line">    cout&lt;&lt;<span class="string">"current line number is : "</span>&lt;&lt;k&lt;&lt;<span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int l=i;l&lt;=j;l++)</span><br><span class="line">        cout&lt;&lt;number[l-1]&lt;&lt;<span class="string">" "</span>;  //当前行的第l个元素，str下标为l-1</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">return</span> k;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="cpp"><a href="#cpp" class="headerlink" title=".cpp"></a>.cpp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include ".h"</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int n=10;  //10个单词</span><br><span class="line">    int Maxnum=8;  //一行可以容纳最多8个字符</span><br><span class="line">    string number[n]=&#123;<span class="string">"abc"</span>,<span class="string">"def"</span>,<span class="string">"gh"</span>,<span class="string">"polq"</span>,<span class="string">"cs"</span>,<span class="string">"opaqe"</span>,<span class="string">"klfgh"</span>,<span class="string">"t"</span>,<span class="string">"asd"</span>,<span class="string">"th"</span>&#125;;</span><br><span class="line">    int length[n]=&#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        length[i]=number[i].size();</span><br><span class="line">    &#125;</span><br><span class="line">    (length,number,n,Maxnum);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a>编辑距离</h2><h3 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h3><p><img src="/2017/03/06/20170307/04.jpg" alt="01"></p>
+<p><img src="/2017/03/06/20170307/05.jpg" alt="02"></p>
+<p><img src="/2017/03/06/20170307/06.jpg" alt="03"></p>
+<p><img src="/2017/03/06/20170307/07.jpg" alt="04"></p>
+<h3 id="状态转移函数"><a href="#状态转移函数" class="headerlink" title="状态转移函数"></a>状态转移函数</h3><script type="math/tex; mode=display">res[i,j]=min
+\begin{cases}
+res[i-1,j-1]+copy& \text{x[i]==y[j]}\\
+res[i-1,j-1]+replace& \text{x[i]!=y[j]}\\
+res[i-2,j-2]+twiddle& \text{i,j>=2 x[i]==y[j-1] && x[i-1]==y[j]}\\
+res[i-1,j]+delete& \text{other}\\
+res[i,j-1]+insert& \text{other}\\
+\mathop{\min}_{0 \leq i \leq m} {res[i,n]}+kill& \text{i==m && j==n}
+\end{cases}</script><p>分析方法与“最长公共子序列”问题分析的方法类似。</p>
+<h3 id="count-distance-h"><a href="#count-distance-h" class="headerlink" title="count_distance.h"></a>count_distance.h</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"><span class="comment">#define infinity 0x7fffffff</span></span><br><span class="line">enum &#123;COPY,REPLACE,DELETE,INSERT,TWIDDLE,KILL,TYPE_NUM&#125;;</span><br><span class="line">struct TABLE</span><br><span class="line">&#123;</span><br><span class="line">    int **cnt,**res;</span><br><span class="line">    TABLE(int m,int n)  //res[m][n] 分别表示图中x_max和y_max</span><br><span class="line">    &#123;</span><br><span class="line">        cnt=new int *[m+1];</span><br><span class="line">        <span class="keyword">for</span>(int i=0;i&lt;=m;i++)</span><br><span class="line">            cnt[i]=new int [n+1];</span><br><span class="line">        res=new int *[m+1];</span><br><span class="line">        <span class="keyword">for</span>(int i=0;i&lt;=m;i++)</span><br><span class="line">            res[i]=new int [n+1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">void PRINT_SOLUTION(TABLE dis,int i,int j);</span><br><span class="line">TABLE count_distance(char x[],char y[],int m,int n)</span><br><span class="line">&#123;</span><br><span class="line">    TABLE dis(m,n);</span><br><span class="line">    int cost[TYPE_NUM]=&#123;-1,1,2,2,-2,1&#125;;</span><br><span class="line">    //初始化</span><br><span class="line">    dis.cnt[0][0]=0;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        dis.cnt[i][0]=i*cost[DELETE];  //这里不操作y，等于把x中的元素全部删除</span><br><span class="line">        //删除的代价就是 第几个元素×cost</span><br><span class="line">        dis.res[i][0]=DELETE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(int j=0;j&lt;=n;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        //这里相当于x中没有元素，y[]的值等于插入每一个新的元素</span><br><span class="line">        dis.cnt[0][j]=j*cost[INSERT];</span><br><span class="line">        dis.res[0][j]=INSERT;</span><br><span class="line">    &#125;</span><br><span class="line">    //计算最优代价</span><br><span class="line">    <span class="keyword">for</span>(int i=1;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=1;j&lt;=n;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            dis.cnt[i][j]=0x7fffffff;</span><br><span class="line">            <span class="keyword">if</span>(x[i]==y[j] &amp;&amp; dis.cnt[i-1][j-1]+cost[COPY]&lt;dis.cnt[i][j])</span><br><span class="line">            &#123;</span><br><span class="line">                dis.cnt[i][j]=dis.cnt[i-1][j-1]+cost[COPY];</span><br><span class="line">                dis.res[i][j]=COPY;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(x[i]!=y[j] &amp;&amp; dis.cnt[i-1][j-1]+cost[REPLACE]&lt;dis.cnt[i][j])</span><br><span class="line">            &#123;</span><br><span class="line">                dis.cnt[i][j]=dis.cnt[i-1][j-1]+cost[REPLACE];</span><br><span class="line">                dis.res[i][j]=REPLACE;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(i&gt;=2&amp;&amp;j&gt;=2&amp;&amp; x[i]==y[j-1] &amp;&amp; x[i-1]==y[j] &amp;&amp; dis.cnt[i-2][j-2]+cost[TWIDDLE]&lt;dis.cnt[i][j])</span><br><span class="line">            &#123;</span><br><span class="line">                dis.cnt[i][j]=dis.cnt[i-2][j-2]+cost[TWIDDLE];</span><br><span class="line">                dis.res[i][j]=TWIDDLE;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(dis.cnt[i-1][j]+cost[DELETE]&lt;dis.cnt[i][j])</span><br><span class="line">            &#123;</span><br><span class="line">                dis.cnt[i][j]=dis.cnt[i-1][j]+cost[DELETE];</span><br><span class="line">                dis.res[i][j]=DELETE;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(dis.res[i][j-1]+cost[INSERT]&lt;dis.cnt[i][j])</span><br><span class="line">            &#123;</span><br><span class="line">                dis.cnt[i][j]=dis.cnt[i][j-1]+cost[INSERT];</span><br><span class="line">                dis.res[i][j]=INSERT;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //此时序列y[n]的值已经完成，这个时候截取从0&lt;=i&lt;=m-1中最小的<span class="built_in">kill</span>值</span><br><span class="line">    //把m以后的值全部截取掉</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=m-1;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dis.cnt[i][n]+cost[KILL]&lt;dis.cnt[m][n])  //相当于调整res[m][n]的值</span><br><span class="line">        //判断从哪里开始截断？</span><br><span class="line">        &#123;</span><br><span class="line">            dis.cnt[m][n]=dis.cnt[i][n]+cost[KILL];</span><br><span class="line">            dis.res[m][n]=i;</span><br><span class="line">            //从i开始截断，distance.solution[][]提供回溯的点，回溯到哪个点？</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;<span class="string">"distance[m][n]="</span>&lt;&lt;dis.cnt[m][n]&lt;&lt;<span class="string">" "</span>&lt;&lt;endl;</span><br><span class="line">    //输出：</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;=n;j++)</span><br><span class="line">            cout&lt;&lt;dis.cnt[i][j]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">for</span>(int i=0;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j=0;j&lt;=n;j++)</span><br><span class="line">            PRINT_SOLUTION(dis,i,j);</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">return</span> dis;</span><br><span class="line">&#125;</span><br><span class="line">void PRINT_sequence(TABLE dis,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    int I,J;</span><br><span class="line">    <span class="keyword">if</span>(i==0 &amp;&amp; j==0)</span><br><span class="line">        <span class="built_in">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(dis.res[i][j]==COPY || dis.res[i][j]==REPLACE)</span><br><span class="line">    &#123;</span><br><span class="line">        I=i-1;</span><br><span class="line">        J=j-1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dis.res[i][j]==TWIDDLE)</span><br><span class="line">    &#123;</span><br><span class="line">        I=i-2;</span><br><span class="line">        J=j-2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dis.res[i][j]==DELETE)</span><br><span class="line">    &#123;</span><br><span class="line">        I=i-1;</span><br><span class="line">        J=j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dis.res[i][j]==INSERT)</span><br><span class="line">    &#123;</span><br><span class="line">        I=i;</span><br><span class="line">        J=j-1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        I=dis.res[i][j];</span><br><span class="line">        J=j;</span><br><span class="line">        dis.res[i][j]=KILL;</span><br><span class="line">    &#125;</span><br><span class="line">    PRINT_sequence(dis,I,J);</span><br><span class="line">    PRINT_SOLUTION(dis,i,j);</span><br><span class="line">&#125;</span><br><span class="line">void PRINT_SOLUTION(TABLE dis,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(dis.res[i][j]==COPY)</span><br><span class="line">        cout&lt;&lt;<span class="string">"COPY"</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dis.res[i][j]==REPLACE)</span><br><span class="line">        cout&lt;&lt;<span class="string">"REPLACE"</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dis.res[i][j]==INSERT)</span><br><span class="line">        cout&lt;&lt;<span class="string">"INSERT"</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dis.res[i][j]==TWIDDLE)</span><br><span class="line">        cout&lt;&lt;<span class="string">"TWIDDLE"</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        cout&lt;&lt;<span class="string">"KILL"</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="count-distance-cpp"><a href="#count-distance-cpp" class="headerlink" title="count_distance.cpp"></a>count_distance.cpp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include "count_distance.h"</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char x[]=<span class="string">"algorithm"</span>;</span><br><span class="line">    char y[]=<span class="string">"altruistic"</span>;</span><br><span class="line">    int x_len=strlen(x),y_len=strlen(y);</span><br><span class="line">    TABLE distance=count_distance(x,y,x_len,y_len);</span><br><span class="line">    PRINT_sequence(distance,x_len,y_len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="算法实现结果"><a href="#算法实现结果" class="headerlink" title="算法实现结果"></a>算法实现结果</h3><p><img src="/2017/03/06/20170307/08.jpg" alt="05"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Zhangmin Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/03/06/20170307/" target="_blank" title="整齐打印与编辑距离问题">http://www.fogsail.net/2017/03/06/20170307/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-programming/">dynamic programming</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/12/20170312/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          公司聚会计划
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/05/20170305/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">回文子序列与欧几里德旅行商</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#整齐打印"><span class="nav-number">1.</span> <span class="nav-text">整齐打印</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#h"><span class="nav-number">1.1.</span> <span class="nav-text">.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cpp"><span class="nav-number">1.2.</span> <span class="nav-text">.cpp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑距离"><span class="nav-number">2.</span> <span class="nav-text">编辑距离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法分析"><span class="nav-number">2.1.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态转移函数"><span class="nav-number">2.2.</span> <span class="nav-text">状态转移函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count-distance-h"><span class="nav-number">2.3.</span> <span class="nav-text">count_distance.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count-distance-cpp"><span class="nav-number">2.4.</span> <span class="nav-text">count_distance.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法实现结果"><span class="nav-number">2.5.</span> <span class="nav-text">算法实现结果</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Zhangmin Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

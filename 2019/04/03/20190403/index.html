@@ -3,22 +3,28 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>tag: dynamic programming | 步履不停</title>
+  <title>csapp实践（五）：存储器层次结构 | 步履不停</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="csapp">
   
   
   
-  <meta name="description" content="Your past does not define you. It is what you decide to be that does.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="步履不停">
-<meta property="og:url" content="http://www.fogsail.net/tags/dynamic-programming/index.html">
+  
+  <meta name="description" content="存储器层次结构的部分难理解的内容总结如下">
+<meta name="keywords" content="csapp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="csapp实践（五）：存储器层次结构">
+<meta property="og:url" content="http://www.fogsail.net/2019/04/03/20190403/index.html">
 <meta property="og:site_name" content="步履不停">
-<meta property="og:description" content="Your past does not define you. It is what you decide to be that does.">
+<meta property="og:description" content="存储器层次结构的部分难理解的内容总结如下">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2019/04/03/20190403/01.jpg">
+<meta property="og:updated_time" content="2019-04-03T11:57:48.131Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="步履不停">
-<meta name="twitter:description" content="Your past does not define you. It is what you decide to be that does.">
+<meta name="twitter:title" content="csapp实践（五）：存储器层次结构">
+<meta name="twitter:description" content="存储器层次结构的部分难理解的内容总结如下">
+<meta name="twitter:image" content="http://www.fogsail.net/2019/04/03/20190403/01.jpg">
   
     <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
   
@@ -57,8 +63,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css">
-  
   
   
     <link rel="stylesheet" href="/css/vdonate.css">
@@ -70,21 +74,21 @@
   <script type="application/ld+json">
     {
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
-        "@id": "http://www.fogsail.net/tags/dynamic-programming/index.html",
+        "@id": "http://www.fogsail.net/2019/04/03/20190403/",
         "appid": "1593711792635024",
-        "title": "",
+        "title": "csapp实践（五）：存储器层次结构",
         "images": [
-        "http://www.fogsail.net/tags/dynamic-programming/index.html01.png",
-        "http://www.fogsail.net/tags/dynamic-programming/index.html01.jpg"
+        "http://www.fogsail.net/2019/04/03/20190403/01.png",
+        "http://www.fogsail.net/2019/04/03/20190403/01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2019-04-03T08:25:58" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2019-04-03T07:28:31" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 </head>
 </html>
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -106,7 +110,7 @@
 
             
               <a class="brand" style="
-                 margin-top: 0px;">
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -175,237 +179,140 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-  
-  
+          <section id="main" style="float:none;"><article id="post-20190403" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/archives/2017" class="archive-year">2017</a></h1>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/05/23/20170523/" class="archive-article-date">
-	  <time datetime="2017-05-22T16:50:00.000Z" itemprop="datePublished">2017-05-23</time>
-	</a>
-
-      
+      <header class="article-header">
+        
   
     <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/05/23/20170523/">签约棒球运动员</a>
+      csapp实践（五）：存储器层次结构
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
+    <div class="article-meta">
       
-	<a href="/2017/05/13/20170513/" class="archive-article-date">
-	  <time datetime="2017-05-13T06:07:00.000Z" itemprop="datePublished">2017-05-13</time>
+	<a href="/2019/04/03/20190403/" class="article-date">
+	  <time datetime="2019-04-03T11:28:31.000Z" itemprop="datePublished">2019-04-03</time>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/20170513/">库存规划</a>
-    </h1>
-  
+    <a class="article-category-link" href="/categories/csapp/">csapp</a>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
       
-	<a href="/2017/05/12/20170512/" class="archive-article-date">
-	  <time datetime="2017-05-12T01:54:00.000Z" itemprop="datePublished">2017-05-12</time>
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/05/12/20170512/">基于接缝裁剪的图像压缩</a>
-    </h1>
-  
 
-    </header>
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>存储器层次结构的部分难理解的内容总结如下<br><a id="more"></a></p>
+<h2 id="存储技术"><a href="#存储技术" class="headerlink" title="存储技术"></a>存储技术</h2><p><img src="/2019/04/03/20190403/01.jpg" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Fogsail Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/04/03/20190403/" target="_blank" title="csapp实践（五）：存储器层次结构">http://www.fogsail.net/2019/04/03/20190403/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csapp/">csapp</a></li></ul>
+
+      
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/02/20190402/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">csapp实践（二）：程序的机器级表示</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
     
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储技术"><span class="nav-number">1.</span> <span class="nav-text">存储技术</span></a></li></ol>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/05/08/20170508/" class="archive-article-date">
-	  <time datetime="2017-05-07T21:03:00.000Z" itemprop="datePublished">2017-05-08</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/05/08/20170508/">投资策略规划</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/04/19/20170419/" class="archive-article-date">
-	  <time datetime="2017-04-19T14:20:00.000Z" itemprop="datePublished">2017-04-19</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/04/19/20170419/">字符串拆分</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/04/16/20170416/" class="archive-article-date">
-	  <time datetime="2017-04-16T07:20:00.000Z" itemprop="datePublished">2017-04-16</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/04/16/20170416/">译码算法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/04/05/20170405/" class="archive-article-date">
-	  <time datetime="2017-04-05T05:05:00.000Z" itemprop="datePublished">2017-04-05</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/04/05/20170405/">有向无环图的最长简单路径</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/03/12/20170312/" class="archive-article-date">
-	  <time datetime="2017-03-12T10:00:00.000Z" itemprop="datePublished">2017-03-12</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/03/12/20170312/">公司聚会计划</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/03/06/20170307/" class="archive-article-date">
-	  <time datetime="2017-03-06T06:00:00.000Z" itemprop="datePublished">2017-03-06</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/03/06/20170307/">整齐打印与编辑距离问题</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/03/05/20170305/" class="archive-article-date">
-	  <time datetime="2017-03-04T23:27:00.000Z" itemprop="datePublished">2017-03-05</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/20170305/">回文子序列与欧几里德旅行商</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/tags/dynamic-programming/page/2/">2</a><a class="extend next" rel="next" href="/tags/dynamic-programming/page/2/">下一页 &raquo;</a>
-  </nav>
+    </div>
+  </aside>
 
 </section>
         
@@ -522,6 +429,8 @@
 
 
 
+
+  <script src="/js/dialog.js"></script>
 
 
 
@@ -640,6 +549,8 @@ ga('send', 'pageview');
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>

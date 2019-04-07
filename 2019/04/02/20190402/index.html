@@ -23,7 +23,10 @@
 <meta property="og:image" content="http://www.fogsail.net/2019/04/02/20190402/02.jpg">
 <meta property="og:image" content="http://www.fogsail.net/2019/04/02/20190402/03.jpg">
 <meta property="og:image" content="http://www.fogsail.net/2019/04/02/20190402/04.jpg">
-<meta property="og:updated_time" content="2019-04-05T22:16:29.307Z">
+<meta property="og:image" content="http://www.fogsail.net/2019/04/02/20190402/05.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2019/04/02/20190402/06.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2019/04/02/20190402/07.jpg">
+<meta property="og:updated_time" content="2019-04-07T13:34:54.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="csapp实践（二）：程序的机器级表示">
 <meta name="twitter:description" content="csapp第三章中，对汇编指令的要求比较高这里把常见的指令整理一下">
@@ -258,6 +261,8 @@
 <p>$ x+1 = 0 $<br>$ x+1 &gt; 8 \quad (default) $<br>$ x+1 &lt; 8 $<br>$ x = -1, 0, 1, 2, 3, 4, 5, 6, 7 $</p>
 <h2 id="函数调用过程"><a href="#函数调用过程" class="headerlink" title="函数调用过程"></a>函数调用过程</h2><h3 id="转移控制"><a href="#转移控制" class="headerlink" title="转移控制"></a>转移控制</h3><p><strong>函数调用的具体分析如下</strong></p>
 <p><img src="/2019/04/02/20190402/04.jpg" alt></p>
+<h3 id="stack上的局部存储"><a href="#stack上的局部存储" class="headerlink" title="stack上的局部存储"></a>stack上的局部存储</h3><p><img src="/2019/04/02/20190402/05.jpg" alt><br><img src="/2019/04/02/20190402/06.jpg" alt></p>
+<h3 id="寄存器中的局部存储空间"><a href="#寄存器中的局部存储空间" class="headerlink" title="寄存器中的局部存储空间"></a>寄存器中的局部存储空间</h3><p><img src="/2019/04/02/20190402/07.jpg" alt></p>
 
       
     </div>
@@ -360,7 +365,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序编码"><span class="nav-number">1.</span> <span class="nav-text">程序编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据传输"><span class="nav-number">2.</span> <span class="nav-text">数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制"><span class="nav-number">3.</span> <span class="nav-text">控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#条件控制实现条件分支"><span class="nav-number">3.1.</span> <span class="nav-text">条件控制实现条件分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用条件传送来实现条件分支"><span class="nav-number">4.</span> <span class="nav-text">用条件传送来实现条件分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用循环来实现条件分支"><span class="nav-number">5.</span> <span class="nav-text">用循环来实现条件分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for循环"><span class="nav-number">5.1.</span> <span class="nav-text">for循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch语句"><span class="nav-number">5.2.</span> <span class="nav-text">switch语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数调用过程"><span class="nav-number">6.</span> <span class="nav-text">函数调用过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转移控制"><span class="nav-number">6.1.</span> <span class="nav-text">转移控制</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序编码"><span class="nav-number">1.</span> <span class="nav-text">程序编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据传输"><span class="nav-number">2.</span> <span class="nav-text">数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制"><span class="nav-number">3.</span> <span class="nav-text">控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#条件控制实现条件分支"><span class="nav-number">3.1.</span> <span class="nav-text">条件控制实现条件分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用条件传送来实现条件分支"><span class="nav-number">4.</span> <span class="nav-text">用条件传送来实现条件分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用循环来实现条件分支"><span class="nav-number">5.</span> <span class="nav-text">用循环来实现条件分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for循环"><span class="nav-number">5.1.</span> <span class="nav-text">for循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch语句"><span class="nav-number">5.2.</span> <span class="nav-text">switch语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数调用过程"><span class="nav-number">6.</span> <span class="nav-text">函数调用过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转移控制"><span class="nav-number">6.1.</span> <span class="nav-text">转移控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack上的局部存储"><span class="nav-number">6.2.</span> <span class="nav-text">stack上的局部存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器中的局部存储空间"><span class="nav-number">6.3.</span> <span class="nav-text">寄存器中的局部存储空间</span></a></li></ol></li></ol>
     
     </div>
   </aside>

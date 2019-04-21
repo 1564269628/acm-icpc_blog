@@ -3,28 +3,28 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>csapp实践（五）：存储器层次结构 | 步履不停</title>
+  <title>算法竞赛中常用的c++ stl技巧 | 步履不停</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="csapp">
+  <meta name="keywords" content="algorithm">
   
   
   
   
-  <meta name="description" content="存储器层次结构的部分难理解的内容总结如下">
-<meta name="keywords" content="csapp">
+  <meta name="description" content="这篇文章主要针对一些复杂的模拟题，给出stl处理模拟题的一些思路以及一部分模版">
+<meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="csapp实践（五）：存储器层次结构">
-<meta property="og:url" content="http://www.fogsail.net/2019/04/03/20190403/index.html">
+<meta property="og:title" content="算法竞赛中常用的c++ stl技巧">
+<meta property="og:url" content="http://www.fogsail.net/2019/04/21/20190421/index.html">
 <meta property="og:site_name" content="步履不停">
-<meta property="og:description" content="存储器层次结构的部分难理解的内容总结如下">
+<meta property="og:description" content="这篇文章主要针对一些复杂的模拟题，给出stl处理模拟题的一些思路以及一部分模版">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.fogsail.net/2019/04/03/20190403/01.jpg">
-<meta property="og:updated_time" content="2019-04-03T11:57:48.131Z">
+<meta property="og:image" content="http://www.fogsail.net/2019/04/21/20190421/LA3634.jpg">
+<meta property="og:updated_time" content="2019-04-21T13:38:05.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="csapp实践（五）：存储器层次结构">
-<meta name="twitter:description" content="存储器层次结构的部分难理解的内容总结如下">
-<meta name="twitter:image" content="http://www.fogsail.net/2019/04/03/20190403/01.jpg">
+<meta name="twitter:title" content="算法竞赛中常用的c++ stl技巧">
+<meta name="twitter:description" content="这篇文章主要针对一些复杂的模拟题，给出stl处理模拟题的一些思路以及一部分模版">
+<meta name="twitter:image" content="http://www.fogsail.net/2019/04/21/20190421/LA3634.jpg">
   
     <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
   
@@ -74,14 +74,14 @@
   <script type="application/ld+json">
     {
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
-        "@id": "http://www.fogsail.net/2019/04/03/20190403/",
+        "@id": "http://www.fogsail.net/2019/04/21/20190421/",
         "appid": "1593711792635024",
-        "title": "csapp实践（五）：存储器层次结构",
+        "title": "算法竞赛中常用的c++ stl技巧",
         "images": [
-        "http://www.fogsail.net/2019/04/03/20190403/01.png",
-        "http://www.fogsail.net/2019/04/03/20190403/01.jpg"
+        "http://www.fogsail.net/2019/04/21/20190421/01.png",
+        "http://www.fogsail.net/2019/04/21/20190421/01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2019-04-03T07:28:31" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2019-04-21T09:23:37" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 </head>
@@ -179,7 +179,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-20190403" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+          <section id="main" style="float:none;"><article id="post-20190421" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -187,7 +187,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      csapp实践（五）：存储器层次结构
+      算法竞赛中常用的c++ stl技巧
     </h1>
   
 
@@ -195,12 +195,12 @@
     
     <div class="article-meta">
       
-	<a href="/2019/04/03/20190403/" class="article-date">
-	  <time datetime="2019-04-03T11:28:31.000Z" itemprop="datePublished">2019-04-03</time>
+	<a href="/2019/04/21/20190421/" class="article-date">
+	  <time datetime="2019-04-21T13:23:37.000Z" itemprop="datePublished">2019-04-21</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/csapp/">csapp</a>
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
 
       
 	<a class="article-views">
@@ -214,8 +214,12 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>存储器层次结构的部分难理解的内容总结如下<br><a id="more"></a></p>
-<h2 id="存储技术"><a href="#存储技术" class="headerlink" title="存储技术"></a>存储技术</h2><p><img src="/2019/04/03/20190403/01.jpg" alt></p>
+        <p>这篇文章主要针对一些复杂的模拟题，给出stl处理模拟题的一些思路<br>以及一部分模版</p>
+<a id="more"></a>
+<h2 id="栈，队列与优先队列"><a href="#栈，队列与优先队列" class="headerlink" title="栈，队列与优先队列"></a>栈，队列与优先队列</h2><p><strong>求抽象数据结构的ID(), 并且构建map映射</strong><br><strong>策略1：线程池MemPool</strong><br><strong>策略2：用vector.size()值作为哈希</strong></p>
+<p>相关的实现如下：</p>
+<p><img src="/2019/04/21/20190421/LA3634.jpg" alt="LA3634"></p>
+<h3 id="The-SetStack-Computer"><a href="#The-SetStack-Computer" class="headerlink" title="The SetStack Computer"></a><a href="https://cn.vjudge.net/problem/UVALive-3634" target="_blank" rel="noopener">The SetStack Computer</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.cpp</span><br><span class="line">//  LA3634</span><br><span class="line">//</span><br><span class="line">//  Created by zhangmin chen on 2019/4/21.</span><br><span class="line">//  Copyright © 2019 zhangmin chen. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;queue&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stack&gt;</span></span><br><span class="line"><span class="comment">#include &lt;map&gt;</span></span><br><span class="line"><span class="comment">#include &lt;set&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long llong;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define Cpy(a, b) memcpy(a, b, sizeof(a))</span></span><br><span class="line"><span class="comment">#define Set(a, v) memset(a, v, sizeof(a))</span></span><br><span class="line"><span class="comment">#define debug(x) cout &lt;&lt; #x &lt;&lt; ": " &lt;&lt; x &lt;&lt; endl</span></span><br><span class="line"><span class="comment">#define _rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="comment">#define _for(i, l, r) for(int i = (l); i &lt; (r); i++)</span></span><br><span class="line"><span class="comment">#define debug_(ch, i) printf(#ch"[%d]: %d\n", i, ch[i])</span></span><br><span class="line"><span class="comment">#define debug_m(mp, p) printf(#mp"[%d]: %d\n", p-&gt;first, p-&gt;second)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">class MemPool &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;T*&gt; buf;</span><br><span class="line">    </span><br><span class="line">    T* <span class="function"><span class="title">create</span></span>() &#123;</span><br><span class="line">        buf.push_back(new T());</span><br><span class="line">        <span class="built_in">return</span> buf.back();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    void <span class="function"><span class="title">dispose</span></span>() &#123;</span><br><span class="line">        <span class="keyword">for</span>(int i = 0; i &lt; buf.size(); i++) delete buf[i];</span><br><span class="line">        buf.clear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">map&lt;<span class="built_in">set</span>&lt;int&gt;, int&gt; IDCache;</span><br><span class="line">vector&lt;<span class="built_in">set</span>&lt;int&gt; &gt; setCache;</span><br><span class="line">MemPool&lt;<span class="built_in">set</span>&lt;int&gt; &gt; pool;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">fresh</span></span>() &#123;</span><br><span class="line">    IDCache.clear();</span><br><span class="line">    setCache.clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int ID(const <span class="built_in">set</span>&lt;int&gt;&amp; st) &#123;</span><br><span class="line">    <span class="keyword">if</span>(IDCache.count(st)) <span class="built_in">return</span> IDCache[st];</span><br><span class="line">    setCache.push_back(st);</span><br><span class="line">    <span class="built_in">return</span> IDCache[st] = (int)setCache.size() - 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// important</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">solve</span></span>() &#123;</span><br><span class="line">    stack&lt;int&gt; stk;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(int i = 0; i &lt; n; i++) &#123;</span><br><span class="line">        string cmd;</span><br><span class="line">        cin &gt;&gt; cmd;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(cmd[0] == <span class="string">'P'</span>) &#123;</span><br><span class="line">            <span class="built_in">set</span>&lt;int&gt; cur = *(pool.create());</span><br><span class="line">            int pid = ID(cur);</span><br><span class="line">            stk.push(pid);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cmd[0] == <span class="string">'D'</span>) &#123;</span><br><span class="line">            stk.push(stk.top());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">set</span>&lt;int&gt; st1 = setCache[stk.top()]; stk.pop();</span><br><span class="line">            <span class="built_in">set</span>&lt;int&gt; st2 = setCache[stk.top()]; stk.pop();</span><br><span class="line">            <span class="built_in">set</span>&lt;int&gt; combine;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(cmd[0] == <span class="string">'U'</span>) set_union(st1.begin(), st1.end(), st2.begin(), st2.end(), inserter(combine, combine.begin()));</span><br><span class="line">            <span class="keyword">if</span>(cmd[0] == <span class="string">'I'</span>) set_intersection(st1.begin(), st1.end(), st2.begin(), st2.end(), inserter(combine, combine.begin()));</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(cmd[0] == <span class="string">'A'</span>) &#123;</span><br><span class="line">                combine = st2;</span><br><span class="line">                combine.insert(ID(st1));</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            stk.push(ID(combine));</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; setCache[stk.top()].size() &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    int kase;</span><br><span class="line">    cin &gt;&gt; kase;</span><br><span class="line">    <span class="keyword">while</span>(kase--) &#123;</span><br><span class="line">        solve();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"***\n"</span>);</span><br><span class="line">        pool.dispose();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -242,7 +246,7 @@ var a = new Donate({
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2019/04/03/20190403/" target="_blank" title="csapp实践（五）：存储器层次结构">http://www.fogsail.net/2019/04/03/20190403/</a>
+          <a href="/2019/04/21/20190421/" target="_blank" title="算法竞赛中常用的c++ stl技巧">http://www.fogsail.net/2019/04/21/20190421/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>
@@ -282,7 +286,7 @@ var a = new Donate({
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csapp/">csapp</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
 
       
 
@@ -292,19 +296,10 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2019/04/21/20190421/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          算法竞赛中常用的c++ stl技巧
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/04/02/20190402/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/03/20190403/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">csapp实践（二）：程序的机器级表示</div>
+      <div class="article-nav-title">csapp实践（五）：存储器层次结构</div>
     </a>
   
 </nav>
@@ -318,7 +313,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储技术"><span class="nav-number">1.</span> <span class="nav-text">存储技术</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈，队列与优先队列"><span class="nav-number">1.</span> <span class="nav-text">栈，队列与优先队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-SetStack-Computer"><span class="nav-number">1.1.</span> <span class="nav-text">The SetStack Computer</span></a></li></ol></li></ol>
     
     </div>
   </aside>

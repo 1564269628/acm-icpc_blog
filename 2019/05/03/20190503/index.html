@@ -27,7 +27,8 @@
 <meta property="og:image" content="http://www.fogsail.net/2019/05/03/20190503/TrieST2.jpg">
 <meta property="og:image" content="http://www.fogsail.net/2019/05/03/20190503/TrieST3.jpg">
 <meta property="og:image" content="http://www.fogsail.net/2019/05/03/20190503/TrieST4.jpg">
-<meta property="og:updated_time" content="2019-05-07T08:23:40.225Z">
+<meta property="og:image" content="http://www.fogsail.net/2019/05/03/20190503/revenge-fibonacci.jpg">
+<meta property="og:updated_time" content="2019-05-07T10:07:52.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tries树和stl中常用的数据结构">
 <meta name="twitter:description" content="刘汝佳的算法书中，有一些关于模拟的题目比较典型，代码量也比较大同时叶比较考验代码的组织能力具体题目请参阅《算法竞赛入门经典（第二版）》 第五章这里对一些复杂的习题予以解答">
@@ -244,6 +245,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int myints[] = &#123;10, 20, 30, 40, 50, 60, 70&#125;;</span><br><span class="line">vector&lt;int&gt; myvector(7);</span><br><span class="line"></span><br><span class="line">copy(myints, myints+7, myvector.begin())</span><br><span class="line"></span><br><span class="line">// 把myints[0]往后7个元素复制到myvector中</span><br></pre></td></tr></table></figure>
 <p><strong>相似的用法</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">string str = <span class="string">"abcdefg"</span></span><br><span class="line">string tmp;</span><br><span class="line"></span><br><span class="line">tmp.append(str, 0, 3);</span><br><span class="line">// tmp后面附加上从str[0]往后3个字符</span><br></pre></td></tr></table></figure>
+<p><strong>Trie树在BigInt上的优势</strong><br><strong>完美解决前导0</strong><br><strong>比如一个数是0067</strong><br><strong>由于trie树只会在字符串末尾保存0067的val，这个val可以是真实值，也可以是索引，也可以是哈希</strong><br><strong>所以保证node u扫完整个字符串，看val[u]的值就可以</strong></p>
+<p><strong>stringstream用于string类和其他值类型的转换</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">stringstream ss;</span><br><span class="line">char buf[maxn];</span><br><span class="line"><span class="keyword">for</span>(i = 0; i &lt; maxn; i++)</span><br><span class="line">    sprintf(buf, <span class="string">"%d"</span>, arr[i]);</span><br><span class="line"></span><br><span class="line">ss &lt;&lt; buf;</span><br><span class="line">cout &lt;&lt; ss.str() &lt;&lt; endl;</span><br></pre></td></tr></table></figure></p>
+<p><strong>基本思想</strong><br><img src="/2019/05/03/20190503/revenge-fibonacci.jpg" alt="revenge-fibonacci"></p>
 
       
     </div>

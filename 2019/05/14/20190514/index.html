@@ -5,22 +5,30 @@
   <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
   <meta charset="utf-8">
   
-  <title>步履不停</title>
+  <title>stl和常用的数据结构（二） | 步履不停</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="algorithm">
   
   
   
-  <meta name="description" content="Your past does not define you. It is what you decide to be that does.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="步履不停">
-<meta property="og:url" content="http://www.fogsail.net/index.html">
+  
+  <meta name="description" content="这里继续讲一些STL中常用的算法与数据结构针对实际开发中的一些业务进行模拟 简易搜索引擎Searching the Web 算法分析：  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL和常用的数据结构（二）">
+<meta property="og:url" content="http://www.fogsail.net/2019/05/14/20190514/index.html">
 <meta property="og:site_name" content="步履不停">
-<meta property="og:description" content="Your past does not define you. It is what you decide to be that does.">
+<meta property="og:description" content="这里继续讲一些STL中常用的算法与数据结构针对实际开发中的一些业务进行模拟 简易搜索引擎Searching the Web 算法分析：  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2019/05/14/20190514/searching-web1.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2019/05/14/20190514/searching-web2.jpg">
+<meta property="og:image" content="http://www.fogsail.net/2019/05/14/20190514/searching-web3.jpg">
+<meta property="og:updated_time" content="2019-05-14T13:46:03.656Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="步履不停">
-<meta name="twitter:description" content="Your past does not define you. It is what you decide to be that does.">
+<meta name="twitter:title" content="STL和常用的数据结构（二）">
+<meta name="twitter:description" content="这里继续讲一些STL中常用的算法与数据结构针对实际开发中的一些业务进行模拟 简易搜索引擎Searching the Web 算法分析：  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970">
+<meta name="twitter:image" content="http://www.fogsail.net/2019/05/14/20190514/searching-web1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
   
@@ -49,11 +57,13 @@
   <link rel="stylesheet" href="/css/bootstrap.css">
 
   
-    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/dialog.css">
   
 
   
 
+  
+    <link rel="stylesheet" href="/css/header-post.css">
   
 
   
@@ -68,223 +78,112 @@
   <script type="application/ld+json">
     {
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
-        "@id": "http://www.fogsail.net/index.html",
+        "@id": "http://www.fogsail.net/2019/05/14/20190514/",
         "appid": "1593711792635024",
-        "title": "",
+        "title": "STL和常用的数据结构（二）",
         "images": [
-        "http://www.fogsail.net/index.html01.png",
-        "http://www.fogsail.net/index.html01.jpg"
+        "http://www.fogsail.net/2019/05/14/20190514/01.png",
+        "http://www.fogsail.net/2019/05/14/20190514/01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2019-05-14T09:51:08" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2019-05-14T09:27:07" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 </head>
 </html>
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
-  
-    <header id="header">
-
-	<!-- 背景图模式 -->
-	
-
-    
-      <div id="intrologo" class="intro-logo" style="background-position:center; background-repeat:no-repeat; background-image: url(); background-size: auto 100%;">
-
-      <!-- Support rolling -->  
-        
-        <section class="awSlider">
-          <div class="carousel slide carousel-fade " data-ride="carousel">
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-               
-                  
-                    <div class="item active">
-                  
-                    <img id="carousel-img0" src="/css/images/home-bg.jpg">
-                  </div>
-
-                  <!-- 自适应大图 -->
-                  <script>
-                      var img0 = new Image();
-                      var imageTag0 = document.getElementById("carousel-img0");
-                      img0.src = imageTag0.src;
-                      img0.onload=function(){
-                        if (img0.width / img0.height <= document.body.clientWidth / document.body.clientHeight) {
-                          imageTag0.style.width = document.body.clientWidth + "px";
-                        } else {
-                          imageTag0.style.height = document.body.clientHeight + "px";
-                          imageTag0.style.marginLeft = -(document.body.clientHeight * img0.width / img0.height - document.body.clientWidth) / 2 + "px";
-        
-                          // imageTag0.style.width = 100%;
-                        }
-                      };
-                  </script>
-                
-                  
-                    <div class="item">
-                  
-                    <img id="carousel-img1" src="/css/images/sample.jpg">
-                  </div>
-
-                  <!-- 自适应大图 -->
-                  <script>
-                      var img1 = new Image();
-                      var imageTag1 = document.getElementById("carousel-img1");
-                      img1.src = imageTag1.src;
-                      img1.onload=function(){
-                        if (img1.width / img1.height <= document.body.clientWidth / document.body.clientHeight) {
-                          imageTag1.style.width = document.body.clientWidth + "px";
-                        } else {
-                          imageTag1.style.height = document.body.clientHeight + "px";
-                          imageTag1.style.marginLeft = -(document.body.clientHeight * img1.width / img1.height - document.body.clientWidth) / 2 + "px";
-        
-                          // imageTag1.style.width = 100%;
-                        }
-                      };
-                  </script>
-                
-                  
-                    <div class="item">
-                  
-                    <img id="carousel-img2" src="/css/images/sample2.jpg">
-                  </div>
-
-                  <!-- 自适应大图 -->
-                  <script>
-                      var img2 = new Image();
-                      var imageTag2 = document.getElementById("carousel-img2");
-                      img2.src = imageTag2.src;
-                      img2.onload=function(){
-                        if (img2.width / img2.height <= document.body.clientWidth / document.body.clientHeight) {
-                          imageTag2.style.width = document.body.clientWidth + "px";
-                        } else {
-                          imageTag2.style.height = document.body.clientHeight + "px";
-                          imageTag2.style.marginLeft = -(document.body.clientHeight * img2.width / img2.height - document.body.clientWidth) / 2 + "px";
-        
-                          // imageTag2.style.width = 100%;
-                        }
-                      };
-                  </script>
-                
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href=".carousel" role="button" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <span class="sr-only">Geri</span>
-            </a>
-            <a class="right carousel-control" href=".carousel" role="button" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              <span class="sr-only">İleri</span>
-            </a>
-          </div>
-        </section>
-        <script>
-          $('section.awSlider .carousel').carousel({
-              pause: '',
-              interval: 5000
-          });
-          var startImage = $('section.awSlider .item.active > img').attr('src');
-          $('section.awSlider .carousel').on('slid.bs.carousel', function () {
-              var bscn = $(this).find('.item.active > img').attr('src');
-              $('section.awSlider > img').attr('src', bscn);
-          });
-        </script>
-      
-
-    
- 
-
-
-    <canvas width="100%" height="100%"></canvas>
-    <script>
-      var c = document.getElementsByTagName('canvas')[0],
-          x = c.getContext('2d'),
-          w = window.innerWidth,
-          h = window.innerHeight,
-          pr = window.devicePixelRatio || 1,
-          f = 90,
-          q,
-          m = Math,
-          r = 0,
-          u = m.PI*2,
-          v = m.cos,
-          z = m.random
-      c.width = w*pr
-      c.height = h*pr
-      x.scale(pr, pr)
-      x.globalAlpha = 0.6
-
-      <!-- 折线Polyline背景 -->
-      
-    </script>
-    
-
-    
-      <div id="homelogo" class="homelogo" style="background: rgba(255,255,255,1);"> 
-    
-
-        
-          <div class="homelogoback" style="border: 1px solid #404040;">
-            <h1><a href="#content" id="logo">步履不停</a></h1>
-            <h3>Your past does not define you. It is what you decide to be that does.</h3>
-            <h5>Fogsail Chen</h5>
-            <!-- <p><a href="https://github.com/iTimeTraveler" target="_blank">Github</a></p> -->
-          </div>
-        
-    
-    </div>
-  </div>
-
-  <!-- 自适应主页背景大图 -->
-  
-
- <!-- home_logo_image居中 -->
- 
-    <script>
-        var homelogodiv = document.getElementById("homelogo");
-        if (document.all.homelogo.offsetWidth > document.body.clientWidth) {
-          homelogodiv.style.width = document.body.clientWidth + "px";
-          homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
-        } else {
-          homelogodiv.style.width = homelogodiv.clientWidth  + "px";
-          homelogodiv.style.marginLeft = (homelogodiv.clientWidth)  * -0.5 + "px";
-        }
-    </script>
-  
-
-  <div class="intro-navigate">
-      <p class="navigater-list">
-        
-          <a id="beautifont" class="main-nav-link" href="/">首页</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/archives">所有文章</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/categories">分类</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/tags">标签</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/about">关于我</a>
-        
-      </p>
-  </div>
-
-</header>
   
   <div id="container">
     <div id="wrap">
       
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-    <article id="post-20190514" class="article article-type-post" itemscope itemprop="blogPost">
+          <section id="main" style="float:none;"><article id="post-20190514" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -292,7 +191,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/14/20190514/">STL和常用的数据结构（二）</a>
+      STL和常用的数据结构（二）
     </h1>
   
 
@@ -308,6 +207,12 @@
     <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
 
       
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
       
 
     </div>
@@ -323,484 +228,102 @@
     </div>
     <footer class="article-footer">
       
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
       
       
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Fogsail Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/05/14/20190514/" target="_blank" title="STL和常用的数据结构（二）">http://www.fogsail.net/2019/05/14/20190514/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
       
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20190503" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
+      
         
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/03/20190503/">tries树和stl中常用的数据结构</a>
-    </h1>
-  
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/03/20190503/" class="article-date">
-	  <time datetime="2019-05-02T17:33:10.000Z" itemprop="datePublished">2019-05-03</time>
-	</a>
+		       if (typeof LivereTower === 'function') { return; }
 
-      
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
 
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>刘汝佳的算法书中，有一些关于模拟的题目<br>比较典型，代码量也比较大<br>同时叶比较考验代码的组织能力<br>具体题目请参阅《算法竞赛入门经典（第二版）》 第五章<br>这里对一些复杂的习题予以解答</p>
-        <p class="article-more-link">
-          <a href="/2019/05/03/20190503/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
 
 
-  
-    <article id="post-20190421" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
+
+      
+      
         
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/21/20190421/">算法竞赛中常用的c++ stl技巧</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/21/20190421/" class="article-date">
-	  <time datetime="2019-04-21T13:23:37.000Z" itemprop="datePublished">2019-04-21</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这篇文章主要针对一些复杂的模拟题，给出stl处理模拟题的一些思路<br>以及一部分模版</p>
-        <p class="article-more-link">
-          <a href="/2019/04/21/20190421/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
       
 
     </footer>
   </div>
   
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20190403" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
     
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/03/20190403/">csapp实践（五）：存储器层次结构</a>
-    </h1>
   
+    <a href="/2019/05/03/20190503/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">tries树和stl中常用的数据结构</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/03/20190403/" class="article-date">
-	  <time datetime="2019-04-03T11:28:31.000Z" itemprop="datePublished">2019-04-03</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/csapp/">csapp</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>存储器层次结构的部分难理解的内容总结如下<br></p>
-        <p class="article-more-link">
-          <a href="/2019/04/03/20190403/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
   
 </article>
 
 <!-- Table of Contents -->
 
-
-  
-    <article id="post-20190402" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
     
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简易搜索引擎"><span class="nav-number">1.</span> <span class="nav-text">简易搜索引擎</span></a></li></ol>
     
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/02/20190402/">csapp实践（二）：程序的机器级表示</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/02/20190402/" class="article-date">
-	  <time datetime="2019-04-02T07:28:31.000Z" itemprop="datePublished">2019-04-02</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/csapp/">csapp</a>
-
-      
-      
-
     </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>csapp第三章中，对汇编指令的要求比较高<br>这里把常见的指令整理一下<br></p>
-        <p class="article-more-link">
-          <a href="/2019/04/02/20190402/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20190306" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/03/06/20190306/">字符串算法：后缀数组与后缀自动机</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/03/06/20190306/" class="article-date">
-	  <time datetime="2019-03-06T14:28:31.000Z" itemprop="datePublished">2019-03-06</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>字符串算法非常常见，并且在一般的算法竞赛中，往往都是以压轴题的形式出现<br>这里先研究字符串和它的子串的一些关系</p>
-<p>常用的字符串和它的子串的处理工具<br>主要有<strong>后缀数组和后缀自动机</strong></p>
-<p><img src="/2019/03/06/20190306/01.jpg" width="50%"><br></p>
-        <p class="article-more-link">
-          <a href="/2019/03/06/20190306/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20181024" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/10/24/20181024/">c++ STL一些小技巧(int和string的相互转换)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/10/24/20181024/" class="article-date">
-	  <time datetime="2018-10-24T12:42:35.000Z" itemprop="datePublished">2018-10-24</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a><a class="article-category-link" href="/categories/algorithm/c/">c++</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c++中的STL在企业的笔试，面试中有一些常见的技巧，string和int的相互转换用的比较多<br></p>
-        <p class="article-more-link">
-          <a href="/2018/10/24/20181024/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20181008" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/10/08/20181008/">TCP/IP实践(一)：Internet地址结构</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/10/08/20181008/" class="article-date">
-	  <time datetime="2018-10-08T10:28:39.000Z" itemprop="datePublished">2018-10-08</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/computer-networks/">computer networks</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前Internet的地址涉及到IPv4、IPv6和MAC地址<br>这里重点介绍一下IPv6地址的构成，以及和相关地址的转换。</p>
-        <p class="article-more-link">
-          <a href="/2018/10/08/20181008/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20180828" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/08/27/20180828/">实现操作系统：BootLoader引导程序(一)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/08/27/20180828/" class="article-date">
-	  <time datetime="2018-08-27T13:08:22.000Z" itemprop="datePublished">2018-08-27</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/操作系统/">操作系统</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前国内的很多计算机资料，大多都是讲述《操作系统原理》，涉及到具体操作系统的实现，能够找到的参考资料非常少。</p>
-<p>这里我尝试自己独立实现一个操作系统<br>这篇文章主要介绍了操作系统的环境配置<br>并且独立实现一个hello world!</p>
-        <p class="article-more-link">
-          <a href="/2018/08/27/20180828/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20180827" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/08/27/20180827/">用vscode打造macOS下c/c++编译利器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/08/27/20180827/" class="article-date">
-	  <time datetime="2018-08-26T16:04:05.000Z" itemprop="datePublished">2018-08-27</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/杂乱的技术/">杂乱的技术</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在macOS环境下写c/c++， 如果是大型项目的话，可以考虑用IDE比如xcode等等<br>但是如果仅仅是写一些小型的模块，或者说是研究一些算法，刷leetcode等等，用vscode就足够方便了。</p>
-        <p class="article-more-link">
-          <a href="/2018/08/27/20180827/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
-  </nav>
+  </aside>
 
 </section>
         
       </div>
-      
-        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
       
       <footer id="footer">
   
@@ -912,9 +435,9 @@
   </script>
 
 
-  <script src="/js/home.js"></script>
 
 
+  <script src="/js/dialog.js"></script>
 
 
 
@@ -1033,6 +556,8 @@ ga('send', 'pageview');
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!--add new google in 20190502-->
+  <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
+  <meta charset="utf-8">
+  
+  <title>数据结构优化（二） | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithm">
+  
+  
+  
+  
+  <meta name="description" content="主要写一些数据结构模版以及综合应用 拓扑排序：有向环解决二阶矩阵">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构优化（二）">
+<meta property="og:url" content="http://www.fogsail.net/2019/05/24/20190524/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="主要写一些数据结构模版以及综合应用 拓扑排序：有向环解决二阶矩阵">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.fogsail.net/2019/05/24/20190524/LA5154.jpg">
+<meta property="og:updated_time" content="2019-05-24T10:23:29.576Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构优化（二）">
+<meta name="twitter:description" content="主要写一些数据结构模版以及综合应用 拓扑排序：有向环解决二阶矩阵">
+<meta name="twitter:image" content="http://www.fogsail.net/2019/05/24/20190524/LA5154.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2019/05/24/20190524/",
+        "appid": "1593711792635024",
+        "title": "数据结构优化（二）",
+        "images": [
+        "http://www.fogsail.net/2019/05/24/20190524/01.png",
+        "http://www.fogsail.net/2019/05/24/20190524/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2019-05-24T04:24:51" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20190524" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      数据结构优化（二）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/05/24/20190524/" class="article-date">
+	  <time datetime="2019-05-24T08:24:51.000Z" itemprop="datePublished">2019-05-24</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>主要写一些数据结构模版<br>以及综合应用</p>
+<h2 id="拓扑排序：有向环解决二阶矩阵"><a href="#拓扑排序：有向环解决二阶矩阵" class="headerlink" title="拓扑排序：有向环解决二阶矩阵"></a>拓扑排序：有向环解决二阶矩阵</h2><a id="more"></a>
+<p>矩阵问题，求方程式是否有解<br><strong>本质是用拓扑排序判断有向环，解决循环引用的问题</strong></p>
+<p><strong><a href="https://cn.vjudge.net/problem/UVALive-5154" target="_blank" rel="noopener">LA5154</a></strong></p>
+<p>题目分析：<br><img src="/2019/05/24/20190524/LA5154.jpg" alt="LA5154"></p>
+<p><strong>1/ 表达式的表示</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const int maxl = 128;</span><br><span class="line">char exp[maxr][maxc][maxl];</span><br></pre></td></tr></table></figure></p>
+<p><strong>2/ 读取表达式中的一串数字</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int <span class="built_in">read</span>(const char* str, int&amp; len) &#123;</span><br><span class="line">    len = 0;</span><br><span class="line">    // len 初始化为多少，具体问题具体分析</span><br><span class="line">    int ans = 0, base = 1;</span><br><span class="line">    <span class="keyword">while</span>(str[len] &amp;&amp; isdigit(str[len])) &#123;</span><br><span class="line">        ans *= base;</span><br><span class="line">        ans += str[len] - <span class="string">'0'</span>;</span><br><span class="line">        base *= 10;</span><br><span class="line"></span><br><span class="line">        len++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3/ 二维拓扑排序程序结构</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">int vis[maxr][maxc];</span><br><span class="line">Set(vis, 0);</span><br><span class="line"></span><br><span class="line">bool candfs(int r, int c) &#123;</span><br><span class="line">    int&amp; ok = vis[r][c];</span><br><span class="line">    <span class="keyword">if</span>(ok == -1) <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ok == 1) <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    ok = -1;</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line"></span><br><span class="line">    read_from_exp(exp_);</span><br><span class="line">    <span class="keyword">if</span>(!candfs(nr, nc)) <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    */</span><br><span class="line"></span><br><span class="line">    ok = 1;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">dfs</span></span>() &#123;</span><br><span class="line">    bool cycle = <span class="literal">false</span>;</span><br><span class="line">    _for(i, 0, R) _for(j, 0, c) &#123;</span><br><span class="line">        bool ok = candfs(i, j);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!ok) &#123;</span><br><span class="line">            cycle = <span class="literal">true</span>;</span><br><span class="line">            print_ans();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(cycle) <span class="built_in">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>4/ 表达式求解：读取表达式的值</strong><br><strong>A7898787这样，从A+1开始，往后读取连续的值7898787</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">bool candfs(int r, int c) &#123;</span><br><span class="line">    int&amp; val = value[r][c];</span><br><span class="line">    val = 0;</span><br><span class="line"></span><br><span class="line">    int&amp; ok = vis[r][c];</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    // 代码同上</span><br><span class="line"></span><br><span class="line">    // read_from_exp(exp_):</span><br><span class="line"></span><br><span class="line">    const char* exp_ = exp[r][c];</span><br><span class="line">    int sign = 1;</span><br><span class="line">    _for(i, 0, strlen(exp_)) &#123;</span><br><span class="line">        <span class="keyword">if</span>(exp_[i] == <span class="string">'-'</span>) sign = -1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(exp_[i] == <span class="string">'+'</span>) sign = 1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(isdigit(exp_[i])) &#123;</span><br><span class="line">            int elen, res;</span><br><span class="line">            res = <span class="built_in">read</span>(exp_+i, elen);</span><br><span class="line"></span><br><span class="line">            val += res * sign;</span><br><span class="line">            sign = 1;</span><br><span class="line">            i += elen - 1;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(isupper(exp_[i])) &#123;</span><br><span class="line">            int elen;</span><br><span class="line">            int row = exp_[i] - <span class="string">'A'</span>;</span><br><span class="line">            int col = <span class="built_in">read</span>(exp_+i+1, elen);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(!candfs(row, col)) <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            val += sign * value[row][col];</span><br><span class="line">            sign = 1;</span><br><span class="line">            i += elen + 1 - 1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.cpp</span><br><span class="line">//  LA5154</span><br><span class="line">//</span><br><span class="line">//  Created by zhangmin chen on 2019/4/18.</span><br><span class="line">//  Copyright © 2019 zhangmin chen. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;queue&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stack&gt;</span></span><br><span class="line"><span class="comment">#include &lt;map&gt;</span></span><br><span class="line"><span class="comment">#include &lt;set&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long llong;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define Cpy(a, b) memcpy(a, b, sizeof(a))</span></span><br><span class="line"><span class="comment">#define Set(a, v) memset(a, v, sizeof(a))</span></span><br><span class="line"><span class="comment">#define debug(x) cout &lt;&lt; #x &lt;&lt; ": " &lt;&lt; x &lt;&lt; endl</span></span><br><span class="line"><span class="comment">#define _rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="comment">#define _for(i, l, r) for(int i = (l); i &lt; (r); i++)</span></span><br><span class="line"><span class="comment">#define debug_(ch, i) printf(#ch"[%d]: %d\n", i, ch[i])</span></span><br><span class="line"><span class="comment">#define debug_m(mp, p) printf(#mp"[%d]: %d\n", p-&gt;first, p-&gt;second)</span></span><br><span class="line"></span><br><span class="line">const int maxr = 20 + 5;</span><br><span class="line">const int maxc = 10 + 5;</span><br><span class="line"></span><br><span class="line">int R, C;</span><br><span class="line">int vis[maxr][maxc], value[maxr][maxc];</span><br><span class="line">char exp[maxr][maxc][128];</span><br><span class="line"></span><br><span class="line">int <span class="built_in">read</span>(const char* str, int&amp; len) &#123;</span><br><span class="line">    //</span><br><span class="line">    len = 0;</span><br><span class="line">    int ans = 0, base = 1;</span><br><span class="line">    <span class="keyword">while</span>(str[len] &amp;&amp; isdigit(str[len])) &#123;</span><br><span class="line">        //</span><br><span class="line">        ans *= base;</span><br><span class="line">        ans += str[len] - <span class="string">'0'</span>;</span><br><span class="line">        base *= 10;</span><br><span class="line">        </span><br><span class="line">        len++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int canDfs(int r, int c) &#123;</span><br><span class="line">    // template of toposort()</span><br><span class="line">    </span><br><span class="line">    int&amp; ok = vis[r][c];</span><br><span class="line">    <span class="keyword">if</span>(ok == -1) <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ok == 1) <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    </span><br><span class="line">    ok = -1;</span><br><span class="line">    // visit signed</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    int&amp; val = value[r][c];</span><br><span class="line">    val = 0;</span><br><span class="line">    </span><br><span class="line">    const char* exp_ = exp[r][c];</span><br><span class="line">    int len = (int)strlen(exp_), sign = 1;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(exp_[i] == <span class="string">'-'</span>) sign = -1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(exp_[i] == <span class="string">'+'</span>) sign = 1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(isdigit(exp_[i])) &#123;</span><br><span class="line">            // just digit, assign value</span><br><span class="line">            int elen;</span><br><span class="line">            int res = <span class="built_in">read</span>(exp_+i, elen);</span><br><span class="line">            </span><br><span class="line">            val += res * sign;</span><br><span class="line">            sign = 1;</span><br><span class="line">            i += elen - 1;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(isupper(exp_[i])) &#123;</span><br><span class="line">            // A1+B2.... judge topo cycle?</span><br><span class="line">            int elen;</span><br><span class="line">            int row = exp_[i] - <span class="string">'A'</span>;</span><br><span class="line">            int col = <span class="built_in">read</span>(exp_+i+1, elen);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(!canDfs(row, col)) <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">            </span><br><span class="line">            val += sign * value[row][col];</span><br><span class="line">            </span><br><span class="line">            sign = 1;</span><br><span class="line">            i += elen - 1 + 1;</span><br><span class="line">            // we add <span class="string">'A'</span>, <span class="string">'B'</span>, upper alpha</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // <span class="keyword">then</span> is the <span class="literal">true</span> situation</span><br><span class="line">    ok = 1;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">dfs</span></span>() &#123;</span><br><span class="line">    //</span><br><span class="line">    memset(vis, 0, sizeof(vis));</span><br><span class="line">    bool cycle = <span class="literal">false</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(int i = 0; i &lt; R; i++) <span class="keyword">for</span>(int j = 0; j &lt; C; j++) &#123;</span><br><span class="line">        bool ok = canDfs(i, j);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(!ok) &#123;</span><br><span class="line">            cycle = <span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%c%d: %s\n"</span>, <span class="string">'A'</span>+i, j, exp[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(cycle) <span class="built_in">return</span>;</span><br><span class="line">    </span><br><span class="line">    // <span class="keyword">then</span> we can explain the exp</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">    <span class="keyword">for</span>(int i = 0; i &lt; C; i++) <span class="built_in">printf</span>(<span class="string">"%6d"</span>, i);</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(int i = 0; i &lt; R; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, i+<span class="string">'A'</span>);</span><br><span class="line">        <span class="keyword">for</span>(int j = 0; j &lt; C; j++)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%6d"</span>, value[i][j]);</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        cin &gt;&gt; R &gt;&gt; C;</span><br><span class="line">        <span class="keyword">if</span>(R == 0 || C == 0) <span class="built_in">break</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(int i = 0; i &lt; R; i++) <span class="keyword">for</span>(int j = 0; j &lt; C; j++) scanf(<span class="string">"%s"</span>, exp[i][j]);</span><br><span class="line">        </span><br><span class="line">        // <span class="keyword">then</span> we run solve()</span><br><span class="line">        dfs();</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Fogsail Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/05/24/20190524/" target="_blank" title="数据结构优化（二）">http://www.fogsail.net/2019/05/24/20190524/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjgyMi85Mzgz">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/21/20190521/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">数据结构优化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑排序：有向环解决二阶矩阵"><span class="nav-number">1.</span> <span class="nav-text">拓扑排序：有向环解决二阶矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Fogsail Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

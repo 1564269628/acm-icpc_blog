@@ -90,12 +90,12 @@
 </script>
 
 <!--rewrit http to https-->
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 var targetProtocol = "https:";
-if (window.location.protocol != targetProtocol)
+if (window.location.protocol != targetProtocol && window.location.host != "localhost:4000")
  window.location.href = targetProtocol +
   window.location.href.substring(window.location.protocol.length);
-</script> -->
+</script>
 <!--20190528-->
 </head>
 </html>

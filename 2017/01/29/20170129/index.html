@@ -17,35 +17,35 @@
 <meta name="keywords" content="data_structure">
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊聊红黑树">
-<meta property="og:url" content="http://www.fogsail.net/2017/01/29/20170129/index.html">
+<meta property="og:url" content="https://www.fogsail.net/2017/01/29/20170129/index.html">
 <meta property="og:site_name" content="步履不停">
 <meta property="og:description" content="第一部分：红黑树表示与旋转红黑树是一种平衡二叉树，其性质不再赘述。红黑树的数据结构如下：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/01.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/02.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/03.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/04.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/05.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/06.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/07.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/08.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/09.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/10.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/11.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/12.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/13.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/14.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/15.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/16.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/17.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/18.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/19.jpg">
-<meta property="og:image" content="http://www.fogsail.net/2017/01/29/20170129/20.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/01.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/02.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/03.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/04.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/05.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/06.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/07.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/08.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/09.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/10.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/11.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/12.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/13.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/14.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/15.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/16.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/17.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/18.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/19.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2017/01/29/20170129/20.jpg">
 <meta property="og:updated_time" content="2018-03-02T16:55:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊聊红黑树">
 <meta name="twitter:description" content="第一部分：红黑树表示与旋转红黑树是一种平衡二叉树，其性质不再赘述。红黑树的数据结构如下：">
-<meta name="twitter:image" content="http://www.fogsail.net/2017/01/29/20170129/01.jpg">
+<meta name="twitter:image" content="https://www.fogsail.net/2017/01/29/20170129/01.jpg">
   
     <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
   
@@ -107,12 +107,12 @@
 </script>
 
 <!--rewrit http to https-->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 var targetProtocol = "https:";
 if (window.location.protocol != targetProtocol && window.location.host != "localhost:4000")
  window.location.href = targetProtocol +
   window.location.href.substring(window.location.protocol.length);
-</script>
+</script> -->
 <!--20190528-->
 </head>
 </html>
@@ -351,7 +351,7 @@ var a = new Donate({
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2017/01/29/20170129/" target="_blank" title="聊聊红黑树">http://www.fogsail.net/2017/01/29/20170129/</a>
+          <a href="/2017/01/29/20170129/" target="_blank" title="聊聊红黑树">https://www.fogsail.net/2017/01/29/20170129/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>

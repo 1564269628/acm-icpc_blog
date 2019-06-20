@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!--rewrit http to https-->
+  <script type="text/javascript">
+      var targetProtocol = "https:";
+      if (window.location.protocol != targetProtocol && window.location.host != "localhost:4000")
+          window.location.href = targetProtocol + window.location.href.substring(window.location.protocol.length);
+  </script>
+  <!--20190528-->
+
+  <!--add new google in 20190502-->
+  <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
+  <meta charset="utf-8">
+  
+  <title>暴力求解和ida* | 步履不停</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="algorithm">
+  
+  
+  
+  
+  <meta name="description" content="主要针对常见的暴力枚举还有状态空间搜索写了一些自己的模版和解法">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暴力求解和IDA*">
+<meta property="og:url" content="https://www.fogsail.net/2019/06/20/20190620/index.html">
+<meta property="og:site_name" content="步履不停">
+<meta property="og:description" content="主要针对常见的暴力枚举还有状态空间搜索写了一些自己的模版和解法">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.fogsail.net/2019/06/20/20190620/mobile-computing.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/06/20/20190620/mobile-computing2.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/06/20/20190620/mobile-computing3.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/06/20/20190620/nQueens.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/06/20/20190620/nQueens2.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/06/20/20190620/UVA524.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/06/20/20190620/HDU1627.jpg">
+<meta property="og:updated_time" content="2019-06-20T11:24:43.296Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="暴力求解和IDA*">
+<meta name="twitter:description" content="主要针对常见的暴力枚举还有状态空间搜索写了一些自己的模版和解法">
+<meta name="twitter:image" content="https://www.fogsail.net/2019/06/20/20190620/mobile-computing.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="步履不停" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <!-- <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style> -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+  <script src="//msite.baidu.com/sdk/c.js?appid=1593711792635024"></script>
+
+  <!--baidu-ldjson-->
+  <!--以下是新添加的内容-->
+  <script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.fogsail.net/2019/06/20/20190620/",
+        "appid": "1593711792635024",
+        "title": "暴力求解和IDA*",
+        "images": [
+        "http://www.fogsail.net/2019/06/20/20190620/01.png",
+        "http://www.fogsail.net/2019/06/20/20190620/01.jpg"
+        ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
+        "pubDate": "2019-06-20T07:05:14" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+    }
+</script>
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">所有文章</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于我</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder>
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-20190620" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      暴力求解和IDA*
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/06/20/20190620/" class="article-date">
+	  <time datetime="2019-06-20T11:05:14.000Z" itemprop="datePublished">2019-06-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>主要针对常见的暴力枚举<br>还有状态空间搜索写了一些自己的模版和解法</p>
+<a id="more"></a>
+<h2 id="回溯求解"><a href="#回溯求解" class="headerlink" title="回溯求解"></a>回溯求解</h2><h3 id="位模拟枚举二叉树"><a href="#位模拟枚举二叉树" class="headerlink" title="位模拟枚举二叉树"></a>位模拟枚举二叉树</h3><p><strong><a href="https://cn.vjudge.net/problem/UVALive-3403" target="_blank" rel="noopener">LA3403</a></strong></p>
+<p>算法分析：<br><img src="/2019/06/20/20190620/mobile-computing.jpg" alt="mobile-computing"><br><img src="/2019/06/20/20190620/mobile-computing2.jpg" alt="mobile-computing2"><br><img src="/2019/06/20/20190620/mobile-computing3.jpg" alt="mobile-computing3"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.cpp</span><br><span class="line">//  LA3403</span><br><span class="line">//</span><br><span class="line">//  Created by zhangmin chen on 2019/6/19.</span><br><span class="line">//  Copyright © 2019 zhangmin chen. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;queue&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stack&gt;</span></span><br><span class="line"><span class="comment">#include &lt;map&gt;</span></span><br><span class="line"><span class="comment">#include &lt;set&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sstream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;iomanip&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long llong;</span><br><span class="line">typedef <span class="built_in">set</span>&lt;string&gt;::iterator ssii;</span><br><span class="line"></span><br><span class="line">const int maxn = 6;</span><br><span class="line">const int MAXN = (1 &lt;&lt; 6);</span><br><span class="line"></span><br><span class="line"><span class="comment">#define Cpy(a, b) memcpy(a, b, sizeof(a))</span></span><br><span class="line"><span class="comment">#define Set(a, v) memset(a, v, sizeof(a))</span></span><br><span class="line"><span class="comment">#define debug(x) cout &lt;&lt; #x &lt;&lt; ": " &lt;&lt; x &lt;&lt; endl</span></span><br><span class="line"><span class="comment">#define _rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="comment">#define _for(i, l, r) for(int i = (l); i &lt; (r); i++)</span></span><br><span class="line"><span class="comment">#define debug_(ch, i) printf(#ch"[%d]: %d\n", i, ch[i])</span></span><br><span class="line"><span class="comment">#define debug_m(mp, p) printf(#mp"[%d]: %d\n", p-&gt;first, p-&gt;second)</span></span><br><span class="line"><span class="comment">#define debugS(str) cout &lt;&lt; "dbg: " &lt;&lt; str &lt;&lt; endl;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Node &#123;</span><br><span class="line">public:</span><br><span class="line">    double L, R;</span><br><span class="line">    Node(double _L = 0, double _R = 0) : L(_L), R(_R) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int vis[MAXN];</span><br><span class="line">double sum[MAXN], weight[maxn + 5];</span><br><span class="line">vector&lt;Node&gt; nodes[MAXN];</span><br><span class="line"></span><br><span class="line">int s;</span><br><span class="line">double r;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">init1</span></span>() &#123;</span><br><span class="line">    Set(vis, 0);</span><br><span class="line">    Set(sum, 0);</span><br><span class="line">    Set(weight, 0);</span><br><span class="line">    _for(i, 0, MAXN) nodes[i].clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">init2</span></span>() &#123;</span><br><span class="line">    int root = (1 &lt;&lt; s) - 1;</span><br><span class="line">    _rep(i, 0, root) _for(k, 0, s) &#123;</span><br><span class="line">        <span class="keyword">if</span>( (1 &lt;&lt; k) &amp; i ) sum[i] += weight[k];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(int u) &#123;</span><br><span class="line">    <span class="keyword">if</span>(vis[u]) <span class="built_in">return</span>;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    </span><br><span class="line">    bool haveChild = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(int left = (u - 1) &amp; u; left; left = (left - 1) &amp; u) &#123;</span><br><span class="line">        haveChild = <span class="literal">true</span>;</span><br><span class="line">        </span><br><span class="line">        int right = u ^ left;</span><br><span class="line">        double dl = sum[right] / sum[u];</span><br><span class="line">        double dr = sum[left] / sum[u];</span><br><span class="line">        </span><br><span class="line">        dfs(left);</span><br><span class="line">        dfs(right);</span><br><span class="line">        </span><br><span class="line">        _for(i, 0, nodes[left].size()) _for(j, 0, nodes[right].size()) &#123;</span><br><span class="line">            Node cur;</span><br><span class="line">            cur.L = max(nodes[left][i].L + dl, nodes[right][j].L - dr);</span><br><span class="line">            cur.R = max(nodes[left][i].R - dl, nodes[right][j].R + dr);</span><br><span class="line">            <span class="keyword">if</span>(cur.L + cur.R &lt; r) nodes[u].push_back(cur);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(!haveChild) nodes[u].push_back(Node());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    </span><br><span class="line">    int kase;</span><br><span class="line">    scanf(<span class="string">"%d"</span>, &amp;kase);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (kase--) &#123;</span><br><span class="line">        scanf(<span class="string">"%lf%d"</span>, &amp;r, &amp;s);</span><br><span class="line">        init1();</span><br><span class="line">        _for(i, 0, s) scanf(<span class="string">"%lf"</span>, &amp;weight[i]);</span><br><span class="line">        int root = init2();</span><br><span class="line">        </span><br><span class="line">        dfs(root);</span><br><span class="line">        double ans = -1;</span><br><span class="line">        _for(i, 0, nodes[root].size()) &#123;</span><br><span class="line">            ans = max(ans, nodes[root][i].L + nodes[root][i].R);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.10lf\n"</span>, ans);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="n皇后问题"><a href="#n皇后问题" class="headerlink" title="n皇后问题"></a>n皇后问题</h3><p><img src="/2019/06/20/20190620/nQueens.jpg" alt="nQueens"><br><img src="/2019/06/20/20190620/nQueens2.jpg" alt="nQueens2"></p>
+<p><strong>实现1</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.cpp</span><br><span class="line">//  nQueens01</span><br><span class="line">//</span><br><span class="line">//  Created by zhangmin chen on 2019/6/15.</span><br><span class="line">//  Copyright © 2019 zhangmin chen. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;queue&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stack&gt;</span></span><br><span class="line"><span class="comment">#include &lt;map&gt;</span></span><br><span class="line"><span class="comment">#include &lt;set&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sstream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;iomanip&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long llong;</span><br><span class="line">typedef <span class="built_in">set</span>&lt;string&gt;::iterator ssii;</span><br><span class="line"></span><br><span class="line">const int maxn = 50;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define Cpy(a, b) memcpy(a, b, sizeof(a))</span></span><br><span class="line"><span class="comment">#define Set(a, v) memset(a, v, sizeof(a))</span></span><br><span class="line"><span class="comment">#define debug(x) cout &lt;&lt; #x &lt;&lt; ": " &lt;&lt; x &lt;&lt; endl</span></span><br><span class="line"><span class="comment">#define _rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="comment">#define _for(i, l, r) for(int i = (l); i &lt; (r); i++)</span></span><br><span class="line"><span class="comment">#define debug_(ch, i) printf(#ch"[%d]: %d\n", i, ch[i])</span></span><br><span class="line"><span class="comment">#define debug_m(mp, p) printf(#mp"[%d]: %d\n", p-&gt;first, p-&gt;second)</span></span><br><span class="line"><span class="comment">#define debugS(str) cout &lt;&lt; "dbg: " &lt;&lt; str &lt;&lt; endl;</span></span><br><span class="line"></span><br><span class="line">int col[maxn], tot = 0, n = 8;</span><br><span class="line">int nc = 0;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">init</span></span>() &#123;</span><br><span class="line">    Set(col, 0);</span><br><span class="line">    tot = 0;</span><br><span class="line">    nc = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void search(int cur) &#123;</span><br><span class="line">    nc++;</span><br><span class="line">    <span class="keyword">if</span>(cur == n) tot++;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        _for(i, 0, n) &#123;</span><br><span class="line">            int ok = 1;</span><br><span class="line">            col[cur] = i;</span><br><span class="line">            </span><br><span class="line">            _for(j, 0, cur) &#123;</span><br><span class="line">                <span class="keyword">if</span>(col[j] == col[cur] || col[j] + j == col[cur] + cur || cur - col[cur] == j - col[j]) &#123;</span><br><span class="line">                    ok = 0;</span><br><span class="line">                    <span class="built_in">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(ok) search(cur + 1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    <span class="keyword">while</span> (scanf(<span class="string">"%d"</span>, &amp;n) &amp;&amp; n) &#123;</span><br><span class="line">        init();</span><br><span class="line">        search(0);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, tot);</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>实现2</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.cpp</span><br><span class="line">//  nQueens02</span><br><span class="line">//</span><br><span class="line">//  Created by zhangmin chen on 2019/6/15.</span><br><span class="line">//  Copyright © 2019 zhangmin chen. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;queue&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stack&gt;</span></span><br><span class="line"><span class="comment">#include &lt;map&gt;</span></span><br><span class="line"><span class="comment">#include &lt;set&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sstream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;iomanip&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long llong;</span><br><span class="line">typedef <span class="built_in">set</span>&lt;string&gt;::iterator ssii;</span><br><span class="line"></span><br><span class="line">const int maxn = 50;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define Cpy(a, b) memcpy(a, b, sizeof(a))</span></span><br><span class="line"><span class="comment">#define Set(a, v) memset(a, v, sizeof(a))</span></span><br><span class="line"><span class="comment">#define debug(x) cout &lt;&lt; #x &lt;&lt; ": " &lt;&lt; x &lt;&lt; endl</span></span><br><span class="line"><span class="comment">#define _rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="comment">#define _for(i, l, r) for(int i = (l); i &lt; (r); i++)</span></span><br><span class="line"><span class="comment">#define debug_(ch, i) printf(#ch"[%d]: %d\n", i, ch[i])</span></span><br><span class="line"><span class="comment">#define debug_m(mp, p) printf(#mp"[%d]: %d\n", p-&gt;first, p-&gt;second)</span></span><br><span class="line"><span class="comment">#define debugS(str) cout &lt;&lt; "dbg: " &lt;&lt; str &lt;&lt; endl;</span></span><br><span class="line"></span><br><span class="line">int vis[3][maxn], col[maxn], n = 8;</span><br><span class="line">int tot = 0;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">init</span></span>() &#123;</span><br><span class="line">    Set(vis, 0);</span><br><span class="line">    Set(col, 0);</span><br><span class="line">    tot = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void search(int cur) &#123;</span><br><span class="line">    <span class="keyword">if</span>(cur == n) tot++;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        _for(i, 0, n) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!vis[0][i] &amp;&amp; !vis[1][cur+i] &amp;&amp; !vis[2][cur+ n-i]) &#123;</span><br><span class="line">                col[cur] = i;</span><br><span class="line">                vis[0][i] = vis[1][cur+i] = vis[2][cur+ n-i] = 1;</span><br><span class="line">                search(cur+1);</span><br><span class="line">                vis[0][i] = vis[1][cur+i] = vis[2][cur+ n-i] = 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(scanf(<span class="string">"%d"</span>, &amp;n) == 1 &amp;&amp; n) &#123;</span><br><span class="line">        init();</span><br><span class="line">        //</span><br><span class="line">        search(0);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, tot);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="解答树填空法"><a href="#解答树填空法" class="headerlink" title="解答树填空法"></a>解答树填空法</h3><p><strong><a href="https://cn.vjudge.net/problem/UVA-524" target="_blank" rel="noopener">UVA524</a></strong></p>
+<p>解答树填空分析<br><img src="/2019/06/20/20190620/UVA524.jpg" alt="UVA524"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.cpp</span><br><span class="line">//  UVA524</span><br><span class="line">//</span><br><span class="line">//  Created by zhangmin chen on 2019/6/18.</span><br><span class="line">//  Copyright © 2019 zhangmin chen. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;queue&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stack&gt;</span></span><br><span class="line"><span class="comment">#include &lt;map&gt;</span></span><br><span class="line"><span class="comment">#include &lt;set&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sstream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;iomanip&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long llong;</span><br><span class="line">typedef <span class="built_in">set</span>&lt;string&gt;::iterator ssii;</span><br><span class="line"></span><br><span class="line">const int inf = 0x3f3f3f3f;</span><br><span class="line">const int maxn = 50;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define Cpy(a, b) memcpy(a, b, sizeof(a))</span></span><br><span class="line"><span class="comment">#define Set(a, v) memset(a, v, sizeof(a))</span></span><br><span class="line"><span class="comment">#define debug(x) cout &lt;&lt; #x &lt;&lt; ": " &lt;&lt; x &lt;&lt; endl</span></span><br><span class="line"><span class="comment">#define _rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="comment">#define _for(i, l, r) for(int i = (l); i &lt; (r); i++)</span></span><br><span class="line"><span class="comment">#define debug_(ch, i) printf(#ch"[%d]: %d\n", i, ch[i])</span></span><br><span class="line"><span class="comment">#define debug_m(mp, p) printf(#mp"[%d]: %d\n", p-&gt;first, p-&gt;second)</span></span><br><span class="line"><span class="comment">#define debugS(str) cout &lt;&lt; "dbg: " &lt;&lt; str &lt;&lt; endl;</span></span><br><span class="line"></span><br><span class="line">int A[maxn + 5], vis[maxn + 5], n;</span><br><span class="line"></span><br><span class="line">int isPrime(int val) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = 2; i * i &lt;= val; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(val % i == 0) <span class="built_in">return</span> 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">init</span></span>() &#123;</span><br><span class="line">    Set(A, 0);</span><br><span class="line">    Set(vis, 0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(int cur) &#123;</span><br><span class="line">    <span class="keyword">if</span>(cur == n &amp;&amp; isPrime(A[n-1] + A[0])) &#123;</span><br><span class="line">        //debug(isPrime(A[n-1] + A[0]))</span><br><span class="line">        _for(i, 0, n) &#123;</span><br><span class="line">            <span class="keyword">if</span>(i != 0) <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d"</span>, A[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(int x = 2; x &lt;= n; x++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!vis[x] &amp;&amp; isPrime(x + A[cur-1])) &#123;</span><br><span class="line">                A[cur] = x;</span><br><span class="line">                // debug(x);</span><br><span class="line">                vis[x] = 1;</span><br><span class="line">                dfs(cur + 1);</span><br><span class="line">                vis[x] = 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    int kase = 0;</span><br><span class="line">    <span class="keyword">while</span>(scanf(<span class="string">"%d"</span>, &amp;n) == 1 &amp;&amp; n &gt; 0) &#123;</span><br><span class="line">        // debug(n);</span><br><span class="line">        <span class="keyword">if</span>(kase &gt; 0) cout &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Case %d:\n"</span>, ++kase);</span><br><span class="line">        </span><br><span class="line">        init();</span><br><span class="line">        A[0] = 1;</span><br><span class="line">        dfs(1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="简单字符串状态搜索：枚举后缀"><a href="#简单字符串状态搜索：枚举后缀" class="headerlink" title="简单字符串状态搜索：枚举后缀"></a>简单字符串状态搜索：枚举后缀</h3><p><strong><a href="https://cn.vjudge.net/problem/HDU-1627" target="_blank" rel="noopener">HDU1627</a></strong></p>
+<p><img src="/2019/06/20/20190620/HDU1627.jpg" alt="HDU1627"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.cpp</span><br><span class="line">//  HDU1627</span><br><span class="line">//</span><br><span class="line">//  Created by zhangmin chen on 2019/6/20.</span><br><span class="line">//  Copyright © 2019 zhangmin chen. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;queue&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stack&gt;</span></span><br><span class="line"><span class="comment">#include &lt;map&gt;</span></span><br><span class="line"><span class="comment">#include &lt;set&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sstream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;iomanip&gt;</span></span><br><span class="line"><span class="comment">#include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long llong;</span><br><span class="line">typedef <span class="built_in">set</span>&lt;string&gt;::iterator ssii;</span><br><span class="line"></span><br><span class="line">const int maxn = 100;</span><br><span class="line"></span><br><span class="line"><span class="comment">#define Cpy(a, b) memcpy(a, b, sizeof(a))</span></span><br><span class="line"><span class="comment">#define Set(a, v) memset(a, v, sizeof(a))</span></span><br><span class="line"><span class="comment">#define debug(x) cout &lt;&lt; #x &lt;&lt; ": " &lt;&lt; x &lt;&lt; endl</span></span><br><span class="line"><span class="comment">#define _rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="comment">#define _for(i, l, r) for(int i = (l); i &lt; (r); i++)</span></span><br><span class="line"><span class="comment">#define debug_(ch, i) printf(#ch"[%d]: %d\n", i, ch[i])</span></span><br><span class="line"><span class="comment">#define debug_m(mp, p) printf(#mp"[%d]: %d\n", p-&gt;first, p-&gt;second)</span></span><br><span class="line"><span class="comment">#define debugS(str) cout &lt;&lt; "dbg: " &lt;&lt; str &lt;&lt; endl;</span></span><br><span class="line"></span><br><span class="line">int S[maxn], n, L;</span><br><span class="line">int cnt = 0;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">init</span></span>() &#123;</span><br><span class="line">    Set(S, 0);</span><br><span class="line">    cnt = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int OK(int cur) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int len = 1; len*2 &lt;= cur+1; len++) &#123;</span><br><span class="line">        int equal = 1;</span><br><span class="line">        _for(i, 0, len) &#123;</span><br><span class="line">            <span class="keyword">if</span>(S[cur-i] != S[cur-i-len]) &#123;</span><br><span class="line">                equal = 0;</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(equal) <span class="built_in">return</span> 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int dfs(int cur) &#123;</span><br><span class="line">    <span class="keyword">if</span>(cnt++ == n) &#123;</span><br><span class="line">        _for(i, 0, cur) &#123;</span><br><span class="line">            <span class="keyword">if</span>(i % 64 == 0 &amp;&amp; i &gt; 0) <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(i % 4 == 0 &amp;&amp; i &gt; 0) <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%c"</span>, <span class="string">'A'</span> + S[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\n%d\n"</span>, cur);</span><br><span class="line">        <span class="built_in">return</span> 0;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        _for(i, 0, L) &#123;</span><br><span class="line">            S[cur] = i;</span><br><span class="line">            <span class="keyword">if</span>(OK(cur) &amp;&amp; !dfs(cur + 1)) <span class="built_in">return</span> 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    <span class="keyword">while</span> (scanf(<span class="string">"%d%d"</span>, &amp;n, &amp;L) == 2 &amp;&amp; n &gt; 0) &#123;</span><br><span class="line">        //</span><br><span class="line">        init();</span><br><span class="line">        dfs(0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="剪枝"><a href="#剪枝" class="headerlink" title="剪枝"></a>剪枝</h3><p><strong>用到的STL函数</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char *strchr(const char *str, int c)</span><br></pre></td></tr></table></figure></p>
+<p><strong>在str字符串中搜索第一个c出现的位置</strong><br><strong>返回值从第一个c出现的位置，截取字符串到结束</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Fogsail Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/06/20/20190620/" target="_blank" title="暴力求解和IDA*">https://www.fogsail.net/2019/06/20/20190620/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<section id="comments" class="comment">
+		<!-- hello world! -->
+		
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+		<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+		<div id="vcomments"></div>
+		<script>
+			new Valine({
+				el: '#vcomments',
+				appId: '6jvLbmDexHR56M68z5z4o66q-gzGzoHsz',
+				appKey: 'WXDOtEMHclOT8f1EeGS0xDor',
+				verify: true
+			})
+		</script>
+	</section>
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/24/20190524/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">数据结构优化（二）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#回溯求解"><span class="nav-number">1.</span> <span class="nav-text">回溯求解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#位模拟枚举二叉树"><span class="nav-number">1.1.</span> <span class="nav-text">位模拟枚举二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n皇后问题"><span class="nav-number">1.2.</span> <span class="nav-text">n皇后问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解答树填空法"><span class="nav-number">1.3.</span> <span class="nav-text">解答树填空法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单字符串状态搜索：枚举后缀"><span class="nav-number">1.4.</span> <span class="nav-text">简单字符串状态搜索：枚举后缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剪枝"><span class="nav-number">1.5.</span> <span class="nav-text">剪枝</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p> -->
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 步履不停 All Rights Reserved.</p>
+        <p><a target="_blank" href="http://www.miitbeian.gov.cn">闽ICP备18003953号-1</a></p>
+        <p>
+          <img src="\css\images\gongan.png" style="float: center">
+          <a target="_blank" href="http://www.miitbeian.gov.cn">闽公网安备 35010202000760号</a></p>
+        <!--
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+         -->
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-114571328-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eefa70020af0829b6b4b9a6151d8a943";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Tencent Analytics -->
+	<script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65332004";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Tencent Analytics -->
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            步履不停
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Fogsail Chen All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

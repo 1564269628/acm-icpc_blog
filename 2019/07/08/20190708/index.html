@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://www.fogsail.net/2019/07/08/20190708/UVA11997.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2019/07/08/20190708/LA3027.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2019/07/08/20190708/HDU3234.jpg">
-<meta property="og:updated_time" content="2019-07-10T08:56:12.287Z">
+<meta property="og:updated_time" content="2019-09-15T12:38:19.302Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实用数据结构">
 <meta name="twitter:description" content="这里对开发中常用的数据结构做了补充包括但不限于treap树，并查集，树状数组等">
@@ -242,6 +242,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入I 5 10</span><br><span class="line"></span><br><span class="line">string line;</span><br><span class="line">getline(cin, line);</span><br><span class="line"></span><br><span class="line">getline(cin, line);</span><br><span class="line">stringstream ss(line);</span><br><span class="line"></span><br><span class="line">int v;</span><br><span class="line"><span class="keyword">while</span>(ss &gt;&gt; v) vec.push_back(v);</span><br></pre></td></tr></table></figure>
 <p><strong>方法二 while(cin &gt;&gt; ), getchar() == ‘\n’判断结束与否</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int len = 0;</span><br><span class="line"><span class="keyword">while</span>(cin &gt;&gt; line[len++])</span><br><span class="line">    <span class="keyword">if</span>(getchar() == <span class="string">'\n'</span>) <span class="built_in">break</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="带删除操作的并查集"><a href="#带删除操作的并查集" class="headerlink" title="带删除操作的并查集"></a>带删除操作的并查集</h3><p><strong>并查集带上删除操作比较麻烦</strong><br><strong>直接的处理方法, 给每个节点一个新的id</strong><br><strong>重新编号, x编号成id[x], 然后对id[]处理</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">del(int p)</span><br><span class="line">    // 先从原来的集合删除p元素</span><br><span class="line">    int root = find(id[p])</span><br><span class="line">    sum[root] -= p; cnt[root]--;</span><br><span class="line"></span><br><span class="line">    // p元素重新编号, 自成一个集合</span><br><span class="line">    id[p] = ++tot;</span><br><span class="line">    sum[id[p]] = p;</span><br><span class="line">    cnt[id[p]] = 1;</span><br><span class="line">    pa[id[p]] = id[p];</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -337,7 +339,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#优先队列"><span class="nav-number">1.</span> <span class="nav-text">优先队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集按秩压缩"><span class="nav-number">2.</span> <span class="nav-text">并查集按秩压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集按秩压缩处理传递性问题-xor"><span class="nav-number">2.1.</span> <span class="nav-text">并查集按秩压缩处理传递性问题(xor)</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#优先队列"><span class="nav-number">1.</span> <span class="nav-text">优先队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集按秩压缩"><span class="nav-number">2.</span> <span class="nav-text">并查集按秩压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集按秩压缩处理传递性问题-xor"><span class="nav-number">2.1.</span> <span class="nav-text">并查集按秩压缩处理传递性问题(xor)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带删除操作的并查集"><span class="nav-number">2.2.</span> <span class="nav-text">带删除操作的并查集</span></a></li></ol></li></ol>
     
     </div>
   </aside>

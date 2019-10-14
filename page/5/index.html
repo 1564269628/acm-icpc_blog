@@ -86,7 +86,7 @@
         "http://www.fogsail.net/page/5/index.html01.png",
         "http://www.fogsail.net/page/5/index.html01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2019-10-14T03:40:49" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2019-10-15T12:14:56" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 
@@ -156,29 +156,6 @@
                           imageTag1.style.marginLeft = -(document.body.clientHeight * img1.width / img1.height - document.body.clientWidth) / 2 + "px";
         
                           // imageTag1.style.width = 100%;
-                        }
-                      };
-                  </script>
-                
-                  
-                    <div class="item">
-                  
-                    <img id="carousel-img2" src="/css/images/sample2.jpg">
-                  </div>
-
-                  <!-- 自适应大图 -->
-                  <script>
-                      var img2 = new Image();
-                      var imageTag2 = document.getElementById("carousel-img2");
-                      img2.src = imageTag2.src;
-                      img2.onload=function(){
-                        if (img2.width / img2.height <= document.body.clientWidth / document.body.clientHeight) {
-                          imageTag2.style.width = document.body.clientWidth + "px";
-                        } else {
-                          imageTag2.style.height = document.body.clientHeight + "px";
-                          imageTag2.style.marginLeft = -(document.body.clientHeight * img2.width / img2.height - document.body.clientWidth) / 2 + "px";
-        
-                          // imageTag2.style.width = 100%;
                         }
                       };
                   </script>

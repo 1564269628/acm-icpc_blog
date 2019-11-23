@@ -16,22 +16,28 @@
   <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
   <meta charset="utf-8">
   
-  <title>tag: algorithm | 算法小站</title>
+  <title>动态规划优化(一) | 算法小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="algorithmdp">
   
   
   
-  <meta name="description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
-<meta property="og:type" content="website">
-<meta property="og:title" content="算法小站">
-<meta property="og:url" content="https://www.fogsail.net/tags/algorithm/page/3/index.html">
+  
+  <meta name="description" content="本节内容主要讲述一些进阶的动态规划包括轮廓线动态规划，四边形不等式，单调队列优化等等">
+<meta name="keywords" content="algorithm,dp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划优化(一)">
+<meta property="og:url" content="https://www.fogsail.net/2019/11/23/20191123/index.html">
 <meta property="og:site_name" content="算法小站">
-<meta property="og:description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
+<meta property="og:description" content="本节内容主要讲述一些进阶的动态规划包括轮廓线动态规划，四边形不等式，单调队列优化等等">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.fogsail.net/2019/11/23/20191123/POJ2411.jpg">
+<meta property="og:updated_time" content="2019-11-23T10:05:23.063Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法小站">
-<meta name="twitter:description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
+<meta name="twitter:title" content="动态规划优化(一)">
+<meta name="twitter:description" content="本节内容主要讲述一些进阶的动态规划包括轮廓线动态规划，四边形不等式，单调队列优化等等">
+<meta name="twitter:image" content="https://www.fogsail.net/2019/11/23/20191123/POJ2411.jpg">
   
     <link rel="alternate" href="/atom.xml" title="算法小站" type="application/atom+xml">
   
@@ -70,8 +76,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css">
-  
   
   
     <link rel="stylesheet" href="/css/vdonate.css">
@@ -83,14 +87,14 @@
   <script type="application/ld+json">
     {
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
-        "@id": "http://www.fogsail.net/tags/algorithm/page/3/index.html",
+        "@id": "http://www.fogsail.net/2019/11/23/20191123/",
         "appid": "1593711792635024",
-        "title": "",
+        "title": "动态规划优化(一)",
         "images": [
-        "http://www.fogsail.net/tags/algorithm/page/3/index.html01.png",
-        "http://www.fogsail.net/tags/algorithm/page/3/index.html01.jpg"
+        "http://www.fogsail.net/2019/11/23/20191123/01.png",
+        "http://www.fogsail.net/2019/11/23/20191123/01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2019-11-23T06:06:07" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2019-11-23T06:00:04" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 
@@ -98,7 +102,7 @@
 </html>
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -120,7 +124,7 @@
 
             
               <a class="brand" style="
-                 margin-top: 0px;">
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -189,237 +193,135 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-  
-  
+          <section id="main" style="float:none;"><article id="post-20191123" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/archives/2019" class="archive-year">2019</a></h1>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/07/23/20190723/" class="archive-article-date">
-	  <time datetime="2019-07-23T09:09:30.000Z" itemprop="datePublished">2019-07-23</time>
-	</a>
-
-      
+      <header class="article-header">
+        
   
     <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/07/23/20190723/">暴力求解和IDA*(三)</a>
+      动态规划优化(一)
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
+    <div class="article-meta">
       
-	<a href="/2019/07/08/20190708/" class="archive-article-date">
-	  <time datetime="2019-07-07T23:42:58.000Z" itemprop="datePublished">2019-07-08</time>
+	<a href="/2019/11/23/20191123/" class="article-date">
+	  <time datetime="2019-11-23T10:00:04.000Z" itemprop="datePublished">2019-11-23</time>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/07/08/20190708/">实用数据结构</a>
-    </h1>
-  
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
       
-	<a href="/2019/07/07/20190707/" class="archive-article-date">
-	  <time datetime="2019-07-07T10:43:26.000Z" itemprop="datePublished">2019-07-07</time>
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/07/07/20190707/">暴力求解和IDA*(二)</a>
-    </h1>
-  
 
-    </header>
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本节内容主要讲述一些进阶的动态规划<br>包括轮廓线动态规划，四边形不等式，单调队列优化等等</p>
+<a id="more"></a>
+<h2 id="轮廓线动态规划"><a href="#轮廓线动态规划" class="headerlink" title="轮廓线动态规划"></a>轮廓线动态规划</h2><p><strong><a href="http://poj.org/problem?id=2411" target="_blank" rel="noopener">POJ2411</a></strong><br><img src="/2019/11/23/20191123/POJ2411.jpg" alt="POJ2411"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">const int maxn = 11 + 1;</span><br><span class="line">llong f[maxn][1 &lt;&lt; maxn];</span><br><span class="line">bool inS[1 &lt;&lt; maxn];</span><br><span class="line">int N, M;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">init</span></span>() &#123;</span><br><span class="line">    Set(f, 0);</span><br><span class="line">    f[0][0] = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline void <span class="function"><span class="title">cal</span></span>() &#123;</span><br><span class="line">    _for(i, 0, 1 &lt;&lt; M) &#123;</span><br><span class="line">        bool cnt = 0, hasOdd = 0;</span><br><span class="line">        _for(k, 0, M) &#123;</span><br><span class="line">            <span class="keyword">if</span>((i &gt;&gt; k) &amp; 1) hasOdd |= cnt, cnt = 0;</span><br><span class="line">            <span class="keyword">else</span> cnt ^= 1;</span><br><span class="line">        &#125;</span><br><span class="line">        inS[i] = hasOdd | cnt ? 0 : 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">dp</span></span>() &#123;</span><br><span class="line">    _rep(i, 1, N) _for(j, 0, 1 &lt;&lt; M) &#123;</span><br><span class="line">        f[i][j] = 0;</span><br><span class="line">        _for(k, 0, 1 &lt;&lt; M) &#123;</span><br><span class="line">            <span class="keyword">if</span>((j &amp; k) == 0 &amp;&amp; inS[j | k]) f[i][j] += f[i - 1][k];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, stdin);</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; N &gt;&gt; M &amp;&amp; N) &#123;</span><br><span class="line">        init();</span><br><span class="line">        cal();</span><br><span class="line"></span><br><span class="line">        dp();</span><br><span class="line">        cout &lt;&lt; f[N][0] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Fogsail Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/11/23/20191123/" target="_blank" title="动态规划优化(一)">https://www.fogsail.net/2019/11/23/20191123/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<section id="comments" class="comment">
+		<!-- hello world! -->
+		
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+		<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+		<div id="vcomments"></div>
+		<script>
+			new Valine({
+				el: '#vcomments',
+				appId: '6jvLbmDexHR56M68z5z4o66q-gzGzoHsz',
+				appKey: 'WXDOtEMHclOT8f1EeGS0xDor',
+				verify: true
+			})
+		</script>
+	</section>
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li></ul>
+
+      
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/13/20191113/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">动态规划专题(六)</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
     
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#轮廓线动态规划"><span class="nav-number">1.</span> <span class="nav-text">轮廓线动态规划</span></a></li></ol>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/06/20/20190620/" class="archive-article-date">
-	  <time datetime="2019-06-20T11:05:14.000Z" itemprop="datePublished">2019-06-20</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/06/20/20190620/">暴力求解和IDA*</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/05/24/20190524/" class="archive-article-date">
-	  <time datetime="2019-05-24T08:24:51.000Z" itemprop="datePublished">2019-05-24</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/05/24/20190524/">数据结构优化（二）</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/05/21/20190521/" class="archive-article-date">
-	  <time datetime="2019-05-21T08:42:24.000Z" itemprop="datePublished">2019-05-21</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/05/21/20190521/">数据结构优化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/05/19/20190519/" class="archive-article-date">
-	  <time datetime="2019-05-19T00:15:13.000Z" itemprop="datePublished">2019-05-19</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/05/19/20190519/">高效算法设计(一)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/05/14/20190514/" class="archive-article-date">
-	  <time datetime="2019-05-14T13:27:07.000Z" itemprop="datePublished">2019-05-14</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/05/14/20190514/">STL和常用的数据结构（二）</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/05/03/20190503/" class="archive-article-date">
-	  <time datetime="2019-05-02T17:33:10.000Z" itemprop="datePublished">2019-05-03</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/05/03/20190503/">tries树和stl中常用的数据结构</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/04/21/20190421/" class="archive-article-date">
-	  <time datetime="2019-04-21T13:23:37.000Z" itemprop="datePublished">2019-04-21</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/04/21/20190421/">算法竞赛中常用的c++ stl技巧</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/tags/algorithm/page/2/">&laquo; 上一页</a><a class="page-number" href="/tags/algorithm/">1</a><a class="page-number" href="/tags/algorithm/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/tags/algorithm/page/4/">4</a><a class="page-number" href="/tags/algorithm/page/5/">5</a><a class="extend next" rel="next" href="/tags/algorithm/page/4/">下一页 &raquo;</a>
-  </nav>
+    </div>
+  </aside>
 
 </section>
         
@@ -536,6 +438,8 @@
 
 
 
+
+  <script src="/js/dialog.js"></script>
 
 
 
@@ -654,6 +558,8 @@ ga('send', 'pageview');
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>

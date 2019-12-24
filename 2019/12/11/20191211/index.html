@@ -16,26 +16,30 @@
   <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
   <meta charset="utf-8">
   
-  <title>动态规划优化(二) | 算法小站</title>
+  <title>嵌套和分块数据结构(二) | 算法小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="algorithmdp">
+  <meta name="keywords" content="algorithmdatastructure">
   
   
   
   
-  <meta name="description" content="这里重点介绍一下轮廓线动态规划以及动态规划相关的单调队列优化，斜率优化等等树形dp和图dp也进行相应的回顾">
-<meta name="keywords" content="algorithm,dp">
+  <meta name="description" content="这部分介绍了数据结构的综合包括前置知识，树的dfs序，树的重心倍增法求LCA等等然后介绍树上莫队和莫队综合">
+<meta name="keywords" content="algorithm,datastructure">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动态规划优化(二)">
-<meta property="og:url" content="https://www.fogsail.net/2019/12/10/20191211/index.html">
+<meta property="og:title" content="嵌套和分块数据结构(二)">
+<meta property="og:url" content="https://www.fogsail.net/2019/12/11/20191211/index.html">
 <meta property="og:site_name" content="算法小站">
-<meta property="og:description" content="这里重点介绍一下轮廓线动态规划以及动态规划相关的单调队列优化，斜率优化等等树形dp和图dp也进行相应的回顾">
+<meta property="og:description" content="这部分介绍了数据结构的综合包括前置知识，树的dfs序，树的重心倍增法求LCA等等然后介绍树上莫队和莫队综合">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-16T12:45:30.398Z">
+<meta property="og:image" content="https://www.fogsail.net/2019/12/11/20191211/treeAlgo01.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/12/11/20191211/treeAlgo02.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2019/12/11/20191211/treeAlgo03.jpg">
+<meta property="og:updated_time" content="2019-12-24T11:19:05.586Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动态规划优化(二)">
-<meta name="twitter:description" content="这里重点介绍一下轮廓线动态规划以及动态规划相关的单调队列优化，斜率优化等等树形dp和图dp也进行相应的回顾">
+<meta name="twitter:title" content="嵌套和分块数据结构(二)">
+<meta name="twitter:description" content="这部分介绍了数据结构的综合包括前置知识，树的dfs序，树的重心倍增法求LCA等等然后介绍树上莫队和莫队综合">
+<meta name="twitter:image" content="https://www.fogsail.net/2019/12/11/20191211/treeAlgo01.jpg">
   
     <link rel="alternate" href="/atom.xml" title="算法小站" type="application/atom+xml">
   
@@ -85,14 +89,14 @@
   <script type="application/ld+json">
     {
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
-        "@id": "http://www.fogsail.net/2019/12/10/20191211/",
+        "@id": "http://www.fogsail.net/2019/12/11/20191211/",
         "appid": "1593711792635024",
-        "title": "动态规划优化(二)",
+        "title": "嵌套和分块数据结构(二)",
         "images": [
-        "http://www.fogsail.net/2019/12/10/20191211/01.png",
-        "http://www.fogsail.net/2019/12/10/20191211/01.jpg"
+        "http://www.fogsail.net/2019/12/11/20191211/01.png",
+        "http://www.fogsail.net/2019/12/11/20191211/01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2019-12-10T02:12:52" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2019-12-11T02:12:52" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 
@@ -199,7 +203,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      动态规划优化(二)
+      嵌套和分块数据结构(二)
     </h1>
   
 
@@ -207,8 +211,8 @@
     
     <div class="article-meta">
       
-	<a href="/2019/12/10/20191211/" class="article-date">
-	  <time datetime="2019-12-10T06:12:52.000Z" itemprop="datePublished">2019-12-10</time>
+	<a href="/2019/12/11/20191211/" class="article-date">
+	  <time datetime="2019-12-11T06:12:52.000Z" itemprop="datePublished">2019-12-11</time>
 	</a>
 
       
@@ -226,8 +230,9 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这里重点介绍一下轮廓线动态规划<br>以及动态规划相关的单调队列优化，斜率优化等等<br>树形dp和图dp也进行相应的回顾</p>
+        <p>这部分介绍了数据结构的综合<br>包括前置知识，树的dfs序，树的重心<br>倍增法求LCA等等<br>然后介绍树上莫队和莫队综合</p>
 <a id="more"></a>
+<h2 id="树有关的算法"><a href="#树有关的算法" class="headerlink" title="树有关的算法"></a>树有关的算法</h2><h3 id="树遍历有关的算法"><a href="#树遍历有关的算法" class="headerlink" title="树遍历有关的算法"></a>树遍历有关的算法</h3><p><img src="/2019/12/11/20191211/treeAlgo01.jpg" alt="treeAlgo01"><br><img src="/2019/12/11/20191211/treeAlgo02.jpg" alt="treeAlgo02"><br><img src="/2019/12/11/20191211/treeAlgo03.jpg" alt="treeAlgo03"></p>
 
       
     </div>
@@ -254,7 +259,7 @@ var a = new Donate({
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2019/12/10/20191211/" target="_blank" title="动态规划优化(二)">https://www.fogsail.net/2019/12/10/20191211/</a>
+          <a href="/2019/12/11/20191211/" target="_blank" title="嵌套和分块数据结构(二)">https://www.fogsail.net/2019/12/11/20191211/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>
@@ -288,7 +293,7 @@ var a = new Donate({
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/datastructure/">datastructure</a></li></ul>
 
       
 
@@ -315,7 +320,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav">无</ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树有关的算法"><span class="nav-number">1.</span> <span class="nav-text">树有关的算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#树遍历有关的算法"><span class="nav-number">1.1.</span> <span class="nav-text">树遍历有关的算法</span></a></li></ol></li></ol>
     
     </div>
   </aside>

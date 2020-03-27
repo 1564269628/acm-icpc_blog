@@ -16,22 +16,31 @@
   <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
   <meta charset="utf-8">
   
-  <title>category: algorithm | 算法小站</title>
+  <title>字符串算法 | 算法小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="algorithm">
   
   
   
-  <meta name="description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
-<meta property="og:type" content="website">
-<meta property="og:title" content="算法小站">
-<meta property="og:url" content="https://www.fogsail.net/categories/algorithm/page/3/index.html">
+  
+  <meta name="description" content="这里给出一些字符串算法的实现主要有后缀数组，trie树等等">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串算法">
+<meta property="og:url" content="https://www.fogsail.net/2020/03/27/20200327/index.html">
 <meta property="og:site_name" content="算法小站">
-<meta property="og:description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
+<meta property="og:description" content="这里给出一些字符串算法的实现主要有后缀数组，trie树等等">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.fogsail.net/2020/03/27/20200327/sa1.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2020/03/27/20200327/sa2.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2020/03/27/20200327/sa3.jpg">
+<meta property="og:image" content="https://www.fogsail.net/2020/03/27/20200327/sa4.jpg">
+<meta property="og:updated_time" content="2020-03-27T11:23:53.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法小站">
-<meta name="twitter:description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
+<meta name="twitter:title" content="字符串算法">
+<meta name="twitter:description" content="这里给出一些字符串算法的实现主要有后缀数组，trie树等等">
+<meta name="twitter:image" content="https://www.fogsail.net/2020/03/27/20200327/sa1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="算法小站" type="application/atom+xml">
   
@@ -70,8 +79,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css">
-  
   
   
     <link rel="stylesheet" href="/css/vdonate.css">
@@ -83,14 +90,14 @@
   <script type="application/ld+json">
     {
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
-        "@id": "http://www.fogsail.net/categories/algorithm/page/3/index.html",
+        "@id": "http://www.fogsail.net/2020/03/27/20200327/",
         "appid": "1593711792635024",
-        "title": "",
+        "title": "字符串算法",
         "images": [
-        "http://www.fogsail.net/categories/algorithm/page/3/index.html01.png",
-        "http://www.fogsail.net/categories/algorithm/page/3/index.html01.jpg"
+        "http://www.fogsail.net/2020/03/27/20200327/01.png",
+        "http://www.fogsail.net/2020/03/27/20200327/01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2020-03-27T07:25:06" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2020-03-27T07:19:44" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 
@@ -98,7 +105,7 @@
 </html>
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -120,7 +127,7 @@
 
             
               <a class="brand" style="
-                 margin-top: 0px;">
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -189,237 +196,135 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-  
-  
+          <section id="main" style="float:none;"><article id="post-20200327" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/archives/2019" class="archive-year">2019</a></h1>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/09/09/20190909/" class="archive-article-date">
-	  <time datetime="2019-09-09T07:17:31.000Z" itemprop="datePublished">2019-09-09</time>
-	</a>
-
-      
+      <header class="article-header">
+        
   
     <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/09/09/20190909/">高效算法设计(七)</a>
+      字符串算法
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
+    <div class="article-meta">
       
-	<a href="/2019/08/29/20190829/" class="archive-article-date">
-	  <time datetime="2019-08-28T17:59:06.000Z" itemprop="datePublished">2019-08-29</time>
+	<a href="/2020/03/27/20200327/" class="article-date">
+	  <time datetime="2020-03-27T11:19:44.000Z" itemprop="datePublished">2020-03-27</time>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/08/29/20190829/">再论后缀自动机</a>
-    </h1>
-  
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
       
-	<a href="/2019/08/28/20190828/" class="archive-article-date">
-	  <time datetime="2019-08-28T05:23:26.000Z" itemprop="datePublished">2019-08-28</time>
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/08/28/20190828/">高效算法设计(六)</a>
-    </h1>
-  
 
-    </header>
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里给出一些字符串算法的实现<br>主要有后缀数组，trie树等等</p>
+<a id="more"></a>
+<h2 id="后缀数组"><a href="#后缀数组" class="headerlink" title="后缀数组"></a>后缀数组</h2><p><img src="/2020/03/27/20200327/sa1.jpg" alt="sa1"><br><img src="/2020/03/27/20200327/sa2.jpg" alt="sa2"><br><img src="/2020/03/27/20200327/sa3.jpg" alt="sa3"><br><img src="/2020/03/27/20200327/sa4.jpg" alt="sa4"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">class suffixArray &#123;</span><br><span class="line">public:</span><br><span class="line">    int str[maxn], sa[maxn];</span><br><span class="line">    int c[maxn], t1[maxn], t2[maxn];</span><br><span class="line"></span><br><span class="line">    int n;</span><br><span class="line"></span><br><span class="line">    void build(int R) &#123;</span><br><span class="line">        *x = t1, *y = t2;</span><br><span class="line"></span><br><span class="line">        // radix sort according to 1stKey</span><br><span class="line">        _for(i, 0, R) c[i] = 0;</span><br><span class="line">        _for(i, 0, n) c[x[i] = str[i]]++;</span><br><span class="line">        _for(i, 1, R) c[i] += c[i - 1];</span><br><span class="line">        _forDown(i, n - 1, 0) sa[--c[x[i]]] = i;</span><br><span class="line"></span><br><span class="line">        // manber-myers loop</span><br><span class="line">        <span class="keyword">for</span>(int k = 1; k &lt;= n; k &lt;&lt;= 1) &#123;</span><br><span class="line">            // construct y[], use sa[] to construct 2ndKey</span><br><span class="line">            int p = 0;</span><br><span class="line">            _for(i, n-k, n) y[p++] = i;</span><br><span class="line">            _for(i, 0, n) <span class="keyword">if</span>(sa[i] &gt;= k) y[p++] = sa[i] - k;</span><br><span class="line"></span><br><span class="line">            // radix sort y[], according to (1st, 2nd) key</span><br><span class="line">            _for(i, 0, R) c[i] = 0;</span><br><span class="line">            _for(i, 0, n) c[x[y[i]]]++;</span><br><span class="line">            _for(i, 1, R) c[i] += c[i - 1];</span><br><span class="line">            _forDown(i, n - 1, 0) sa[--c[x[y[i]]]] = y[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // update x[] and loop</span><br><span class="line">        swap(x, y);</span><br><span class="line">        x[sa[0]] = 0;</span><br><span class="line"></span><br><span class="line">        p = 1;</span><br><span class="line">        _for(i, 1, n) &#123;</span><br><span class="line">            bool flag = (x[sa[i]] == x[sa[i - 1]] &amp;&amp; x[sa[i]+k] == x[sa[i-1]+k]);</span><br><span class="line">            x[sa[i]] = (flag ? p - 1 : p++);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // update p and R</span><br><span class="line">        <span class="keyword">if</span>(p &gt;= n) <span class="built_in">break</span>;</span><br><span class="line">        R = p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Fogsail Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2020/03/27/20200327/" target="_blank" title="字符串算法">https://www.fogsail.net/2020/03/27/20200327/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<section id="comments" class="comment">
+		<!-- hello world! -->
+		
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+		<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+		<div id="vcomments"></div>
+		<script>
+			new Valine({
+				el: '#vcomments',
+				appId: '6jvLbmDexHR56M68z5z4o66q-gzGzoHsz',
+				appKey: 'WXDOtEMHclOT8f1EeGS0xDor',
+				verify: true
+			})
+		</script>
+	</section>
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+
+      
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/05/20200305/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">实用数据结构(六)</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
     
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#后缀数组"><span class="nav-number">1.</span> <span class="nav-text">后缀数组</span></a></li></ol>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/08/26/20190826/" class="archive-article-date">
-	  <time datetime="2019-08-26T06:21:11.000Z" itemprop="datePublished">2019-08-26</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/08/26/20190826/">高效算法设计(五)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/08/13/20190813/" class="archive-article-date">
-	  <time datetime="2019-08-13T11:49:53.000Z" itemprop="datePublished">2019-08-13</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/20190813/">高效算法设计(四)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/08/09/20190809/" class="archive-article-date">
-	  <time datetime="2019-08-09T07:10:42.000Z" itemprop="datePublished">2019-08-09</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/08/09/20190809/">高效算法设计(三)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/08/05/20190805/" class="archive-article-date">
-	  <time datetime="2019-08-05T11:06:12.000Z" itemprop="datePublished">2019-08-05</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/08/05/20190805/">高效算法设计(二)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/07/31/20190731/" class="archive-article-date">
-	  <time datetime="2019-07-31T08:39:18.000Z" itemprop="datePublished">2019-07-31</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/07/31/20190731/">动态规划专题(一)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/07/29/20190729/" class="archive-article-date">
-	  <time datetime="2019-07-29T13:03:46.000Z" itemprop="datePublished">2019-07-29</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/07/29/20190729/">暴力求解和IDA*(四)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2019/07/23/20190723/" class="archive-article-date">
-	  <time datetime="2019-07-23T09:09:30.000Z" itemprop="datePublished">2019-07-23</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2019/07/23/20190723/">暴力求解和IDA*(三)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/categories/algorithm/page/2/">&laquo; 上一页</a><a class="page-number" href="/categories/algorithm/">1</a><a class="page-number" href="/categories/algorithm/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/categories/algorithm/page/4/">4</a><a class="page-number" href="/categories/algorithm/page/5/">5</a><a class="page-number" href="/categories/algorithm/page/6/">6</a><a class="extend next" rel="next" href="/categories/algorithm/page/4/">下一页 &raquo;</a>
-  </nav>
+    </div>
+  </aside>
 
 </section>
         
@@ -536,6 +441,8 @@
 
 
 
+
+  <script src="/js/dialog.js"></script>
 
 
 
@@ -654,6 +561,8 @@ ga('send', 'pageview');
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>

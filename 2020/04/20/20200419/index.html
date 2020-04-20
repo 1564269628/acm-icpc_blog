@@ -32,7 +32,7 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-20T11:34:27.941Z">
+<meta property="og:updated_time" content="2020-04-20T12:11:05.163Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些通用的数学概念和记号">
 <meta name="twitter:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
@@ -228,7 +228,7 @@
       
         <p>最近想着有空的时候把数学捡起来<br>那么先从分析学开始吧</p>
 <a id="more"></a>
-<h2 id="集合论一些结论的证明"><a href="#集合论一些结论的证明" class="headerlink" title="集合论一些结论的证明"></a>集合论一些结论的证明</h2><h3 id="solution1"><a href="#solution1" class="headerlink" title="solution1"></a>solution1</h3><p>$<br>X \times Y =  \emptyset \iff (X=\emptyset) \vee (Y =\emptyset)<br>$</p>
+<h2 id="集合论一些结论的证明"><a href="#集合论一些结论的证明" class="headerlink" title="集合论一些结论的证明"></a>集合论一些结论的证明</h2><p>$\textbf{solution1}$<br>$<br>X \times Y =  \emptyset \iff (X=\emptyset) \vee (Y =\emptyset)<br>$</p>
 <p>$\textbf{proof}$</p>
 <script type="math/tex; mode=display">
 \emptyset = (x \in X) \wedge (x \in C_MX)
@@ -251,7 +251,7 @@ Y=C_MY\end{cases}
 \\
 
 \Rightarrow \forall (x,y), \ x \notin X\times Y</script><p>$X, Y$ 任意，所以 $X \times Y = \emptyset$</p>
-<h3 id="solution2"><a href="#solution2" class="headerlink" title="solution2"></a>solution2</h3><p>$<br>(A\times B)\subset (X \times Y) \iff (A \subset X) \wedge (B \subset Y)<br>$</p>
+<p>$\textbf{solution2}$<br>$<br>(A\times B)\subset (X \times Y) \iff (A \subset X) \wedge (B \subset Y)<br>$</p>
 <p>$\textbf{proof}$</p>
 <script type="math/tex; mode=display">
 Let \ \textbf{P}=(x \in A) \wedge (y \in B), \  \textbf{Q}=(x\in X) \wedge (y \in Y)
@@ -267,12 +267,12 @@ x \in A \Rightarrow x\in X \iff (A \subset X)
 \\
 
 y \in B \Rightarrow y\in Y \iff (B \subset Y)</script><p>$2)$<br>根据命题等价性，右边推左边也同理</p>
-<h3 id="solution3"><a href="#solution3" class="headerlink" title="solution3"></a>solution3</h3><p>$<br>(X \times Y) \cup (Z \times Y) = (X \cup Z) \times Y<br>$</p>
+<p>$\textbf{ solution3 }$<br>$<br>(X \times Y) \cup (Z \times Y) = (X \cup Z) \times Y<br>$</p>
 <script type="math/tex; mode=display">
 \forall x \in X, \forall y \in Y, \forall z\in Z, \\
 (x \in X) \vee (y \in Y) \vee (z \in Z) \vee (y \in Y) \\
 \iff \{(x, z) | (x \in X) \vee (z \in Z)\} \cup Y
-\iff (X \cup Z) \times Y</script><h3 id="solution4"><a href="#solution4" class="headerlink" title="solution4"></a>solution4</h3><p>$<br>(X \times Y) \cap (X’ \times Y’) = (X \cap X’) \times (Y \cap Y’)<br>$</p>
+\iff (X \cup Z) \times Y</script><p>$\textbf{ solution4 }$<br>$<br>(X \times Y) \cap (X’ \times Y’) = (X \cap X’) \times (Y \cap Y’)<br>$</p>
 <p>不妨假设<br>$<br>u \in (X \cap X’), \ v \in (Y \cap Y’)<br>$</p>
 <script type="math/tex; mode=display">
 \{(u, v) | (u \in (X \cap X')) \wedge (v \in (Y \cap Y'))\} \\
@@ -282,7 +282,7 @@ y \in B \Rightarrow y\in Y \iff (B \subset Y)</script><p>$2)$<br>根据命题等
 \{(u, v) | (u \in X) \wedge (v \in Y)\} \Rightarrow \{p | p \in A\} \\
 \{(u, v) | (u \in X') \wedge (v \in Y')\} \Rightarrow \{p | p \in B\} \\
 \iff \{p | (p \in A) \wedge (p \in  B)\} \iff A \cap B
-\iff (X \times Y) \cap (X' \times Y')</script><h2 id="函数的表示"><a href="#函数的表示" class="headerlink" title="函数的表示"></a>函数的表示</h2><h3 id="solution1-1"><a href="#solution1-1" class="headerlink" title="solution1"></a>solution1</h3><p>$<br>(A \subset B) \Rightarrow (f(A) \subset f(B))<br>$</p>
+\iff (X \times Y) \cap (X' \times Y')</script><h2 id="函数的表示"><a href="#函数的表示" class="headerlink" title="函数的表示"></a>函数的表示</h2><p>$\textbf{ solution1 }$<br>$<br>(A \subset B) \Rightarrow (f(A) \subset f(B))<br>$</p>
 <p>$1) (A \subset B) \Rightarrow \quad f(A) \subset f(B)$</p>
 <script type="math/tex; mode=display">
 f(A) := \{y \in Y | \exists x, (x \in A) \wedge (y \in f(x))\} \\
@@ -292,42 +292,42 @@ A \subset B
 <script type="math/tex; mode=display">
 \{y \in Y | \exists x, (x \in A)\} \Rightarrow \{y \in Y | \exists x, x \in B\} \\
 \exists x, (x \in A) \Longrightarrow \exists x, (x \in B) \\
-\iff \exists x, \ (x \in A) \wedge (x \not \in B)</script><h3 id="solution2-1"><a href="#solution2-1" class="headerlink" title="solution2"></a>solution2</h3><p>$<br>A \neq \emptyset \Rightarrow f(A) \neq \emptyset<br>$</p>
+\iff \exists x, \ (x \in A) \wedge (x \not \in B)</script><p>$\textbf{ solution2 }$<br>$<br>A \neq \emptyset \Rightarrow f(A) \neq \emptyset<br>$</p>
 <script type="math/tex; mode=display">
 \exists x, x \in A \\ 
 Let \ x_1 \in A \Rightarrow f(x_1) = y_1 \Leftrightarrow \exists y_1 \in Y \\
-\iff \{\exists x | x \in A \} \Rightarrow \{\exists y | f(x) = y\}</script><h3 id="solution3-1"><a href="#solution3-1" class="headerlink" title="solution3"></a>solution3</h3><p>$<br>f(A \cap B) \subset (f(A) \cap f(B))<br>$</p>
+\iff \{\exists x | x \in A \} \Rightarrow \{\exists y | f(x) = y\}</script><p>$\textbf{ solution3 }$<br>$<br>f(A \cap B) \subset (f(A) \cap f(B))<br>$</p>
 <script type="math/tex; mode=display">
 f(A):=\{y \in Y | \exists x \ (x \in (A \cap B)) \wedge (y \in f(x))\} \\
 \{\exists x, x \in (A \cap B) \wedge y \in f(x)\} \Rightarrow \{\exists x | (x \in A) \wedge (y \in f(x)) \wedge (x \in B) \wedge (y \in f(x)\} \\
-\Rightarrow f(A) \cap f(B)</script><h3 id="solution4-1"><a href="#solution4-1" class="headerlink" title="solution4"></a>solution4</h3><p>$<br>f(A \cap B) = f(A) \cap f(B)<br>$</p>
+\Rightarrow f(A) \cap f(B)</script><p>$\textbf{ solution4 }$<br>$<br>f(A \cap B) = f(A) \cap f(B)<br>$</p>
 <script type="math/tex; mode=display">
 f(A \cap B):= \{y \in Y | \exists x, (x \in (A \cap B) \wedge (y \in f(x)))\} \\
 \{\exists x,y | ((x \in A) \vee (x \in B)) \wedge (y \in f(x))\} \\
 \iff \{\exists x,y | (x \in A \wedge y \in f(x)) \vee (x \in B \wedge y \in f(x))\} \\
-\iff f(A) \cup f(B)</script><h3 id="solution5"><a href="#solution5" class="headerlink" title="solution5"></a>solution5</h3><p>$<br>A^{\prime} \subset B^{\prime} \Rightarrow f^{-1}\left(A^{\prime}\right) \subset f^{-1}\left(B^{\prime}\right)<br>$<br>需要用到定义<br>$<br>f^{-1}(B)={x \in X | f(x) \in B}<br>$</p>
+\iff f(A) \cup f(B)</script><p>$\textbf{ solution5 }$<br>$<br>A^{\prime} \subset B^{\prime} \Rightarrow f^{-1}\left(A^{\prime}\right) \subset f^{-1}\left(B^{\prime}\right)<br>$<br>需要用到定义<br>$<br>f^{-1}(B)={x \in X | f(x) \in B}<br>$</p>
 <script type="math/tex; mode=display">
 A^{\prime} \subset B^{\prime} \iff f(x) \in A^{\prime} \Rightarrow f(x) \in B^{\prime}
 \iff \left\{x \in X | f(x) \in A^{\prime}\right\} \Rightarrow\left\{x \in X | f(x) \in B^{\prime}\right\} \\
-f^{-1}(A) \subset f^{-1}(B)</script><h3 id="solution6"><a href="#solution6" class="headerlink" title="solution6"></a>solution6</h3><p>$<br>f^{-1}\left(A^{\prime} \cap B^{\prime}\right)=f^{-1}\left(A^{\prime}\right) \cap f^{-1}\left(B^{\prime}\right)<br>$</p>
+f^{-1}(A) \subset f^{-1}(B)</script><p>$\textbf{ solution6 }$<br>$<br>f^{-1}\left(A^{\prime} \cap B^{\prime}\right)=f^{-1}\left(A^{\prime}\right) \cap f^{-1}\left(B^{\prime}\right)<br>$</p>
 <script type="math/tex; mode=display">
 \left\{x \in X |\left(f(x) \in A^{\prime}\right) \wedge\left(f(x) \in B^{\prime}\right)\right\} \\
 \Leftrightarrow\left\{x \in X\left|f(x) \in A^{\prime}\right\} \cap\left\{x \in X | f(x) \in B^{\prime}\right\}\right.\\
-\iff f^{-1}\left(A^{\prime}\right) \cap f^{-1}\left(B^{\prime}\right)</script><h3 id="solution7"><a href="#solution7" class="headerlink" title="solution7"></a>solution7</h3><p>$<br>f^{-1}\left(A^{\prime} \cup B^{\prime}\right)=f^{-1}\left(A^{\prime}\right) \cup f^{-1}\left(B^{\prime}\right)<br>$<br>同理可证</p>
-<h3 id="solution8"><a href="#solution8" class="headerlink" title="solution8"></a>solution8</h3><p>$<br>f^{-1}(A / B)=f^{-1}(A) / f^{-1}(B)<br>$</p>
+\iff f^{-1}\left(A^{\prime}\right) \cap f^{-1}\left(B^{\prime}\right)</script><p>$\textbf{ solution7 }$<br>$<br>f^{-1}\left(A^{\prime} \cup B^{\prime}\right)=f^{-1}\left(A^{\prime}\right) \cup f^{-1}\left(B^{\prime}\right)<br>$<br>同理可证</p>
+<p>$\textbf{solution8 }$<br>$<br>f^{-1}(A / B)=f^{-1}(A) / f^{-1}(B)<br>$</p>
 <script type="math/tex; mode=display">
 \{x \in X |(f(x) \in A) \wedge(f(x) \notin B)\} \iff \left\{x \in X\left|f(x) \in A\} \cap\left\{x \in X | f^{\prime}(x) \notin B\right\}\right.\right. \\
-\Leftrightarrow f^{-1}(A) / f^{-1}(B)</script><h3 id="solution9"><a href="#solution9" class="headerlink" title="solution9"></a>solution9</h3><p>$f^{-1}\left(C_{Y} A\right)=C_{X} f^{-1}(A)$</p>
+\Leftrightarrow f^{-1}(A) / f^{-1}(B)</script><p>$\textbf{ solution9 }$<br>$f^{-1}\left(C_{Y} A\right)=C_{X} f^{-1}(A)$</p>
 <script type="math/tex; mode=display">
 C_{X} f^{-1}(A)=X-\{x \in X |f(x) \in A\} \\
-=\{x \in X | f(x) \notin A\}=\left\{x \in X | f(x) \in C_{Y} A\right\} = f^{-1}\left(C_{Y} A\right)</script><h3 id="solution10"><a href="#solution10" class="headerlink" title="solution10"></a>solution10</h3><p>$<br>\begin{aligned}<br>&amp;\forall A, \ A \subset X\<br>&amp;\forall B , \ B \subset Y<br>\end{aligned}<br>$<br>有 $f^{-1}(f(A)) \supset A$</p>
+=\{x \in X | f(x) \notin A\}=\left\{x \in X | f(x) \in C_{Y} A\right\} = f^{-1}\left(C_{Y} A\right)</script><p>$\textbf{ solution10 }$<br>$<br>\begin{aligned}<br>&amp;\forall A, \ A \subset X\<br>&amp;\forall B , \ B \subset Y<br>\end{aligned}<br>$<br>有 $f^{-1}(f(A)) \supset A$</p>
 <p>需要用到的很重要的结论是</p>
 <script type="math/tex; mode=display">f(A)=\{y \in Y | \exists x, \quad(x \in A) \wedge(y \in f(x))\}</script><script type="math/tex; mode=display">
 \text { i) } \quad x \in A \Rightarrow f(x) \in f(A) \\
 \text {ii)} \quad A \subset X \Rightarrow x \in A, x \in X \\
 \Rightarrow \{x \in X | f(x) \in f(A)\}=f^{-1}(f(x)) \\
 let \ \textbf{M} = \{x \in X | f(x) \in f(A)\}</script><script type="math/tex; mode=display">
-\iff \{x \in A \Rightarrow x \in \textbf{M} \} \Rightarrow A \subset M \iff f^{-1}(f(A)) \supset A</script><h3 id="solution11"><a href="#solution11" class="headerlink" title="solution11"></a>solution11</h3><p>$f\left(f^{-1}(B)\right) \subset B$</p>
+\iff \{x \in A \Rightarrow x \in \textbf{M} \} \Rightarrow A \subset M \iff f^{-1}(f(A)) \supset A</script><p>$\textbf{ solution11 }$<br>$f\left(f^{-1}(B)\right) \subset B$</p>
 <script type="math/tex; mode=display">
 M=f^{-1}(B)=\{x \in X | f(x) \in B\} \\
 f(M)=\{y \in Y, \exists x|(x \in M) \wedge(y \in f(x))\} \\
@@ -335,7 +335,7 @@ f(M)=\{y \in Y, \exists x|(x \in M) \wedge(y \in f(x))\} \\
 <script type="math/tex; mode=display">
 \exists x_i, f(x_i) \in B \\
 \Leftrightarrow\{y \in Y |(f(x) \in B) \wedge(y \in f(x))\} \subset B \\
-\iff f(f^{-1}(B)) \subset B</script><h2 id="函数的其他命题（一）"><a href="#函数的其他命题（一）" class="headerlink" title="函数的其他命题（一）"></a>函数的其他命题（一）</h2><h3 id="solution1-2"><a href="#solution1-2" class="headerlink" title="solution1"></a>solution1</h3><p>$<br>\mathcal{R}_1 \subset X \times Y, \quad \mathcal{R}_2 \subset Y \times X<br>$ 满足<br>$\left(\mathcal{R}_{1} \circ \mathcal{R}_{2}=\Delta_{x}\right) \wedge\left(\mathcal{R}_{2} \circ \mathcal{R}_{1}=\Delta_{Y}\right)$<br>它们都是函数关系</p>
+\iff f(f^{-1}(B)) \subset B</script><h2 id="函数的其他命题（一）"><a href="#函数的其他命题（一）" class="headerlink" title="函数的其他命题（一）"></a>函数的其他命题（一）</h2><p>$\textbf{ solution1 }$<br>$<br>\mathcal{R}_1 \subset X \times Y, \quad \mathcal{R}_2 \subset Y \times X<br>$ 满足<br>$\left(\mathcal{R}_{1} \circ \mathcal{R}_{2}=\Delta_{x}\right) \wedge\left(\mathcal{R}_{2} \circ \mathcal{R}_{1}=\Delta_{Y}\right)$<br>它们都是函数关系</p>
 <script type="math/tex; mode=display">
 \left\{\begin{array}{l}
 \mathcal{R}_{1} \subset X \times Y \\
@@ -348,28 +348,32 @@ f(M)=\{y \in Y, \exists x|(x \in M) \wedge(y \in f(x))\} \\
 x \mathcal{R} y_{2}=\left\{\exists y_{2}, \quad\left(x \mathcal{R}_1y_{2}\right) \wedge\left(y_{2} \mathcal{R}_{2} x\right)\right\}=\Delta_{Y}
 \end{array}\right.
 \iff y_1=y_2</script><p>同理可证，$\mathcal{R}_2 \circ \mathcal{R}_1$为函数关系</p>
-<h3 id="solution2-2"><a href="#solution2-2" class="headerlink" title="solution2"></a>solution2</h3><p>$\mathcal{R} \subset X^{2}$，传递性等价于$\mathcal{R} \circ \mathcal{R} \subset \mathcal{R}$</p>
+<p>$\textbf{ solution2 }$<br>$\mathcal{R} \subset X^{2}$，传递性等价于$\mathcal{R} \circ \mathcal{R} \subset \mathcal{R}$</p>
 <p>$\text{i)}$， 根据传递性 $(a \mathcal{R} b) \wedge (b \mathcal{R} c) \Rightarrow (a \mathcal{R} c)$<br>$\exists a \in X, \exists b \in X$， 因为 $\mathcal{R}$ 是建立在 $X \times X$ 上的关系<br>所以有 $c \in X$</p>
 <p>$\text{ii)}$，有 </p>
 <script type="math/tex; mode=display">\mathcal{R} \circ \mathcal{R}=\{\exists x,(x \mathcal{R} x) \wedge(x \mathcal{R} x)\} \subset\{\forall x | x \in X \times  X\} \subset \mathcal{R} \\
-\iff \mathcal{R} \circ \mathcal{R} \subset \mathcal{R}</script><h3 id="solution3-2"><a href="#solution3-2" class="headerlink" title="solution3"></a>solution3</h3><p>$\mathcal{R}’ \subset Y \times X \ \text{和} \ \mathcal{R} \subset X \times Y \ \text{满足} \  (y \mathcal{R}’ x) \Leftrightarrow (x \mathcal{R} y), \text{则} \ \mathcal{R}’ \text{是} \ \mathcal{R} \text{的转置关系}$<br>$\mathcal{R} \subset X^2 \text{的反对称性等价于} \ \mathcal{R} \cap \mathcal{R}’ \subset \Delta_X$</p>
+\iff \mathcal{R} \circ \mathcal{R} \subset \mathcal{R}</script><p>$\textbf{ solution3 }$<br>$\mathcal{R}’ \subset Y \times X \ \text{和} \ \mathcal{R} \subset X \times Y \ \text{满足} \  (y \mathcal{R}’ x) \Leftrightarrow (x \mathcal{R} y), \text{则} \ \mathcal{R}’ \text{是} \ \mathcal{R} \text{的转置关系}$<br>$\mathcal{R} \subset X^2 \text{的反对称性等价于} \ \mathcal{R} \cap \mathcal{R}’ \subset \Delta_X$</p>
 <script type="math/tex; mode=display">\exists a \in X, \exists b \in X, \quad(a \mathcal{R} b) \wedge(b \mathcal{R} a) \Rightarrow a=b</script><script type="math/tex; mode=display">
 \text{因为} (b \mathcal{R} a) \Leftrightarrow (a \mathcal{R}' b)
 \iff (a \mathcal{R} b) \wedge (a \mathcal{R}' b) \Rightarrow a = b
 \iff (\mathcal{R} \cap \mathcal{R}') X = X \\
-\text{所以有} \mathcal{R} \cap \mathcal{R}' \subset \Delta_X</script><h3 id="solution4-2"><a href="#solution4-2" class="headerlink" title="solution4"></a>solution4</h3><p>$\text{当且仅当} \mathcal{R} \cup \mathcal{R}’ = X^2 \text{时，集合} X \text{中的任意两个元素由} \mathcal{R} \subset X^2 \text{相联系}$</p>
+\text{所以有} \mathcal{R} \cap \mathcal{R}' \subset \Delta_X</script><p>$\textbf{ solution4 }$<br>$\text{当且仅当} \mathcal{R} \cup \mathcal{R}’ = X^2 \text{时，集合} X \text{中的任意两个元素由} \mathcal{R} \subset X^2 \text{相联系}$</p>
 <script type="math/tex; mode=display">
 \text{因为} \mathcal{R} \subset X^2, \quad 
 \forall a, b \in X, \quad a \mathcal{R} b \in X \Leftrightarrow  b \mathcal{R}' a \in X \\
 \text{所以} (a \mathcal{R} b) \cup (b \mathcal{R}' a) \in X^2 \\
 \iff \mathcal{R} \cup \mathcal{R}' = X^2</script><script type="math/tex; mode=display">
 \text{另一方面}, \mathcal{R} \cup \mathcal{R}'，\text{显然} \mathcal{R} \subset X^2, \ \mathcal{R}' \subset X^2</script><h2 id="函数的其他命题（二）"><a href="#函数的其他命题（二）" class="headerlink" title="函数的其他命题（二）"></a>函数的其他命题（二）</h2><p>$f:X \to Y\text{是映射}， y \in Y的原像f^{-1}(y) \subset X 称为 y上的层$</p>
-<h3 id="solution1-3"><a href="#solution1-3" class="headerlink" title="solution1"></a>solution1</h3><p>$x_1 \in X, x_2 \in X, \text{如果} f(x_1)=f(x_2)，\text{认为} x_1, x_2 \text{由关系} \mathcal{R} \subset X^2 \text{相联系，并记作} x_1 \mathcal{R} x_2, \mathcal{R}\text{是等价关系}$</p>
+<p>$\textbf{ solution1 }$<br>$x_1 \in X, x_2 \in X, \text{如果} f(x_1)=f(x_2)，\text{认为} x_1, x_2 \text{由关系} \mathcal{R} \subset X^2 \text{相联系，并记作} x_1 \mathcal{R} x_2, \mathcal{R}\text{是等价关系}$</p>
 <script type="math/tex; mode=display">
 \text{i)， 很显然} x_1 \mathcal{R} x_2 = x_2 \mathcal{R} x_1 \\
 \text{ii)} \ x_1 \mathcal{R} a := f(x_1)=f(a), \quad a \mathcal{R} x_2:=f(a)=f(x_2) \\
 (x_1 \mathcal{R} a) \wedge (a \mathcal{R} x_2) \Rightarrow f(x_1)=f(a)=f(x_2) \Rightarrow f(x_1)=f(x_2) \\
-\text{是等价关系}</script>
+\text{是等价关系}</script><p>$\textbf { solution2 }$<br>$\text{i)} \quad f: X\to Y \text{的层互不相交，而所有层的并集是整个集合} X$</p>
+<script type="math/tex; mode=display">
+\text{如果} X \to Y \text{的层相交}, f^{-1}(y_1) = f^{-1}(y_2) = x_1 \\
+f(x_1) = y_1 \quad f(x_1) = y_2, \text{与映射定义矛盾}</script><p>$\text{ii)} \quad f^{-1}(y_1) \cup f^{-1}(y_2) \cup \cdots f^{-1}(y_n) = x_1 \cup x_2 \cup \cdots \cup x_n = X$</p>
+<h2 id="映射的性质"><a href="#映射的性质" class="headerlink" title="映射的性质"></a>映射的性质</h2>
       
     </div>
     <footer class="article-footer">
@@ -456,7 +460,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1"><span class="nav-number">1.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2"><span class="nav-number">1.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3"><span class="nav-number">1.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4"><span class="nav-number">1.4.</span> <span class="nav-text">solution4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的表示"><span class="nav-number">2.</span> <span class="nav-text">函数的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-1"><span class="nav-number">2.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2-1"><span class="nav-number">2.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3-1"><span class="nav-number">2.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4-1"><span class="nav-number">2.4.</span> <span class="nav-text">solution4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution5"><span class="nav-number">2.5.</span> <span class="nav-text">solution5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution6"><span class="nav-number">2.6.</span> <span class="nav-text">solution6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution7"><span class="nav-number">2.7.</span> <span class="nav-text">solution7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution8"><span class="nav-number">2.8.</span> <span class="nav-text">solution8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution9"><span class="nav-number">2.9.</span> <span class="nav-text">solution9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution10"><span class="nav-number">2.10.</span> <span class="nav-text">solution10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution11"><span class="nav-number">2.11.</span> <span class="nav-text">solution11</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（一）"><span class="nav-number">3.</span> <span class="nav-text">函数的其他命题（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-2"><span class="nav-number">3.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2-2"><span class="nav-number">3.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3-2"><span class="nav-number">3.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4-2"><span class="nav-number">3.4.</span> <span class="nav-text">solution4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（二）"><span class="nav-number">4.</span> <span class="nav-text">函数的其他命题（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-3"><span class="nav-number">4.1.</span> <span class="nav-text">solution1</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的表示"><span class="nav-number">2.</span> <span class="nav-text">函数的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（一）"><span class="nav-number">3.</span> <span class="nav-text">函数的其他命题（一）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（二）"><span class="nav-number">4.</span> <span class="nav-text">函数的其他命题（二）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#映射的性质"><span class="nav-number">5.</span> <span class="nav-text">映射的性质</span></a></li></ol>
     
     </div>
   </aside>

@@ -32,7 +32,7 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-20T05:44:45.415Z">
+<meta property="og:updated_time" content="2020-04-20T07:41:18.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些通用的数学概念和记号">
 <meta name="twitter:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
@@ -282,7 +282,48 @@ y \in B \Rightarrow y\in Y \iff (B \subset Y)</script><p>$2)$<br>根据命题等
 \{(u, v) | (u \in X) \wedge (v \in Y)\} \Rightarrow \{p | p \in A\} \\
 \{(u, v) | (u \in X') \wedge (v \in Y')\} \Rightarrow \{p | p \in B\} \\
 \iff \{p | (p \in A) \wedge (p \in  B)\} \iff A \cap B
-\iff (X \times Y) \cap (X' \times Y')</script>
+\iff (X \times Y) \cap (X' \times Y')</script><h2 id="函数的表示"><a href="#函数的表示" class="headerlink" title="函数的表示"></a>函数的表示</h2><h3 id="solution1-1"><a href="#solution1-1" class="headerlink" title="solution1"></a>solution1</h3><p>$<br>(A \subset B) \Rightarrow (f(A) \subset f(B))<br>$</p>
+<p>$1) (A \subset B) \Rightarrow \quad f(A) \subset f(B)$</p>
+<script type="math/tex; mode=display">
+f(A) := \{y \in Y | \exists x, (x \in A) \wedge (y \in f(x))\} \\
+A \subset B 
+\iff (x \in A \Rightarrow x \in B) \\
+\Rightarrow \{y \in Y | \exists x, (x \in B) \wedge (y \in f(x))\} = f(B)</script><p>$2) \ (f(A) \subset f(B)) \not \Rightarrow (A \subset B)$</p>
+<script type="math/tex; mode=display">
+\{y \in Y | \exists x, (x \in A)\} \Rightarrow \{y \in Y | \exists x, x \in B\} \\
+\exists x, (x \in A) \Longrightarrow \exists x, (x \in B) \\
+\iff \exists x, \ (x \in A) \wedge (x \not \in B)</script><h3 id="solution2-1"><a href="#solution2-1" class="headerlink" title="solution2"></a>solution2</h3><p>$<br>A \neq \emptyset \Rightarrow f(A) \neq \emptyset<br>$</p>
+<script type="math/tex; mode=display">
+\exists x, x \in A \\ 
+Let \ x_1 \in A \Rightarrow f(x_1) = y_1 \Leftrightarrow \exists y_1 \in Y \\
+\iff \{\exists x | x \in A \} \Rightarrow \{\exists y | f(x) = y\}</script><h3 id="solution3-1"><a href="#solution3-1" class="headerlink" title="solution3"></a>solution3</h3><p>$<br>f(A \cap B) \subset (f(A) \cap f(B))<br>$</p>
+<script type="math/tex; mode=display">
+f(A):=\{y \in Y | \exists x \ (x \in (A \cap B)) \wedge (y \in f(x))\} \\
+\{\exists x, x \in (A \cap B) \wedge y \in f(x)\} \Rightarrow \{\exists x | (x \in A) \wedge (y \in f(x)) \wedge (x \in B) \wedge (y \in f(x)\} \\
+\Rightarrow f(A) \cap f(B)</script><h3 id="solution4-1"><a href="#solution4-1" class="headerlink" title="solution4"></a>solution4</h3><p>$<br>f(A \cap B) = f(A) \cap f(B)<br>$</p>
+<script type="math/tex; mode=display">
+f(A \cap B):= \{y \in Y | \exists x, (x \in (A \cap B) \wedge (y \in f(x)))\} \\
+\{\exists x,y | ((x \in A) \vee (x \in B)) \wedge (y \in f(x))\} \\
+\iff \{\exists x,y | (x \in A \wedge y \in f(x)) \vee (x \in B \wedge y \in f(x))\} \\
+\iff f(A) \cup f(B)</script><h3 id="solution5"><a href="#solution5" class="headerlink" title="solution5"></a>solution5</h3><p>$<br>A^{\prime} \subset B^{\prime} \Rightarrow f^{-1}\left(A^{\prime}\right) \subset f^{-1}\left(B^{\prime}\right)<br>$<br>需要用到定义<br>$<br>f^{-1}(B)={x \in X | f(x) \in B}<br>$</p>
+<script type="math/tex; mode=display">
+A^{\prime} \subset B^{\prime} \iff f(x) \in A^{\prime} \Rightarrow f(x) \in B^{\prime}
+\iff \left\{x \in X | f(x) \in A^{\prime}\right\} \Rightarrow\left\{x \in X | f(x) \in B^{\prime}\right\} \\
+f^{-1}(A) \subset f^{-1}(B)</script><h3 id="solution6"><a href="#solution6" class="headerlink" title="solution6"></a>solution6</h3><p>$<br>f^{-1}\left(A^{\prime} \cap B^{\prime}\right)=f^{-1}\left(A^{\prime}\right) \cap f^{-1}\left(B^{\prime}\right)<br>$</p>
+<script type="math/tex; mode=display">
+\left\{x \in X |\left(f(x) \in A^{\prime}\right) \wedge\left(f(x) \in B^{\prime}\right)\right\} \\
+\Leftrightarrow\left\{x \in X\left|f(x) \in A^{\prime}\right\} \cap\left\{x \in X | f(x) \in B^{\prime}\right\}\right.\\
+\iff f^{-1}\left(A^{\prime}\right) \cap f^{-1}\left(B^{\prime}\right)</script><h3 id="solution7"><a href="#solution7" class="headerlink" title="solution7"></a>solution7</h3><p>$<br>f^{-1}\left(A^{\prime} \cup B^{\prime}\right)=f^{-1}\left(A^{\prime}\right) \cup f^{-1}\left(B^{\prime}\right)<br>$<br>同理可证</p>
+<h3 id="solution8"><a href="#solution8" class="headerlink" title="solution8"></a>solution8</h3><p>$<br>f^{-1}(A / B)=f^{-1}(A) / f^{-1}(B)<br>$</p>
+<script type="math/tex; mode=display">
+\{x \in X |(f(x) \in A) \wedge(f(x) \notin B)\} \iff \left\{x \in X\left|f(x) \in A\} \cap\left\{x \in X | f^{\prime}(x) \notin B\right\}\right.\right. \\
+\Leftrightarrow f^{-1}(A) / f^{-1}(B)</script><h3 id="solution9"><a href="#solution9" class="headerlink" title="solution9"></a>solution9</h3><p>$f^{-1}\left(C_{Y} A\right)=C_{X} f^{-1}(A)$</p>
+<script type="math/tex; mode=display">
+C_{X} f^{-1}(A)=X-\{x \in X |f(x) \in A\} \\
+=\{x \in X | f(x) \notin A\}=\left\{x \in X | f(x) \in C_{Y} A\right\} = f^{-1}\left(C_{Y} A\right)</script><h3 id="solution10"><a href="#solution10" class="headerlink" title="solution10"></a>solution10</h3><p>$<br>\begin{aligned}<br>&amp;\forall A, \ A \subset X\<br>&amp;\forall B , \ B \subset Y<br>\end{aligned}<br>$<br>有 $f^{-1}(f(A)) \supset A$</p>
+<script type="math/tex; mode=display">
+\text { i) } \quad x \in A \Rightarrow f(x) \in f(A) \\
+\text {ii)} \quad A \subset X \Rightarrow x \in A, x \in X</script>
       
     </div>
     <footer class="article-footer">
@@ -369,7 +410,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1"><span class="nav-number">1.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2"><span class="nav-number">1.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3"><span class="nav-number">1.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4"><span class="nav-number">1.4.</span> <span class="nav-text">solution4</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1"><span class="nav-number">1.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2"><span class="nav-number">1.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3"><span class="nav-number">1.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4"><span class="nav-number">1.4.</span> <span class="nav-text">solution4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的表示"><span class="nav-number">2.</span> <span class="nav-text">函数的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-1"><span class="nav-number">2.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2-1"><span class="nav-number">2.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3-1"><span class="nav-number">2.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4-1"><span class="nav-number">2.4.</span> <span class="nav-text">solution4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution5"><span class="nav-number">2.5.</span> <span class="nav-text">solution5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution6"><span class="nav-number">2.6.</span> <span class="nav-text">solution6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution7"><span class="nav-number">2.7.</span> <span class="nav-text">solution7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution8"><span class="nav-number">2.8.</span> <span class="nav-text">solution8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution9"><span class="nav-number">2.9.</span> <span class="nav-text">solution9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution10"><span class="nav-number">2.10.</span> <span class="nav-text">solution10</span></a></li></ol></li></ol>
     
     </div>
   </aside>

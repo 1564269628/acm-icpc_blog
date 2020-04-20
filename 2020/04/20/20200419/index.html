@@ -32,7 +32,7 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-20T08:39:35.246Z">
+<meta property="og:updated_time" content="2020-04-20T11:34:27.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些通用的数学概念和记号">
 <meta name="twitter:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
@@ -335,7 +335,41 @@ f(M)=\{y \in Y, \exists x|(x \in M) \wedge(y \in f(x))\} \\
 <script type="math/tex; mode=display">
 \exists x_i, f(x_i) \in B \\
 \Leftrightarrow\{y \in Y |(f(x) \in B) \wedge(y \in f(x))\} \subset B \\
-\iff f(f^{-1}(B)) \subset B</script>
+\iff f(f^{-1}(B)) \subset B</script><h2 id="函数的其他命题（一）"><a href="#函数的其他命题（一）" class="headerlink" title="函数的其他命题（一）"></a>函数的其他命题（一）</h2><h3 id="solution1-2"><a href="#solution1-2" class="headerlink" title="solution1"></a>solution1</h3><p>$<br>\mathcal{R}_1 \subset X \times Y, \quad \mathcal{R}_2 \subset Y \times X<br>$ 满足<br>$\left(\mathcal{R}_{1} \circ \mathcal{R}_{2}=\Delta_{x}\right) \wedge\left(\mathcal{R}_{2} \circ \mathcal{R}_{1}=\Delta_{Y}\right)$<br>它们都是函数关系</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{l}
+\mathcal{R}_{1} \subset X \times Y \\
+\mathcal{R}_{2} \subset Y \times X
+\end{array}\right.
+ \Rightarrow \mathcal{R}_{2} \circ \mathcal{R}_{1}= \left\{\exists y,(x \mathcal{R}_1 y) \wedge\left(y \mathcal{R}_{2} x\right)\right\} = \Delta_y</script><p>不妨设 $\mathcal{R} = \mathcal{R}_2 \circ \mathcal{R}_1$</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{l}
+\left.x \mathcal{R} y_{1}=\{\exists y_{1},\quad\left(x \mathcal{R}_1 y_{1}\right) \wedge\left(y_{1}\mathcal{R}_{2} x\right)\right\}=\Delta_{Y} \\
+x \mathcal{R} y_{2}=\left\{\exists y_{2}, \quad\left(x \mathcal{R}_1y_{2}\right) \wedge\left(y_{2} \mathcal{R}_{2} x\right)\right\}=\Delta_{Y}
+\end{array}\right.
+\iff y_1=y_2</script><p>同理可证，$\mathcal{R}_2 \circ \mathcal{R}_1$为函数关系</p>
+<h3 id="solution2-2"><a href="#solution2-2" class="headerlink" title="solution2"></a>solution2</h3><p>$\mathcal{R} \subset X^{2}$，传递性等价于$\mathcal{R} \circ \mathcal{R} \subset \mathcal{R}$</p>
+<p>$\text{i)}$， 根据传递性 $(a \mathcal{R} b) \wedge (b \mathcal{R} c) \Rightarrow (a \mathcal{R} c)$<br>$\exists a \in X, \exists b \in X$， 因为 $\mathcal{R}$ 是建立在 $X \times X$ 上的关系<br>所以有 $c \in X$</p>
+<p>$\text{ii)}$，有 </p>
+<script type="math/tex; mode=display">\mathcal{R} \circ \mathcal{R}=\{\exists x,(x \mathcal{R} x) \wedge(x \mathcal{R} x)\} \subset\{\forall x | x \in X \times  X\} \subset \mathcal{R} \\
+\iff \mathcal{R} \circ \mathcal{R} \subset \mathcal{R}</script><h3 id="solution3-2"><a href="#solution3-2" class="headerlink" title="solution3"></a>solution3</h3><p>$\mathcal{R}’ \subset Y \times X \ \text{和} \ \mathcal{R} \subset X \times Y \ \text{满足} \  (y \mathcal{R}’ x) \Leftrightarrow (x \mathcal{R} y), \text{则} \ \mathcal{R}’ \text{是} \ \mathcal{R} \text{的转置关系}$<br>$\mathcal{R} \subset X^2 \text{的反对称性等价于} \ \mathcal{R} \cap \mathcal{R}’ \subset \Delta_X$</p>
+<script type="math/tex; mode=display">\exists a \in X, \exists b \in X, \quad(a \mathcal{R} b) \wedge(b \mathcal{R} a) \Rightarrow a=b</script><script type="math/tex; mode=display">
+\text{因为} (b \mathcal{R} a) \Leftrightarrow (a \mathcal{R}' b)
+\iff (a \mathcal{R} b) \wedge (a \mathcal{R}' b) \Rightarrow a = b
+\iff (\mathcal{R} \cap \mathcal{R}') X = X \\
+\text{所以有} \mathcal{R} \cap \mathcal{R}' \subset \Delta_X</script><h3 id="solution4-2"><a href="#solution4-2" class="headerlink" title="solution4"></a>solution4</h3><p>$\text{当且仅当} \mathcal{R} \cup \mathcal{R}’ = X^2 \text{时，集合} X \text{中的任意两个元素由} \mathcal{R} \subset X^2 \text{相联系}$</p>
+<script type="math/tex; mode=display">
+\text{因为} \mathcal{R} \subset X^2, \quad 
+\forall a, b \in X, \quad a \mathcal{R} b \in X \Leftrightarrow  b \mathcal{R}' a \in X \\
+\text{所以} (a \mathcal{R} b) \cup (b \mathcal{R}' a) \in X^2 \\
+\iff \mathcal{R} \cup \mathcal{R}' = X^2</script><script type="math/tex; mode=display">
+\text{另一方面}, \mathcal{R} \cup \mathcal{R}'，\text{显然} \mathcal{R} \subset X^2, \ \mathcal{R}' \subset X^2</script><h2 id="函数的其他命题（二）"><a href="#函数的其他命题（二）" class="headerlink" title="函数的其他命题（二）"></a>函数的其他命题（二）</h2><p>$f:X \to Y\text{是映射}， y \in Y的原像f^{-1}(y) \subset X 称为 y上的层$</p>
+<h3 id="solution1-3"><a href="#solution1-3" class="headerlink" title="solution1"></a>solution1</h3><p>$x_1 \in X, x_2 \in X, \text{如果} f(x_1)=f(x_2)，\text{认为} x_1, x_2 \text{由关系} \mathcal{R} \subset X^2 \text{相联系，并记作} x_1 \mathcal{R} x_2, \mathcal{R}\text{是等价关系}$</p>
+<script type="math/tex; mode=display">
+\text{i)， 很显然} x_1 \mathcal{R} x_2 = x_2 \mathcal{R} x_1 \\
+\text{ii)} \ x_1 \mathcal{R} a := f(x_1)=f(a), \quad a \mathcal{R} x_2:=f(a)=f(x_2) \\
+(x_1 \mathcal{R} a) \wedge (a \mathcal{R} x_2) \Rightarrow f(x_1)=f(a)=f(x_2) \Rightarrow f(x_1)=f(x_2) \\
+\text{是等价关系}</script>
       
     </div>
     <footer class="article-footer">
@@ -422,7 +456,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1"><span class="nav-number">1.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2"><span class="nav-number">1.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3"><span class="nav-number">1.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4"><span class="nav-number">1.4.</span> <span class="nav-text">solution4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的表示"><span class="nav-number">2.</span> <span class="nav-text">函数的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-1"><span class="nav-number">2.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2-1"><span class="nav-number">2.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3-1"><span class="nav-number">2.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4-1"><span class="nav-number">2.4.</span> <span class="nav-text">solution4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution5"><span class="nav-number">2.5.</span> <span class="nav-text">solution5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution6"><span class="nav-number">2.6.</span> <span class="nav-text">solution6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution7"><span class="nav-number">2.7.</span> <span class="nav-text">solution7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution8"><span class="nav-number">2.8.</span> <span class="nav-text">solution8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution9"><span class="nav-number">2.9.</span> <span class="nav-text">solution9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution10"><span class="nav-number">2.10.</span> <span class="nav-text">solution10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution11"><span class="nav-number">2.11.</span> <span class="nav-text">solution11</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1"><span class="nav-number">1.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2"><span class="nav-number">1.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3"><span class="nav-number">1.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4"><span class="nav-number">1.4.</span> <span class="nav-text">solution4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的表示"><span class="nav-number">2.</span> <span class="nav-text">函数的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-1"><span class="nav-number">2.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2-1"><span class="nav-number">2.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3-1"><span class="nav-number">2.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4-1"><span class="nav-number">2.4.</span> <span class="nav-text">solution4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution5"><span class="nav-number">2.5.</span> <span class="nav-text">solution5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution6"><span class="nav-number">2.6.</span> <span class="nav-text">solution6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution7"><span class="nav-number">2.7.</span> <span class="nav-text">solution7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution8"><span class="nav-number">2.8.</span> <span class="nav-text">solution8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution9"><span class="nav-number">2.9.</span> <span class="nav-text">solution9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution10"><span class="nav-number">2.10.</span> <span class="nav-text">solution10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution11"><span class="nav-number">2.11.</span> <span class="nav-text">solution11</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（一）"><span class="nav-number">3.</span> <span class="nav-text">函数的其他命题（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-2"><span class="nav-number">3.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution2-2"><span class="nav-number">3.2.</span> <span class="nav-text">solution2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution3-2"><span class="nav-number">3.3.</span> <span class="nav-text">solution3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution4-2"><span class="nav-number">3.4.</span> <span class="nav-text">solution4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（二）"><span class="nav-number">4.</span> <span class="nav-text">函数的其他命题（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution1-3"><span class="nav-number">4.1.</span> <span class="nav-text">solution1</span></a></li></ol></li></ol>
     
     </div>
   </aside>

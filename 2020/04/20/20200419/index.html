@@ -32,7 +32,7 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-20T12:11:05.163Z">
+<meta property="og:updated_time" content="2020-04-20T14:18:48.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些通用的数学概念和记号">
 <meta name="twitter:description" content="最近想着有空的时候把数学捡起来那么先从分析学开始吧">
@@ -233,7 +233,6 @@
 <script type="math/tex; mode=display">
 \emptyset = (x \in X) \wedge (x \in C_MX)
 \\
-
 \begin{cases} 
 (x \in X) \wedge (y \in Y) = (x \in X) \wedge (x \in C_MX) &  \\
 (x \in X) \wedge (y \in Y) = (y \in Y) \wedge (y \in C_MY)  &  
@@ -244,12 +243,9 @@
 Y=C_MY\end{cases}
 \Rightarrow (x=\emptyset) \vee (y = \emptyset)</script><p>另一方面</p>
 <script type="math/tex; mode=display">
-(X = \emptyset) \vee (Y=\emptyset) \Rightarrow \forall(x,y), \ (x\in C_MX) \vee (y \in C_MY)
-\\
-
+(X = \emptyset) \vee (Y=\emptyset) \Rightarrow \forall(x,y), \ (x\in C_MX) \vee (y \in C_MY)</script><script type="math/tex; mode=display">
 \Rightarrow \forall (x,y), \ x \in C_M(X\times Y)
 \\
-
 \Rightarrow \forall (x,y), \ x \notin X\times Y</script><p>$X, Y$ 任意，所以 $X \times Y = \emptyset$</p>
 <p>$\textbf{solution2}$<br>$<br>(A\times B)\subset (X \times Y) \iff (A \subset X) \wedge (B \subset Y)<br>$</p>
 <p>$\textbf{proof}$</p>
@@ -260,12 +256,9 @@ P \Rightarrow Q   \iff (\lnot p \vee Q)</script><p>$1)$</p>
 <script type="math/tex; mode=display">
 (\lnot p) \vee ((x \in X) \wedge (y \in Y)) \iff (\lnot p \vee (x\in X)) \wedge (\lnot p \vee (y \in Y))
 \\
-
-\iff (p \Rightarrow (x \in X)) \wedge (p \Rightarrow (y \in Y))
-\\</script><script type="math/tex; mode=display">
+\iff (p \Rightarrow (x \in X)) \wedge (p \Rightarrow (y \in Y))</script><script type="math/tex; mode=display">
 x \in A \Rightarrow x\in X \iff (A \subset X)
 \\
-
 y \in B \Rightarrow y\in Y \iff (B \subset Y)</script><p>$2)$<br>根据命题等价性，右边推左边也同理</p>
 <p>$\textbf{ solution3 }$<br>$<br>(X \times Y) \cup (Z \times Y) = (X \cup Z) \times Y<br>$</p>
 <script type="math/tex; mode=display">
@@ -373,7 +366,36 @@ x \mathcal{R} y_{2}=\left\{\exists y_{2}, \quad\left(x \mathcal{R}_1y_{2}\right)
 <script type="math/tex; mode=display">
 \text{如果} X \to Y \text{的层相交}, f^{-1}(y_1) = f^{-1}(y_2) = x_1 \\
 f(x_1) = y_1 \quad f(x_1) = y_2, \text{与映射定义矛盾}</script><p>$\text{ii)} \quad f^{-1}(y_1) \cup f^{-1}(y_2) \cup \cdots f^{-1}(y_n) = x_1 \cup x_2 \cup \cdots \cup x_n = X$</p>
-<h2 id="映射的性质"><a href="#映射的性质" class="headerlink" title="映射的性质"></a>映射的性质</h2>
+<h2 id="映射的性质"><a href="#映射的性质" class="headerlink" title="映射的性质"></a>映射的性质</h2><p>$\textbf{solution1}$<br>$\textbf{映射} f:X \to Y \text{是满射, 当且仅当} \forall B \subset Y, f(f^{-1}(B))= B$</p>
+<script type="math/tex; mode=display">
+\text{a)} \quad \forall x \in f^{-1}(B), f(x) \in B \subset Y \\
+\forall x \in X, f(x) = \bigcup_{i=1} B_{i} = Y \iff f(X) = Y</script><script type="math/tex; mode=display">
+\text{b)} \quad 
+\forall B \subset Y, f(f^{-1}(B)) = B, \text{保证了} f \text{是满射}
+\text{，下面证明} f \text{为单射} \\
+\iff f(x_1)=f(x_2) \Rightarrow x_1=x_2 \\
+\text{不妨设} f(x_1) = f(x_2) = p \in Y \\
+f^{-1}(f(x_1)) = f^{-1}(p) = \{x\in A | f(x)=p\} = M_1 \subset A \\
+f^{-1}(f(x_2)) = f^{-1}(p) = M_2 \subset A \\
+f^{-1}(p) = M_1 = M_2, \text{即它的层是唯一的} \\
+f(x_1)=f(x_2) \Rightarrow x_1=x_2</script><p>$\textbf{solution2}$<br>$如果\ f:X \to Y 与\ g: Y\to X 满足\  g\circ f=e_X, e_X 为中性元，$<br>$则\ g \ 称为 \ f \ 的左逆映射，\ f \ 称为 \ g \ 的右逆映射，可能存在多个单侧逆映射$</p>
+<script type="math/tex; mode=display">
+\left(x_{1}, x_{2}, \ldots \ldots, x_{n} \ldots\right) \stackrel{f_{a}}{\rightarrow}\left(a, x_{1}, x_{n} \ldots x_{n}\right) \\
+注意到 a 的取值可以是任意的</script><p>$<br>\textbf{solution3}<br>$</p>
+<p>$<br>f: X \to Y \quad g: Y\to Z 是双射，映射 \ g \circ f : X \to Z 是双射，并且 (g\circ f)^{-1} = f^{-1} \circ g^{-1}<br>$</p>
+<script type="math/tex; mode=display">
+\text{i)} \quad 先证满射性，X \stackrel{f}{\rightarrow} Y\stackrel{g} \rightarrow Z \\
+(g \circ f) X = Z \\
+g \circ f 为满射</script><script type="math/tex; mode=display">
+\text{ii)} \quad 再证单射性，(g \circ f)(x_1)=(g\circ f)(x_2) \Rightarrow g(f(x_1))=g(f(x_2)) \\
+g 为单射，f(x_1)=f(x_2) \\
+f 为单射，x_1=x_2</script><script type="math/tex; mode=display">
+\text{iii)} \quad (f^{-1} \circ g^{-1}) \circ (g \circ f) = f^{-1} \circ (g^{-1}\circ g) \circ f= f^{-1} \circ e_Y \circ f \\
+= f^{-1} \circ f = e_X</script><p>$\textbf{solution4}$<br>$对于任何映射 \ f : X\to Y, 由 x \stackrel {F} \longmapsto (x, f(x)) 定义的映射$<br>$F: X \to X \times Y 是单射$</p>
+<script type="math/tex; mode=display">
+f(x_1) = f(x_2) \Rightarrow x_1 = x_2 \\
+\forall x_1 \neq x_2, f(x_1) \neq f(x_2) \Rightarrow (x_1, f(x_1)) \neq (x_2, f(x_2)) \\
+F(x_1)=F(x_2) \Rightarrow x_1 = x_2</script>
       
     </div>
     <footer class="article-footer">

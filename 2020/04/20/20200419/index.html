@@ -32,10 +32,12 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="最近想着有空的时候把数学捡起来这篇博文写了分析学中的集合论先从分析学开始吧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-20T20:08:47.673Z">
+<meta property="og:image" content="https://www.fogsail.net/2020/04/20/20200419/01.jpg">
+<meta property="og:updated_time" content="2020-04-21T23:04:04.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些通用的数学概念和记号">
 <meta name="twitter:description" content="最近想着有空的时候把数学捡起来这篇博文写了分析学中的集合论先从分析学开始吧">
+<meta name="twitter:image" content="https://www.fogsail.net/2020/04/20/20200419/01.jpg">
   
     <link rel="alternate" href="/atom.xml" title="算法小站" type="application/atom+xml">
   
@@ -395,7 +397,13 @@ f 为单射，x_1=x_2</script><script type="math/tex; mode=display">
 <script type="math/tex; mode=display">
 f(x_1) = f(x_2) \Rightarrow x_1 = x_2 \\
 \forall x_1 \neq x_2, f(x_1) \neq f(x_2) \Rightarrow (x_1, f(x_1)) \neq (x_2, f(x_2)) \\
-F(x_1)=F(x_2) \Rightarrow x_1 = x_2</script>
+F(x_1)=F(x_2) \Rightarrow x_1 = x_2</script><h2 id="极限理论基础"><a href="#极限理论基础" class="headerlink" title="极限理论基础"></a>极限理论基础</h2><p><img src="/2020/04/20/20200419/01.jpg" alt="01"><br>$极限为A，A的邻域之外，有有限个点，在数学上要注意表示形式$<br>$比如，证明极限的唯一性的时候，要想证明邻域重合$</p>
+<script type="math/tex; mode=display">
+\forall n > N_1, x_1 \in V(A_1) \\
+\forall n > N_2, x_2 \in V(A_2) \\
+不妨设 \ A_1 < A_2，N_1 < N_2 \\
+此时，使得 \ A_1 + \epsilon = A_2 - \epsilon \\
+\epsilon = \frac{A_1-A_2}{2}，更一般地，让 \ \epsilon = \frac{|A_1 - A_2|}{2}</script>
       
     </div>
     <footer class="article-footer">
@@ -482,7 +490,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的表示"><span class="nav-number">2.</span> <span class="nav-text">函数的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（一）"><span class="nav-number">3.</span> <span class="nav-text">函数的其他命题（一）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（二）"><span class="nav-number">4.</span> <span class="nav-text">函数的其他命题（二）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#映射的性质"><span class="nav-number">5.</span> <span class="nav-text">映射的性质</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合论一些结论的证明"><span class="nav-number">1.</span> <span class="nav-text">集合论一些结论的证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的表示"><span class="nav-number">2.</span> <span class="nav-text">函数的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（一）"><span class="nav-number">3.</span> <span class="nav-text">函数的其他命题（一）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的其他命题（二）"><span class="nav-number">4.</span> <span class="nav-text">函数的其他命题（二）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#映射的性质"><span class="nav-number">5.</span> <span class="nav-text">映射的性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极限理论基础"><span class="nav-number">6.</span> <span class="nav-text">极限理论基础</span></a></li></ol>
     
     </div>
   </aside>

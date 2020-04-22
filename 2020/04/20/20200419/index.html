@@ -33,7 +33,7 @@
 <meta property="og:description" content="最近想着有空的时候把数学捡起来这篇博文写了分析学中的集合论先从分析学开始吧">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/04/20/20200419/01.jpg">
-<meta property="og:updated_time" content="2020-04-22T06:26:33.684Z">
+<meta property="og:updated_time" content="2020-04-22T09:19:47.365Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些通用的数学概念和记号">
 <meta name="twitter:description" content="最近想着有空的时候把数学捡起来这篇博文写了分析学中的集合论先从分析学开始吧">
@@ -433,7 +433,22 @@ F(x_1)=F(x_2) \Rightarrow x_1 = x_2</script><h2 id="极限理论基础"><a href=
 此时构造出 \Delta y_{n}<\frac{1}{16} \frac{\varepsilon B^{2}}{(| A |+1)}, \Delta y_{n}<\min \left\{\frac{1}{16} \frac{\varepsilon B^{2}}{(| A |+1)}, \frac{|B|}{4}\right\}</script><p>$\textbf{ii)}$</p>
 <script type="math/tex; mode=display">
 \frac{1}{y_{n}}<\frac{2}{|B|}, \quad \Delta x_{n} \leqslant \frac{\varepsilon|B|}{8} \\
-\Delta x_{n} \leqslant \min \left\{\frac{\varepsilon|B|}{8}, 1\right\}</script>
+\Delta x_{n} \leqslant \min \left\{\frac{\varepsilon|B|}{8}, 1\right\}</script><p>$\textbf{solution3}$<br>$分析中很重要的一点，\textbf{集合变小时，下界不减小，上界不增大}$<br>$柯西准则的证明如下$<br>$\textbf{i)} \quad 基本数列是收敛数列$</p>
+<script type="math/tex; mode=display">
+\left|x_{m}-x_{n}\right|<\left|x_{m}-A\right|+\left|x_{n}-A\right| \\
+\text{if} \quad \forall k>N \quad,\left|x_{k}-A\right|<\frac{\varepsilon}{2} \Longrightarrow\left|x_{m}-x_{n}\right|<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon</script><p>$\textbf{ii)} \quad 收敛数列是基本数列$</p>
+<script type="math/tex; mode=display">
+a_{n}:=\inf _{k \geqslant n} x_{k} \quad b_{n}:=\sup _{k \geqslant n} x_{k} \\
+a_{n+1}:=\inf _{k \geqslant n+1} x_{k} \quad b_{n+1}:=\sup _{k \geqslant n+1} x_{k} \\
+\Rightarrow a_{n} \leqslant a_{n+1} \leqslant b_{n+1} \leqslant b_{n} \\
+根据闭区间套，[a_n, b_n]有公共点 A</script><script type="math/tex; mode=display">
+\left[a_{n}, b_{n}\right], \quad\left\{\begin{array}{l}
+\left|A-x_{k}\right| \leqslant b_{n}-a_{n} \\
+x_{n}-\delta \leqslant \inf \limits_{k \geqslant n} x_{k}=a_{n} \leqslant b_{n}=\sup\limits _{k \geqslant n} x_{k} \leqslant x_{n}+\delta, \delta=?
+\end{array}\right.</script><script type="math/tex; mode=display">
+b_{n}-a_{n} \leqslant 2 \delta<\varepsilon \Rightarrow \delta=\frac{\varepsilon}{3} \\
+x_{n}-\frac{\varepsilon}{3}<x_{k}<x_{n}+\frac{\varepsilon}{3} \\
+\left|A-x_{k}\right|<\varepsilon</script>
       
     </div>
     <footer class="article-footer">

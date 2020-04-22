@@ -33,7 +33,7 @@
 <meta property="og:description" content="最近想着有空的时候把数学捡起来这篇博文写了分析学中的集合论先从分析学开始吧">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/04/20/20200419/01.jpg">
-<meta property="og:updated_time" content="2020-04-21T23:04:04.438Z">
+<meta property="og:updated_time" content="2020-04-22T06:26:33.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些通用的数学概念和记号">
 <meta name="twitter:description" content="最近想着有空的时候把数学捡起来这篇博文写了分析学中的集合论先从分析学开始吧">
@@ -403,7 +403,37 @@ F(x_1)=F(x_2) \Rightarrow x_1 = x_2</script><h2 id="极限理论基础"><a href=
 \forall n > N_2, x_2 \in V(A_2) \\
 不妨设 \ A_1 < A_2，N_1 < N_2 \\
 此时，使得 \ A_1 + \epsilon = A_2 - \epsilon \\
-\epsilon = \frac{A_1-A_2}{2}，更一般地，让 \ \epsilon = \frac{|A_1 - A_2|}{2}</script>
+\epsilon = \frac{A_1-A_2}{2}，更一般地，让 \ \epsilon = \frac{|A_1 - A_2|}{2}</script><p>$\textbf{solution1}$</p>
+<script type="math/tex; mode=display">
+\left|A \cdot B-x_{n} y_{n}\right| \leqslant
+\left|x_{n}\right|\left(\Delta y_{n}\right)+\left|y_{n}\right|\left(\Delta x_{n}\right)+\Delta x_{n} \Delta y_{n} \\ \ \\ 
+构造 \frac{\epsilon}{3}</script><script type="math/tex; mode=display">
+\begin{aligned}
+&\left\{\begin{array}{l}
+\Delta x_{n}<\min \left(1, \frac{\varepsilon}{3}\right) \leqslant 1 \\
+\Delta y_{n}< \min \left(1, \frac{\varepsilon}{3}\right) \leqslant 1
+\end{array}\right.\\
+&\Rightarrow \quad \Delta x_{n} \Delta y_{n}<\frac{\varepsilon}{3}
+\end{aligned}</script><script type="math/tex; mode=display">
+\left\{\begin{array}{l}
+\left|x_{n}\right|<A+\Delta x_{n} \leqslant A+1 \\
+\left|y_{n}\right|<B+\Delta y_{n} \leqslant B+1
+\end{array}\right. \stackrel{|x_n|\Delta y_n \leqslant \frac{\epsilon}{3}}\Longrightarrow \Delta y_{n} \leqslant \min \left(1, \frac{\varepsilon}{3(A+1)}\right) \\
+这样所需要的 \epsilon 已经构造完毕了</script><p>$\textbf{solution2}$</p>
+<script type="math/tex; mode=display">
+\left| \frac{A}{B} - \frac{x_n}{y_n} \right| \leqslant \frac{\left|x_{n}\right|+\Delta x_{n}}{\left|y_{n}\right|-\Delta y_{n}}-\frac{x_{n}}{y_{n}}=\frac{\left|x_{n}\right|\left|y_{n}\right|
++\left|y_{n}\right| \Delta x_{n}-\left|x_{n}\right|\left|y_{n}\right|+\left|x_{n}\right| \Delta y_{n}}{\left|y_{n}\right|^{2}-|y _{n} | \Delta y_{n}} \\ \ \\
+=\frac{\left|x_{n}\right| \Delta y_{n}+\left|y_{n}\right| \Delta x_{n}}{y_{n}^{2}} \frac{1}{1-\delta\left(y_{n}\right)}, \delta\left(y_{n}\right)=\frac{\Delta y_{n}}{\left|y_{n}\right|}</script><p>$构造证明的第一部分，已知条件\left|x_{n}\right|&lt;|A|+\Delta x_{n}, \quad\left|y_{n}\right|&gt;|B|-\Delta y_{n}，先凑出$</p>
+<script type="math/tex; mode=display">\frac{1}{1-\delta\left(y_{n}\right)} < ?</script><script type="math/tex; mode=display">
+\Delta y_{n}<\frac{|B|}{4} \Longrightarrow\left|y_{n}\right|>|B|-\Delta y_{n}>\frac{|B|}{2} \\ 
+\Longrightarrow \delta\left(y_{n}\right)<\frac{1}{2} \Longrightarrow \frac{1}{1-\delta\left(y_{n}\right)}<2</script><script type="math/tex; mode=display">
+接下来只要证明 \frac{\left|x_{n}\right| \Delta y_{n}}{y_{n}^{2}}<\frac{\varepsilon}{4}, \quad \frac{\left|y_{n}\right| \Delta x_{n}}{y_{n}^{2}}<\frac{\varepsilon}{4}即可</script><p>$\textbf{i)}$</p>
+<script type="math/tex; mode=display">
+\left|x_{n}\right|<|A|+1, \quad \frac{1}{y_{n}^{2}}<\left(\frac{2}{|B|}\right)^{2}=\frac{4}{B^{2}} \\ \ \\ 
+此时构造出 \Delta y_{n}<\frac{1}{16} \frac{\varepsilon B^{2}}{(| A |+1)}, \Delta y_{n}<\min \left\{\frac{1}{16} \frac{\varepsilon B^{2}}{(| A |+1)}, \frac{|B|}{4}\right\}</script><p>$\textbf{ii)}$</p>
+<script type="math/tex; mode=display">
+\frac{1}{y_{n}}<\frac{2}{|B|}, \quad \Delta x_{n} \leqslant \frac{\varepsilon|B|}{8} \\
+\Delta x_{n} \leqslant \min \left\{\frac{\varepsilon|B|}{8}, 1\right\}</script>
       
     </div>
     <footer class="article-footer">

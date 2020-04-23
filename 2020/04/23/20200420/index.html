@@ -16,22 +16,28 @@
   <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
   <meta charset="utf-8">
   
-  <title>category: linux | 算法小站</title>
+  <title>分析学基本理论（一） | 算法小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="math">
   
   
   
-  <meta name="description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
-<meta property="og:type" content="website">
-<meta property="og:title" content="算法小站">
-<meta property="og:url" content="https://www.fogsail.net/categories/linux/index.html">
+  
+  <meta name="description" content="$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$">
+<meta name="keywords" content="math">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分析学基本理论（一）">
+<meta property="og:url" content="https://www.fogsail.net/2020/04/23/20200420/index.html">
 <meta property="og:site_name" content="算法小站">
-<meta property="og:description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
+<meta property="og:description" content="$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.fogsail.net/2020/04/23/20200420/01.jpg">
+<meta property="og:updated_time" content="2020-04-23T12:06:21.580Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法小站">
-<meta name="twitter:description" content="ICPC和项目开发中常见的算法，主流算法书籍阅读记录，还记录一些有意思的小项目，以及开发日常">
+<meta name="twitter:title" content="分析学基本理论（一）">
+<meta name="twitter:description" content="$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$">
+<meta name="twitter:image" content="https://www.fogsail.net/2020/04/23/20200420/01.jpg">
   
     <link rel="alternate" href="/atom.xml" title="算法小站" type="application/atom+xml">
   
@@ -70,8 +76,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css">
-  
   
   
     <link rel="stylesheet" href="/css/vdonate.css">
@@ -83,14 +87,14 @@
   <script type="application/ld+json">
     {
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
-        "@id": "http://www.fogsail.net/categories/linux/index.html",
+        "@id": "http://www.fogsail.net/2020/04/23/20200420/",
         "appid": "1593711792635024",
-        "title": "",
+        "title": "分析学基本理论（一）",
         "images": [
-        "http://www.fogsail.net/categories/linux/index.html01.png",
-        "http://www.fogsail.net/categories/linux/index.html01.jpg"
+        "http://www.fogsail.net/2020/04/23/20200420/01.png",
+        "http://www.fogsail.net/2020/04/23/20200420/01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2020-04-24T01:11:51" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2020-04-23T02:31:25" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 
@@ -98,7 +102,7 @@
 </html>
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -120,7 +124,7 @@
 
             
               <a class="brand" style="
-                 margin-top: 0px;">
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -189,64 +193,147 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-  
-  
+          <section id="main" style="float:none;"><article id="post-20200420" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/archives/2017" class="archive-year">2017</a></h1>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/06/30/20170630/" class="archive-article-date">
-	  <time datetime="2017-06-29T19:12:00.000Z" itemprop="datePublished">2017-06-30</time>
-	</a>
-
-      
+      <header class="article-header">
+        
   
     <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/06/30/20170630/">linux脚本编程：系统软件的安装</a>
+      分析学基本理论（一）
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
+    <div class="article-meta">
       
-	<a href="/2017/06/26/20170626/" class="archive-article-date">
-	  <time datetime="2017-06-25T19:12:00.000Z" itemprop="datePublished">2017-06-26</time>
+	<a href="/2020/04/23/20200420/" class="article-date">
+	  <time datetime="2020-04-23T06:31:25.000Z" itemprop="datePublished">2020-04-23</time>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/06/26/20170626/">深度学习基础：Linux系统配置</a>
-    </h1>
-  
+    <a class="article-category-link" href="/categories/math/">math</a>
 
-    </header>
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$<br>$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$</p>
+<a id="more"></a>
+<h2 id="数列极限的补充问题"><a href="#数列极限的补充问题" class="headerlink" title="数列极限的补充问题"></a>数列极限的补充问题</h2><p>$从每一个实数列中都可以选出一个收敛的或者是趋于无穷的子列$<br>$\textbf{proof} \quad 其中，收敛很好证明$<br><img src="/2020/04/23/20200420/01.jpg" alt="01"></p>
+<p>$无穷性的证明，\forall k \in \mathbb{N}, \text{choose} \ n_k \in \mathbb{N}$<br>$|x_{n_k}| &gt; k \ and \ n_k &lt; n_{k+1}, {x_{n_k}} 构成无穷子列$</p>
+<p>$\textbf{example1}$</p>
+<script type="math/tex; mode=display">
+\mathop{\underline{\lim}}\limits_{k \rightarrow \infty} \frac{(-1)^{k}}{k}=\lim _{n \rightarrow \infty} \inf _{k \geqslant n} \frac{(-1)^{k}}{k}=\left\{\begin{array}{l}
+\frac{(-1)^{2m +1}}{(2 m+1)}=-\frac{1}{n} \quad n=2 m+1 \\ \ \\
+\frac{(-1)^{2 m} \cdot(-1)}{2 m+1}=\frac{-1}{n+1} \quad n=2m
+\end{array} \right\} =0</script><script type="math/tex; mode=display">
+\mathop{\overline{\lim}}\limits _{k \rightarrow \infty} \frac{(-1)^{k}}{k}=\lim _{n \rightarrow \infty} \sup _{k \geqslant n} \frac{(-1)^{k}}{k}=\left\{\begin{array}{ll}
+\frac{(-1)^{2m}}{2 m}=\frac{1}{n} & n=2 m \\ \ \\
+\frac{(-1)^{2 m+2}}{2 m+2}=\frac{1}{n+1} & n=2 m+1
+\end{array}\right\} = 0</script><p>$下极限证明语言$<br>$\forall \varepsilon&gt;0, \quad i-\varepsilon&lt;i_n=\inf\limits_{k \geqslant n} x_{k} \leqslant x_{k}$<br>$因为 \ \varepsilon \ 是任意的，所以对于{x_k}$<br>$任何部分极限都不能小于 \ i - \varepsilon，也就是不能小于 \ i$</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/css/images/wechatpay.jpg',
+  alipayImage: '/css/images/alipay.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Fogsail Chen
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2020/04/23/20200420/" target="_blank" title="分析学基本理论（一）">https://www.fogsail.net/2020/04/23/20200420/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<section id="comments" class="comment">
+		<!-- hello world! -->
+		
+		<!--<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>-->
+		<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+		<div id="vcomments"></div>
+		<script>
+			new Valine({
+				el: '#vcomments',
+				appId: '6jvLbmDexHR56M68z5z4o66q-gzGzoHsz',
+				appKey: 'WXDOtEMHclOT8f1EeGS0xDor',
+				verify: true
+			})
+		</script>
+	</section>
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li></ul>
+
+      
+
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/04/20/20200419/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">一些通用的数学概念和记号</div>
+    </a>
   
+</nav>
 
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数列极限的补充问题"><span class="nav-number">1.</span> <span class="nav-text">数列极限的补充问题</span></a></li></ol>
+    
+    </div>
+  </aside>
 
 </section>
         
@@ -363,6 +450,8 @@
 
 
 
+
+  <script src="/js/dialog.js"></script>
 
 
 
@@ -481,6 +570,8 @@ ga('send', 'pageview');
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>

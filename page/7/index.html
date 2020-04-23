@@ -86,7 +86,7 @@
         "http://www.fogsail.net/page/7/index.html01.png",
         "http://www.fogsail.net/page/7/index.html01.jpg"
         ], //请在此处添加希望在搜索结果中展示图片的url，可以添加1个或3个url
-        "pubDate": "2020-04-22T05:20:24" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        "pubDate": "2020-04-24T01:11:51" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
     }
 </script>
 
@@ -272,6 +272,57 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-20170512" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/05/12/20170512/">基于接缝裁剪的图像压缩</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/05/12/20170512/" class="article-date">
+	  <time datetime="2017-05-12T01:54:00.000Z" itemprop="datePublished">2017-05-12</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+
+      
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>给定一幅彩色图像，它由$m\times n$的像素$A[1\cdots m,1\cdots n]$构成，每个像素是一个红绿蓝$(RGB)$亮度的三元组。假定我们希望轻度压缩这幅图像。具体地，我们希望从每一行中删除一个像素，使得图像变窄一个像素。</p>
+<p>为了避免影响视觉效果，我们要求删除的像素必须位于同一列或者是相邻列，也就是说，删除的像素构成从底端到顶端的一条“接缝”(seam)，相邻像素均在垂直或对角线方向上相邻。</p>
+        <p class="article-more-link">
+          <a href="/2017/05/12/20170512/#more">阅读全文</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-20170508" class="article article-type-post" itemscope itemprop="blogPost">
   <div id="articleInner" class="article-inner">
@@ -708,57 +759,6 @@
         <p>动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划。</p>
         <p class="article-more-link">
           <a href="/2017/02/02/20170202/#more">阅读全文</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-20170130" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/01/30/20170130/">约瑟夫环</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/01/30/20170130/" class="article-date">
-	  <time datetime="2017-01-29T21:27:00.000Z" itemprop="datePublished">2017-01-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/data-structure/">data_structure</a>
-
-      
-      
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Josephus问题的定义如下：假设n个人排成环形，且有以正整数m&lt;=n。从某个制定的人开始，沿环报数，每遇到第m个人就让其出列，且报数进行下去。这个过程一直进行到所有人都出列为止。每个人出列的次序定义了整数1，2，…，n的(n, m)-Josephus排列。例如，(7,3)-Josephus排列为<3,6,2,7,5,1,4>。</3,6,2,7,5,1,4></p>
-<p>a)假设m为整数。请描述一个O(n)时间的算法，使之对给定的整数n，输出(n, m)-Josephus排列。<br>b)假设m不是个常数。请描述一个O(nlgn)时间的算法，使给定的整数n和m，输出(n, m)-Josephus排列。</p>
-        <p class="article-more-link">
-          <a href="/2017/01/30/20170130/#more">阅读全文</a>
         </p>
       
     </div>

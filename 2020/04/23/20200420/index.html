@@ -33,7 +33,7 @@
 <meta property="og:description" content="$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/04/23/20200420/01.jpg">
-<meta property="og:updated_time" content="2020-04-23T12:06:21.580Z">
+<meta property="og:updated_time" content="2020-04-26T08:38:43.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分析学基本理论（一）">
 <meta name="twitter:description" content="$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$">
@@ -242,7 +242,99 @@
 \frac{(-1)^{2m}}{2 m}=\frac{1}{n} & n=2 m \\ \ \\
 \frac{(-1)^{2 m+2}}{2 m+2}=\frac{1}{n+1} & n=2 m+1
 \end{array}\right\} = 0</script><p>$下极限证明语言$<br>$\forall \varepsilon&gt;0, \quad i-\varepsilon&lt;i_n=\inf\limits_{k \geqslant n} x_{k} \leqslant x_{k}$<br>$因为 \ \varepsilon \ 是任意的，所以对于{x_k}$<br>$任何部分极限都不能小于 \ i - \varepsilon，也就是不能小于 \ i$</p>
-
+<h2 id="补充阅读：《不等式的秘密》"><a href="#补充阅读：《不等式的秘密》" class="headerlink" title="补充阅读：《不等式的秘密》"></a>补充阅读：《不等式的秘密》</h2><p>$阅读这部分内容，主要是为了提升数感，让自己的代数变形能力有进一步的提升$</p>
+<h3 id="AM-GM不等式"><a href="#AM-GM不等式" class="headerlink" title="AM-GM不等式"></a>AM-GM不等式</h3><p>$\textbf{problem1}$<br>$a, b, c&gt;0, abc = 1，证明$</p>
+<script type="math/tex; mode=display">(a+b)(b+c)(c+a) \geqslant (a+1)(b+1)(c+1) \\ 
+\Longrightarrow ab(a+b)+bc(b+c)+ca(c+a) \geqslant a+b+c+ab+bc+ca</script><p>$重点在于轮换对称的构造$</p>
+<script type="math/tex; mode=display">
+L H S_{c y c}=\left\{\begin{array}{l}
+a^{2} b+a^{2} c \\
+b^{2} a+b^{2} c \\
+c^2a+c^{2} b
+\end{array}\right\} \quad \left\{\begin{array}{l}
+a^{2} b+a b^{2} \\
+b^{2} c+b c^{2} \\
+c^{2} a+c a^{2}
+\end{array}\right\}</script><script type="math/tex; mode=display">
+2 L H S+\sum_{c y c} a b=\sum_{c y c}\left(a^{2} b+a^{2} b+a^{2} c+a^{2} c+b c\right) \geqslant 5 \sum_{c y c}a \\
+2 L H S+\sum_{c y c} a=\sum_{c y c}\left(a^{2} b+a^{2} b+a b^{2}+a b^{2}+c\right) \geqslant 5 \sum_{c y c} a b</script><script type="math/tex; mode=display">
+综上，L H S \geqslant \sum_{c y c} a+\sum_{c yc} a b</script><p>$\textbf{problem2} \ 4n+3是数论中非常常见的数，因此构造\  \frac{3}{4} \ 也是很常见的$<br>$x,y,z&gt;0，且\ xyz=1$</p>
+<script type="math/tex; mode=display">
+\frac{x^{3}}{(1+y)(1+z)}+\frac{y^{3}}{(1+z)(1+x)}+\frac{z^{3}}{(1+x)(1+y)} \geq \frac{3}{4}</script><script type="math/tex; mode=display">
+\frac{x^{3}}{(1+y)(1+z)}+\frac{1+y}{8}+\frac{1+z}{8} \geqslant \frac{3}{4} x ，写成轮换对称</script><script type="math/tex; mode=display">
+\sum_{c y c} \frac{x^{3}}{(1+y)(1+z)}+\frac{1}{4} \sum_{c y c}(1+x) \geqslant \sum_{c y c} \frac{3 x}{4} \\
+\Rightarrow \sum_{c y c} \frac{x^{3}}{(1+y)(1+z)} \geq \frac{1}{4} \sum_{c y c}(2 x-1)=\frac{1}{4}(x+x+y+y+\ldots)-\frac{3}{4} \\
+\geqslant \frac{6}{4}-\frac{3}{4}=\frac{3}{4}</script><p>$<br>\textbf{problem3  轮换恒等变形}<br>$</p>
+<script type="math/tex; mode=display">
+\left(a^{2}+b^{2}+c^{2}\right)(a b+b c+c a)=a b\left(a^{2}+b^{2}\right)+b c\left(b^{2}+c^{2}\right)+c a\left(a^{2}+c^{2}\right)+a b c(a+b+c) \\
+\text{if} \ a , b, c \geqslant 0, a+b+c =2 \\
+\left(a^{2}+b^{2}+c^{2}\right)(a b+b c+c a) \geqslant a b\left(a^{2}+b^{2}\right)+b c\left(b^{2}+c^{2}\right)+c a\left(a^{2}+c^{2}\right) \\
+\geqslant 2\left(a^{2} b^{2}+b^2 c^{2}+a^{2} c^{2}\right)</script><script type="math/tex; mode=display">
+a^{2}+b^{2}+c^{2}+2(a b+b c+c a)=(a+b+c)^{2}=4 \\
+2\left(a^{2}+b^{2}+c^{2}\right)(a b+b c+c a) \leqslant\left(\frac{a^{2}+b^{2}+c^{2}+2(a b+b c+c a)}{2}\right)^{2}=4 \\
+\begin{array}{l}
+\left(a^{2}+b^{2}+c^{2}\right)(a b+b c+c a) \leqslant 2 \\
+\Rightarrow a^{2} b^{2}+b^{2} c^{2}+a^{2} c^{2} \leqslant 1
+\end{array}</script><p>$\textbf{problem4 不等式中的域分组}$<br>$a,b,c,d&gt;0$</p>
+<script type="math/tex; mode=display">
+\frac{1}{a^{2}+a b}+\frac{1}{b^{2}+b c}+\frac{1}{c^{2}+c d}+\frac{1}{d^{2}+d a} \geqslant \frac{4}{a c+b d}</script><script type="math/tex; mode=display">
+\frac{a c+b d}{a^{2}+a b}=\frac{a^{2}+a b+a c+b d}{a^{2}+a b}-1=\frac{a+c}{a+b}+\frac{b(d+a)}{a(a+b)}-1 \\
+L H S=\sum_{c y c} \frac{a+c}{a+b}+\sum_{c y c} \frac{b(d+a)}{a(a+b)}-4</script><script type="math/tex; mode=display">
+\left\{\frac{a+c}{a+b}, \frac{b(d+a)}{a(a+b)}\right\}, \quad \left\{\frac{b+d}{b+c}, \frac{c(a+b)}{b(b+c)} \right\} \\
+\left\{\frac{c+a}{c+d}, \frac{d(c+b)}{c(c+d)}\right\}, \quad \left\{\frac{d+b}{d+a}, \frac{a(d+c)}{d(d+a)}\right\} \\ \ \\
+用AM-GM不等式消去第二个项，得到 \\ \ \\
+LH S \geqslant \sum_{c y c} \frac{a+c}{a+b}</script><script type="math/tex; mode=display">
+\sum_{c y c} \frac{a+c}{a+b}=(a+c)\left(\frac{1}{a+b}+\frac{1}{c+d}\right)+(b+d)\left(\frac{1}{b+c}+\frac{1}{d+a}\right) \\
+\text{Schwarz 不等式} \\ \ \\
+\frac{1}{a+b}+\frac{1}{c+d} \geqslant \frac{(1+1)^{2}}{a+b+c+d}=\frac{4}{a+b+c+d} \\ \ \\
+L H S \geqslant \frac{4(a+c)}{a+b+c+d}+\frac{4(b+d)}{a+b+c+d}=4</script><p>$\textbf{problem5}$<br>$a,b,c,d,e \geqslant 0, a+b+c+d+e = 5, \text{proof}$<br>$abc+bcd+cde+dea+eab \leqslant 5$<br>$\textbf{proof}$</p>
+<script type="math/tex; mode=display">
+a b c+b c d+c d e+d e a+e a b=e(a+c)(b+d)+b c(a+d-e) \\
+\leqslant e\left(\frac{a+b+c+d}{2}\right)^{2}+\left(\frac{b+c+a+d-e}{3}\right)^{3} \\ \ \\
+=\frac{e(5-e)^{2}}{4}+\frac{(5-2 e)^{2}}{27}</script><script type="math/tex; mode=display">
+f(x)=\frac{x(5-x)^{2}}{4}+\frac{(5-2 x)^{2}}{27} \\
+\frac{d f(x)}{d x}=-\frac{5}{36}\left(x^{2}+4 x-5\right) \Rightarrow x=1, \frac{d f(x)}{d x}=0 \\ \ \\
+\text{let } e = \min\{a,b,c,d,e\}, \Rightarrow e \leqslant 1 \\ \ \\
+f(x) \leqslant f(1)=2 \leqslant 5</script><p>$\textbf{problem5}$<br>$a,b,c,d&gt;0, \text{proof}$</p>
+<script type="math/tex; mode=display">\left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}+\frac{1}{d}\right)^{2} \geqslant \frac{1}{a^{2}}+\frac{4}{a^{2}+b^{2}}+\frac{9}{a^{2}+b^{2}+c^{2}}+\frac{16}{a^{2}+b^{2}+c^{2}+d^{2}}</script><script type="math/tex; mode=display">
+\Leftrightarrow \frac{1}{b^{2}}+\frac{1}{c^{2}}+\frac{1}{d^{2}}+\sum_{s y m} \frac{2}{a b} \geqslant \frac{4}{a^{2}+b^{2}}+\frac{9}{a^{2}+b^{2}+c^{2}}+\frac{16}{a^{2}+b^{2}+c^{2}+d^{2}}</script><script type="math/tex; mode=display">
+AM-GM不等式，有 \\ \ \\
+\frac{2}{a b} \geqslant \frac{4}{a^{2}+b^{2}} \\ \ \\
+\frac{2}{a c}+\frac{2}{b c} \geqslant \frac{(2 \sqrt{2})^{2}}{a c+b c} \geqslant \frac{8}{\frac{a^{2}+b^{2}}{2}+c^{2}}>\frac{8}{a^{2}+b^{2}+c^{2}} \ \text{(Cauchy-Schwarz)}\\ \ \\
+\frac{1}{b^{2}}+\frac{1}{c^{2}} \geqslant \frac{4}{b^{2}+c^{2}} \geqslant \frac{1}{b^{2}+c^{2}+a^{2}} \\ \ \\
+d=\min \{a, b, c, d\} \\ \ \\
+\frac{2}{a d}+\frac{2}{b d}+\frac{2}{c d} \geqslant \frac{(3 \sqrt{2})^{2}}{a d+b d+c d} \\ \ \\
+\geqslant \frac{18}{a d+b d+c d+d^{2}} \geqslant \frac{18}{a^{2}+b^{2}+c^{2}+d^{2}}>\frac{16}{a^{2}+b^{2}+c^{2}+d^{2}}</script><p>$\textbf{problem6   } \text{ask} \min {M}$</p>
+<script type="math/tex; mode=display">
+\left|a b\left(a^{2}-b^{2}\right)+b c\left(b^{2}-c^{2}\right)+c a\left(c^{2}-a^{2}\right)\right| \leqslant M\left(a^{2}+b^{2}+c^{2}\right)^{2}</script><script type="math/tex; mode=display">
+L H S=a b\left(a^{2}-b^{2}+c^{2}-c^{2}\right)+b c\left(b^{2}-c^{2}\right)+c a\left(c^{2}-a^{2}\right) \\ \ \\
+=b\left(b^{2}-c^{2}\right)(c-a)+a(c-a)(c+a)(c-b) \\ \ \\
+=-(a-b)(b-c)(c-a)(a+b+c) \\ \ \\
+\text{let } x=a-b, y = b-c, z=c-a, s=a+b+c</script><script type="math/tex; mode=display">
+\Leftrightarrow 9|sxyz| \leqslant M\left(s^{2}+x^{2}+y^{2}+z^{2}\right)^{2}, \quad x +y+z =0 \\ \ \\</script><p>$\textbf{i)}$</p>
+<script type="math/tex; mode=display">
+x^{2}+y^{2}+z^{2}=x^{2}+y^{2}+(x+y)^{2}=2\left((x+y)^{2}-x y\right) \\ \ \\
+\geqslant 2\left((x+y)^{2}-\frac{(x+y)^{2}}{4}\right)=\frac{3}{2}(x+y)^{2} \\ \ \\
+|s x y z|=|s x y(x+y)| \leqslant |s| \frac{(x+y)^{3}}{4}</script><p>$\textbf{ii)}$</p>
+<script type="math/tex; mode=display">
+\text{let } t = x+y \\ \ \\
+\Leftrightarrow \text{ask} \quad |s| t^{3} \leqslant ?\left(s^{2}+\frac{3}{2} t^{2}\right)^{2} \\ \ \\
+\Leftrightarrow \text{ask} \quad s^{2} t^{6} \leqslant \ ? \frac{\left(2 s^{2}+3 t^{2}\right)^{4}}{4} \\ \ \\
+\text{we have} \quad 2 s^{2} t^{6}=2 s^{2} \cdot t^{2} \cdot t^{2} \cdot t^{2} \leqslant\left(\frac{2 s^{2}+3 t^{2}}{4}\right)^{4} \\ \ \\
+4 \cdot \sqrt{2}|s| t^{3} \leqslant \frac{\left(2 s^{2}+3 t^{2}\right)^{2}}{4} \\ \ \\
+|s x y z| \leqslant \frac{1}{16 \sqrt{2}}\left(s^{2}+x^{2}+y^{2}+z^{2}\right)^{2}, M=\frac{9}{16 \sqrt{2}} \\ \ \\
+\left\{\begin{array}{l}
+\sqrt{2}(a+b+c)=c-a \\
+a+b+c=3 \\
+c-a=3 \sqrt{2} \\
+a-b=b-c
+\end{array}\right. \Rightarrow 
+\left\{\begin{array}{l}
+b=1 \\
+c-a=3 \sqrt{2} \\
+a+c=2
+\end{array}\right. \\ \ \\
+(a, b, c)=\left(1-\frac{3}{\sqrt{2}}, 1,1+\frac{3}{\sqrt{2}}\right)</script>
       
     </div>
     <footer class="article-footer">
@@ -330,7 +422,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数列极限的补充问题"><span class="nav-number">1.</span> <span class="nav-text">数列极限的补充问题</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数列极限的补充问题"><span class="nav-number">1.</span> <span class="nav-text">数列极限的补充问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充阅读：《不等式的秘密》"><span class="nav-number">2.</span> <span class="nav-text">补充阅读：《不等式的秘密》</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AM-GM不等式"><span class="nav-number">2.1.</span> <span class="nav-text">AM-GM不等式</span></a></li></ol></li></ol>
     
     </div>
   </aside>

@@ -33,7 +33,7 @@
 <meta property="og:description" content="$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/04/23/20200420/01.jpg">
-<meta property="og:updated_time" content="2020-04-26T08:38:43.799Z">
+<meta property="og:updated_time" content="2020-04-30T14:07:18.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分析学基本理论（一）">
 <meta name="twitter:description" content="$这里对分析学基础理论，极限和无穷级数部分做一个 \textbf{review}$$在 \text{knuth} 的具体数学中，很多理论都是建立在分析学基础上的$">
@@ -334,7 +334,67 @@ b=1 \\
 c-a=3 \sqrt{2} \\
 a+c=2
 \end{array}\right. \\ \ \\
-(a, b, c)=\left(1-\frac{3}{\sqrt{2}}, 1,1+\frac{3}{\sqrt{2}}\right)</script>
+(a, b, c)=\left(1-\frac{3}{\sqrt{2}}, 1,1+\frac{3}{\sqrt{2}}\right)</script><h2 id="连分数"><a href="#连分数" class="headerlink" title="连分数"></a>连分数</h2><h3 id="连分数相关定义"><a href="#连分数相关定义" class="headerlink" title="连分数相关定义"></a>连分数相关定义</h3><p>$\textbf{表示}$</p>
+<script type="math/tex; mode=display">
+\left[a_{0}, a_{1}\right]=a_{0}+\frac{1}{a_{1}} \\ \ \\
+\left[a_{0}, a_{1}, \ldots, a_{n-1}, a_{n}\right]=\left[a_{0}, a_{1}, \ldots, a_{n-2}, a_{n-1}+\frac{1}{a_{n}}\right]</script><script type="math/tex; mode=display">
+p_{0}=a_{0}, \quad p_{1}=a_{1} a_{0}+1, \quad p_{n}=a_{n} p_{n-1}+p_{n-2} \quad(2 \leqslant n \leqslant N) \\ 
+q_{0}=1, \quad q_{1}=a_{1}, \quad q_{n}=a_{n} q_{n-1}+q_{n-2} \quad \quad \quad(2 \leqslant n \leqslant N) \\ \ \\
+\left[a_{0}, a_{1}, \ldots . ., a_{n}\right]=\frac{p_{n}}{q_{n}}</script><p>$\textbf{proof}$</p>
+<script type="math/tex; mode=display">
+\left[a_{0}, a_{1}, \ldots, a_{m-1}, a_{m}\right]=\frac{p_{m}}{q_{m}}=\frac{a_{m} p_{m-1}+p_{m-2}}{a_{m} q_{m-1}+q_{m-2}} \\ \ \\
+\left[a_{0}, a_{1}, \ldots, a_{m-1}, a_{m}, a_{m+1}\right]=\left[a_{0}, a_{1}, \ldots ., a_{m-1}, a_{m}+\frac{1}{a_{m+1}}\right] \\ \ \\
+=\frac{\left(a_{m}+\frac{1}{a_{m+1}}\right) p_{m-1}+p_{m-2}}{\left(a_{m}+\frac{1}{a_{m+1}}\right) q_{m-1}+q_{m-2}}=\frac{a_{m+1}\left(a_{m} p_{m-1}+p_{m-2}\right)+p_{m-1}}{a_{m+1}\left(a_{m} q_{m-1}+q_{m-2}\right)+q_{m-1}} \\ \ \\
+= \frac{p_{m+1}}{q_{m+1}}</script><p>$\textbf{lemma1}$</p>
+<script type="math/tex; mode=display">
+\frac{p_{n}}{q_{n}}=\frac{a_{n} p_{n-1}+p_{n-2}}{a_{n} q_{n-1}+q_{n-2}}</script><p>$构造递推式如下$</p>
+<script type="math/tex; mode=display">
+p_{n} q_{n-1}-p_{n-1} q_{n}=\left(a_{n} p_{n-1}+p_{n-2}\right) q_{n-1}-p_{n-1}\left(a_{n} q_{n-1}+q_{n-2}\right) \\ \ \\
+=(-1)^{1}\left(p_{n-1} q_{n-2}-p_{n-2} q_{n-1}\right)=(-1)^{n-1}\left(p_1q_{0}-p_{0} q_{1}\right)=(-1)^{n-1}</script><p>$还有$</p>
+<script type="math/tex; mode=display">
+p_{n} q_{n-2}-p_{n-2} q_{n}=\left(a_{n} p_{n-1}+p_{n-2}\right) q_{n-2}-p_{n-2}\left(a_{n} q_{n-1}+q_{n-2}\right) \\ \ \\
+=a_{n}\left(p_{n-1} q_{n-2}-p_{n-2} q_{n-1}\right)=(-1)^{n-2} \cdot a_{n}=(-1)^{n} a_{n}</script><script type="math/tex; mode=display">
+p_{n} q_{n-1}-p_{n-1} q_{n}=(-1)^{n-1} \\
+\left.p_{n} q_{n-2}-p_{n-2} q_{n}=(-1\right)^{n} a_{n} \\ \ \\
+\frac{p_{n}}{q_{n}}-\frac{p_{n-1}}{q_{n-1}}=\frac{(-1)^{n-1}}{q_{n-1} q_{n}} \\ \ \\
+\frac{p_{n}}{q_{n}}-\frac{p_{n-2}}{q_{n-2}}=\frac{(-1)^{n} a_{n}}{q_{n-2} q_{n}}</script><p>$由此可以知道分奇偶项，得到的单调性$</p>
+<p>$\textbf{lemma2}$<br>$\text{if} \quad n &gt; 3, \quad q_n \geqslant n$</p>
+<script type="math/tex; mode=display">
+q_{0}=1, \quad q_{1}=a_{1} \geqslant 1 \\
+q_{n}=a_{n} q_{n-1}+q_{n-2} \geqslant q_{n-1}+1=n-1+1=n \\ \ \\
+根据数学归纳法，证毕</script><p>$\textbf{theorem1}$<br>$x\ 可以用一个奇数个渐进分数的连分数表示出来$<br>$那么也一定能用偶数个渐进分数的连分数表示$</p>
+<script type="math/tex; mode=display">
+\left[a_{0}, a_{1}, \dots a_{n}\right]=\left[a_{0}, a_{1}, \dots a_{n}-1,1\right], \quad a_n \geqslant 2 \\ \ \\
+\text{if} \quad a_n = 1, \left[a_{0}, a_{1}, \ldots, a_{n-1}, 1\right]=\left[a_{0}, a_{1}, \ldots, a_{n-2}, a_{n-1}+1\right]</script><p>$\textbf{theorem2}$<br>$连分数的第 \ n \ 个完全商$<br>$a_{n}^{\prime}=\left[a_{n}, a_{n+1}, \ldots, a_{N}\right] \quad(0 \leqslant n \leqslant N)$</p>
+<script type="math/tex; mode=display">
+x=a_{0}^{\prime}, \quad x=a_{0}+\frac{1}{a_{1}^{\prime}}=\frac{a_{0} a_{1}^{\prime}+1}{a_{1}^{\prime}} \\ \ \\
+\left[a_{n}, a_{1}, \ldots, a_{N}\right]=\left[a_{0}, a_{1}, \ldots a_{n-1},\left[a_{n}, a_{n+1}, \dots, a_{N}\right]\right] \\ \ \\
+=\frac{\left[a_{n}, a_{n+1} \ldots, a_{n}\right] p_{n-1}+p_{n-2}}{\left[a_{n}, a_{n+1} \dots, a_{n}\right] q_{n-1}+q_{n-2}} \\ \ \\
+x=\frac{a_{n}' p_{n-1}+p_{n-2}}{a_{n}' q_{n-1}+q_{n-2}}</script><p>$\textbf{theorem3}$<br>$除了 \ a_N = 1，有 a_{N-1} = [a_{N-1}’]-1$<br>$其他情况，a_n = [a_n’]$</p>
+<script type="math/tex; mode=display">
+注意到，a_{n}^{\prime}=a_{n}+\frac{1}{a_{n+1}'} \quad(0 \leqslant n \leqslant N-1)</script><script type="math/tex; mode=display">
+\textbf{i)}\quad N = 0, a_0 = a_0'=[a_0'] \\ \ \\
+\textbf{ii)}\quad N > 0，\ n = N-1, a_{n+1}^{\prime}=1, a_{N}=1，我们有 \\ \ \\
+a_{N-1}^{\prime}=a_{N-1}+\frac{1}{a_{N}^{\prime}}=a_{N-1}+1>1 \\ \ \\
+\text{from } \ n + 1 \ \text{down to} \ n，a_{n+1}^{\prime}>1 \quad(0 \leqslant n \leqslant N-1) \\ \ \\
+a_{n}<a_{n}^{\prime}<a_{n}+1 \quad(0 \leqslant n \leqslant N-1) \\ \ \\
+a_{n}=\left[a_{n}^{\prime}\right] \quad(0 \leqslant n \leq N-1)</script><p>$\textbf{theorem4  连分数唯一展开}$<br>$如果两个简单连分数$<br>$[a_0, a_1, \ldots, a_{n-1}, a_n^{\prime}], [b_0, b_1, \ldots, b_{n-1}, b_n^{\prime}] 有同样的值 \ x$<br>$a_N &gt; 1, b_M &gt; 1, M=N \ 并且这两个连分数完全相同$</p>
+<script type="math/tex; mode=display">
+\textbf{i)} \quad n = m \\ \ \\
+根据 \text{theorem3}，a_0 = [x] = b_0，那么 \\ \ \\
+x=\left[a_{0}, a_{1}, \ldots, a_{n-1}, a_{n}^{\prime}\right]=\left[a_{0}, a_{1}, \ldots, a_{n-1}, b_{n}^{\prime}\right] \\ \ \\
+\text{if} \ n = 1, a_{0}+\frac{1}{a_{1}^{\prime}}=a_{0}+\frac{1}{b_{1}^{\prime}} \Rightarrow a_{1}^{\prime}=b_{1}^{\prime} \Rightarrow a_{1}=b_1 \\ \ \\
+\frac{a_{n}^{\prime} p_{n-1}+p_{n-2}}{a_{n}^{\prime} q_{n-1}+q_{n-2}}=\frac{b_{n}^{\prime} p_{n-1}+p_{n-2}}{b_{n}^{\prime} q_{n-1}+q_{n-2}} \\ \ \\
+\left(a_{n}^{\prime}-b_{n}^{\prime}\right)\left(p_{n-1} q_{n-2}-p_{n-2} q_{n-1}\right)=0 \\ \ \\
+p_{n-1} q_{n-2}-p_{n-2} q_{n-1}=(-1)^{n} \neq 0 \Rightarrow a_{n}^{\prime}=b_{n}^{\prime} \\ \ \\
+\Rightarrow a_{n}=b_{n}</script><script type="math/tex; mode=display">
+\textbf{ii)} \quad N \leqslant M, \forall n \leqslant N \\
+a_n = b_n \\ \ \\
+M > N, \frac{p_{N}}{q_N}=x=\left[a_{0}, a_{1}, \ldots , a_{N}\right]=\left[a_{0}, a_{1}, \ldots, a_{N}, b_{N+1}, \ldots, b_{M}\right] \\ \ \\
+=\frac{b_{N+1}^{\prime} p_{N}+p_{N-1}}{b_{N+1}^{\prime} q_{N}+ q_{N-1}} \Rightarrow p_{N}q_{ N-1}-p_{N-1} q_{N}=0 \\ \ \\
+这是不可能的 \\ \ \\
+证明过程中，我们假定了 n \leqslant N 的部分，所以 \\ \ \\
+b_{n}^{\prime}=\left[b_{N+1}, \ldots, b_{M}\right]</script>
       
     </div>
     <footer class="article-footer">
@@ -431,7 +491,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数列极限的补充问题"><span class="nav-number">1.</span> <span class="nav-text">数列极限的补充问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充阅读：《不等式的秘密》"><span class="nav-number">2.</span> <span class="nav-text">补充阅读：《不等式的秘密》</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AM-GM不等式"><span class="nav-number">2.1.</span> <span class="nav-text">AM-GM不等式</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数列极限的补充问题"><span class="nav-number">1.</span> <span class="nav-text">数列极限的补充问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充阅读：《不等式的秘密》"><span class="nav-number">2.</span> <span class="nav-text">补充阅读：《不等式的秘密》</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AM-GM不等式"><span class="nav-number">2.1.</span> <span class="nav-text">AM-GM不等式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连分数"><span class="nav-number">3.</span> <span class="nav-text">连分数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数相关定义"><span class="nav-number">3.1.</span> <span class="nav-text">连分数相关定义</span></a></li></ol></li></ol>
     
     </div>
   </aside>

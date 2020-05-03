@@ -32,7 +32,7 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="这篇博文对连分数理论和逼近算法做进一步研究">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-02T14:25:16.371Z">
+<meta property="og:updated_time" content="2020-05-03T12:21:43.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分析学基本理论（二）">
 <meta name="twitter:description" content="这篇博文对连分数理论和逼近算法做进一步研究">
@@ -265,7 +265,69 @@ q_{n+1}^{\prime}=a_{n+1} q_{n}+q_{n-1}, \quad q_{n+1}^{\prime}>q_{n+1} \\ \ \\
 \frac{1}{q_{n+1}^{\prime}}<\frac{1}{q_{n+1}} \Rightarrow \frac{1}{q_{n+1}^{\prime}}=\frac{1}{q_{n+1}} \cdot \delta_{n} \quad\left(0<\delta_{n}<1\right)</script><script type="math/tex; mode=display">
 q_{n} x-p_{n}=\frac{(-1)^{n} \delta_{n}}{q_{n+1}} \quad\left(0<\delta_{n}<1\right)</script><h3 id="连分数的极限"><a href="#连分数的极限" class="headerlink" title="连分数的极限"></a>连分数的极限</h3><script type="math/tex; mode=display">
 n>3, \quad q_n \geqslant n \\
-\left|\frac{p_{2 n}}{q_{2n}}-\frac{p_{2n-1}}{q_{2 n-1}}\right|=\frac{1}{q_{2 n} q_{2 n-1}} \leqslant \frac{1}{2 n(2 n-1)} \rightarrow 0</script>
+\left|\frac{p_{2 n}}{q_{2n}}-\frac{p_{2n-1}}{q_{2 n-1}}\right|=\frac{1}{q_{2 n} q_{2 n-1}} \leqslant \frac{1}{2 n(2 n-1)} \rightarrow 0</script><h2 id="初等数论相关算法"><a href="#初等数论相关算法" class="headerlink" title="初等数论相关算法"></a>初等数论相关算法</h2><h3 id="素数筛法"><a href="#素数筛法" class="headerlink" title="素数筛法"></a>素数筛法</h3><p>$\textbf{Eratosthenes筛法，用 v[x] 标记合数}$</p>
+<script type="math/tex; mode=display">
+从 \ x \ 开始 \\ \ \\
+\{x^2, (x+1)x, \ldots , [N/x]\cdot x\} 标记为合数</script><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int v[maxn];</span><br><span class="line">void primes(int n) &#123;</span><br><span class="line">    Set(v, 0);</span><br><span class="line">    _rep(i, 2, n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(v[i]) <span class="built_in">continue</span>;</span><br><span class="line">        cout &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">        _rep(j, i, n / i) v[i * j] = 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$\textbf{线性筛法，标记最小素因子}$</p>
+<script type="math/tex; mode=display">
+\textbf{i)} \ 记录当前数的最小素因子 \ v[x] \\ \ \\
+\textbf{ii)} \ 用递增素数列 \  \textbf{primes} \ 维护 [2, x]已产生的素数集合 \\ \ \\
+\textbf{iii)} \ p \in \text{primes}， p = \text{primes}[j], \ 在 \ x \ 的基础上， 累乘一个最小质因子 \ p \\
+需满足，p \leqslant v[x]，p \ 是 \ i \cdot p \ 的最小素因子</script><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int v[maxn];</span><br><span class="line">void primes(int n) &#123;</span><br><span class="line">    Set(v, 0);</span><br><span class="line">    vector&lt;int&gt; prime;</span><br><span class="line"></span><br><span class="line">    _rep(x, 2, n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(v[x] == 0) &#123;</span><br><span class="line">            v[x] = x;</span><br><span class="line">            prime.push_back(x);</span><br><span class="line">        &#125;</span><br><span class="line">        _for(i, 0, prime.size()) &#123;</span><br><span class="line">            <span class="keyword">if</span>(prime[i] &gt; n / x || prime[i] &gt; v[x]) <span class="built_in">break</span>;</span><br><span class="line">            v[x * prime[i]] = prime[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _for(i, 0, prime.size()) cout &lt;&lt; prime[i] &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Fermat数用于逼近"><a href="#Fermat数用于逼近" class="headerlink" title="Fermat数用于逼近"></a>Fermat数用于逼近</h3><script type="math/tex; mode=display">
+F_{n}=2^{2^n}+1 \\ \ \\
+没有大于1的公约数</script><script type="math/tex; mode=display">
+x=2^{2^{n}} \\ \ \\
+\frac{F_{n+k}-2}{F_{n}}=\frac{2^{2^{n+k}}-1}{2^{2^{n}}+1}=\frac{x^{2^{k}}-1}{x+1} \\ \ \\
+=x^{2^k-1}-x^{2^k-2}+\cdots-1 \\ \ \\
+m\left|F_{n}, \quad m\right| F_{n+k}, \quad \Rightarrow m |\left(F_{n+k}-2\right) \\ \ \\
+\Rightarrow m | 2, \quad 2 \not \mathop{|} F_{n} \Rightarrow m=1</script><script type="math/tex; mode=display">
+\{F_1, F_2, \cdots, F_n\} 能够被一个奇素数整除，并且这些奇素数互不相同 \\ \ \\
+p_{n +1} \leqslant F_n = 2^{2^n}+1</script><p>$\textbf{代数恒等式}$</p>
+<script type="math/tex; mode=display">
+\frac{a^{kl}+1}{a^{l}+1}=a^{(k-1) l}-a^{(k-2) l}+\dots+1</script><p>$\textbf{Euclid定理的代数证明}$<br>$N(x)表示不超过 \ x \ ，并且不能被任何 \ p &gt; p_j \ 素数整除的数 \ n \ 的个数$</p>
+<script type="math/tex; mode=display">
+n = n_1^2m, \  m \ 无平方因子 \\ \ \\
+m=2^{b_{1}} 3^{b_{2}} \ldots p_{j}^{b_{j}} , \ b_j = \{0, 1\}， 有 \ 2^j \ 种不同的取值 \\ \ \\
+n_{1}^{2} \leqslant n \leqslant x \Rightarrow n_{1} \leqslant \sqrt{n} \leqslant \sqrt{x} \\ \ \\
+m 有 \ 2^j \ 种取值，n_1 有 \sqrt{x} 种取值，N(x) \leqslant 2^{j} \sqrt{x}</script><script type="math/tex; mode=display">
+如果素数有限，那么设所有素数为 \{2,3,\cdots, p_j\} \\ \ \\
+对于每个 \ x \ , 要么被 [2, p_j] 中的一个整除，要么 \ x \ 本身是素数 \\ \ \\
+N(x) = x, \ \Rightarrow x \leqslant 2^j \sqrt{x} \\
+x \leqslant 2^{2^{2j}}，这个对 \  x \geqslant 2^{2^{2j}} + 1 \  不成立</script><p>$\textbf{素数相关的级数的敛散性}$</p>
+<script type="math/tex; mode=display">
+\sum \frac{1}{p}=\frac{1}{2}+\frac{1}{3}+\frac{1}{5}+\frac{1}{7}+\dots \\ \ \\
+发散，证明如下 \\ \ \\
+x-N(x) \ 表示 \{\cdots n \cdots x\} 中能够被 \{p_{j+1}, p_{j+2}, \cdots \} 整除的数的个数 \\ \ \\
+\frac{x}{p_{i+1}}+\frac{x}{p_{j+2}}+\ldots<\frac{1}{2} x, \quad x-N(x)<\frac{1}{2} x \\ \ \\
+\frac{1}{2} x<N(x) \leqslant 2^j \sqrt{x}, \quad x<2^{2j+2} \\ \ \\
+\text{let} \ x \geqslant 2^{2j+2} ，结论不成立</script><p>$\pi(x) 性质$<br>$\pi(x) 表示不超过 \ x \ 的素数的个数$</p>
+<script type="math/tex; mode=display">
+\text{let} \ j = \pi(x)，这个 \ j \ 是可以取到的，\text{we have} \\ \ \\
+p_{j+1} > x, \quad N(x) = x \\ \ \\
+x = N(x) \leqslant 2^{\pi(x)} \sqrt{x} \quad \Rightarrow 2^{\pi(x)} \geqslant \sqrt{x} \\ \ \\
+\pi(x) \geqslant \frac{\ln x}{2 \ln 2} \\ \ \\
+x = p_n, \quad \pi(x) = n \Rightarrow p_n \leqslant 4^n</script><h3 id="素数公式进一步结果"><a href="#素数公式进一步结果" class="headerlink" title="素数公式进一步结果"></a>素数公式进一步结果</h3><p>不存在任何非常数的整系数多项式 $f(n)$，使得它对充分大的 $n$，都取素数值<br>$\text{proof}$</p>
+<script type="math/tex; mode=display">
+x>N, \quad f(x)=a_{0} x^{k}+\ldots=y>1 \\ \ \\
+\forall r, \quad f(r y+x)=a_{0}(y+x)^{k}+\ldots=a_{0}(y)^{k}+\cdots+\left(a_{0} x^{k}+\cdots\right) \\ \ \\
+y | f(ry + x), r \rightarrow \infty, f(r y+x) \rightarrow \infty \\ \ \\
+f(n) 取的到无穷多合数</script><h3 id="整数模"><a href="#整数模" class="headerlink" title="整数模"></a>整数模</h3><p>除了 $0$ 模以外，任何模都是某个正数 $d$ 的整数倍构成的集合</p>
+<script type="math/tex; mode=display">
+a \in S, \quad b \in S, \quad \Rightarrow \quad x a+y b \in S \\ \ \\
+d\ 是\ S\ 中的最小正数，\forall z, \quad n-z d \in S \\ \ \\
+记余数是 \  c \ , 0 \leqslant c < d，假设 \ d \ 最小，因此 \\ \ \\
+c = 0, \quad n = zd</script><h3 id="Galois理论角度理解"><a href="#Galois理论角度理解" class="headerlink" title="Galois理论角度理解"></a>Galois理论角度理解</h3><p>能以多于一种方式分解成素数乘积的数称为非正规数</p>
+<script type="math/tex; mode=display">
+设 \ n \ 是最小的非正规数，同一个素数 \ p \ 不可能同时在因式分解中出现 \\ \ \\
+否则 \  n / p \ 就是非正规数， n /p < n \\ \ \\
+\text{we have} \quad n = p_1p_2p_3 \cdots = q_1q_2\cdots, \ \ p_i \neq q_j \\ \ \\
+p_1^2\leqslant n, \ q_1^2 \leqslant n \stackrel{p_{1} \neq q_{1}}{\Longrightarrow} \ p_1q_1 < n \\ \ \\
+N = n - p_1q_1, \ 0 < N < n, N 为正规数 \\ \ \\
+p_1 | N, q_1 | N, \ \ \Rightarrow (p_1q_1) | N \ \Rightarrow (p_1q_1) | n \\ \ \\
+q_1 | (n / p_1)， \text{but} \ (n / p_1) < n \ 为正规数 \\ \ \\
+n / p_1 有唯一的素数分解 \ p_2p_3\cdots \Rightarrow n = p_1p_2\cdots 唯一</script>
       
     </div>
     <footer class="article-footer">
@@ -353,7 +415,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#连分数逼近算法"><span class="nav-number">1.</span> <span class="nav-text">连分数逼近算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数与渐进分数的差"><span class="nav-number">1.1.</span> <span class="nav-text">连分数与渐进分数的差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数的极限"><span class="nav-number">1.2.</span> <span class="nav-text">连分数的极限</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#连分数逼近算法"><span class="nav-number">1.</span> <span class="nav-text">连分数逼近算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数与渐进分数的差"><span class="nav-number">1.1.</span> <span class="nav-text">连分数与渐进分数的差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数的极限"><span class="nav-number">1.2.</span> <span class="nav-text">连分数的极限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初等数论相关算法"><span class="nav-number">2.</span> <span class="nav-text">初等数论相关算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#素数筛法"><span class="nav-number">2.1.</span> <span class="nav-text">素数筛法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fermat数用于逼近"><span class="nav-number">2.2.</span> <span class="nav-text">Fermat数用于逼近</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#素数公式进一步结果"><span class="nav-number">2.3.</span> <span class="nav-text">素数公式进一步结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数模"><span class="nav-number">2.4.</span> <span class="nav-text">整数模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Galois理论角度理解"><span class="nav-number">2.5.</span> <span class="nav-text">Galois理论角度理解</span></a></li></ol></li></ol>
     
     </div>
   </aside>

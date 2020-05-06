@@ -32,7 +32,7 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="这篇博文对连分数理论和逼近算法做进一步研究">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-03T12:21:43.343Z">
+<meta property="og:updated_time" content="2020-05-06T02:22:42.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分析学基本理论（二）">
 <meta name="twitter:description" content="这篇博文对连分数理论和逼近算法做进一步研究">
@@ -265,7 +265,48 @@ q_{n+1}^{\prime}=a_{n+1} q_{n}+q_{n-1}, \quad q_{n+1}^{\prime}>q_{n+1} \\ \ \\
 \frac{1}{q_{n+1}^{\prime}}<\frac{1}{q_{n+1}} \Rightarrow \frac{1}{q_{n+1}^{\prime}}=\frac{1}{q_{n+1}} \cdot \delta_{n} \quad\left(0<\delta_{n}<1\right)</script><script type="math/tex; mode=display">
 q_{n} x-p_{n}=\frac{(-1)^{n} \delta_{n}}{q_{n+1}} \quad\left(0<\delta_{n}<1\right)</script><h3 id="连分数的极限"><a href="#连分数的极限" class="headerlink" title="连分数的极限"></a>连分数的极限</h3><script type="math/tex; mode=display">
 n>3, \quad q_n \geqslant n \\
-\left|\frac{p_{2 n}}{q_{2n}}-\frac{p_{2n-1}}{q_{2 n-1}}\right|=\frac{1}{q_{2 n} q_{2 n-1}} \leqslant \frac{1}{2 n(2 n-1)} \rightarrow 0</script><h2 id="初等数论相关算法"><a href="#初等数论相关算法" class="headerlink" title="初等数论相关算法"></a>初等数论相关算法</h2><h3 id="素数筛法"><a href="#素数筛法" class="headerlink" title="素数筛法"></a>素数筛法</h3><p>$\textbf{Eratosthenes筛法，用 v[x] 标记合数}$</p>
+\left|\frac{p_{2 n}}{q_{2n}}-\frac{p_{2n-1}}{q_{2 n-1}}\right|=\frac{1}{q_{2 n} q_{2 n-1}} \leqslant \frac{1}{2 n(2 n-1)} \rightarrow 0</script><h2 id="Farey数列"><a href="#Farey数列" class="headerlink" title="Farey数列"></a>Farey数列</h2><h3 id="重要的结论"><a href="#重要的结论" class="headerlink" title="重要的结论"></a>重要的结论</h3><p>$\textbf{定理1} \quad$ 如果 $h / k$ 和$\ h^{\prime} / k^{\prime}$ 是 $\mathfrak{F_n}$ 中相邻的项，那么<br>$kh’-hk’=1$</p>
+<p>$\textbf{定理2} \quad$ 如果$h/k,  \ h’’/k’’, \ h’/k’$ 是 $\mathfrak{F_n}$ 中 $3$ 个相连的项，那么</p>
+<script type="math/tex; mode=display">
+\frac{h^{\prime \prime}}{k^{\prime \prime}}=\frac{h+h^{\prime}}{k+k^{\prime}}</script><p>$\textbf{定理3} \quad$ 如果 $h/k$ 和 $h’/k’$ 是 $\mathfrak{F_n}$ 中相连的两项，那么</p>
+<script type="math/tex; mode=display">
+k+k'>n</script><p>如果定理2成立，定理3必然成立，因为</p>
+<script type="math/tex; mode=display">
+\frac{h+h^{\prime}}{k+k^{\prime}}</script><p>落在区间 </p>
+<script type="math/tex; mode=display">
+\left(\frac{h}{k}, \frac{h^{\prime}}{k^{\prime}}\right)</script><p>中，除非 $k+k’&gt;n$ 成立，否则违背 $h/k, h’/k’$ 是相邻两项</p>
+<p>$\textbf{proof1}$<br>数学归纳法，假设对于 $\mathfrak{F}_{n-1}$ 两个相连的项 $h/k, h’/k’$ 成立，在 $\mathfrak{F}_n$ 中它们被 $h’’/ k’’$ 隔开</p>
+<script type="math/tex; mode=display">
+kh''-hk''=r > 0, \quad k''h'-h''k'=s >0 \\
+归纳法已知结论, \quad kh'-hk' = 1 \\ \ \\
+(h'', k'') = 1, \Rightarrow (s, r)=1 \\ \ \\
+\Rightarrow h'' = sh + rh', \quad k''=sk+rk' \\ \ \\
+考虑分数集合 S \\ \ \\
+\frac{H}{K}=\frac{\mu h+\lambda h^{\prime}}{\mu k+\lambda k^{\prime}}, \quad (\mu, \lambda) = 1\\ \ \\
+这是一个既约分数，如果不是的话，不妨设 \\ \ \\
+m | s\left(\mu h+\lambda h^{\prime}\right)+t\left(\mu k+\lambda k^{\prime}\right), \quad \forall s,t \\ \ \\
+k\left(\mu h+\lambda h^{\prime}\right)-h\left(\mu k+\lambda k^{\prime}\right) = \lambda \\
+h'\left(\mu h+\lambda k^{\prime}\right)-k'\left(\mu h+\lambda h^{\prime}\right) = \mu \\ \ \\
+\Rightarrow m | \mu, \ m | \lambda  \\ \ \\
+在 \ S \ 中取值使得 \ K \ 最小, \lambda = 1, \mu = 1 \\
+h''=h+h', \ k'' = k+k'</script><p>$\textbf{proof2}$<br>构造法，假设 $h/k$ 后面的项不是 $h’/k’$ ，不妨假设是 $x/y$，那么有</p>
+<script type="math/tex; mode=display">
+kx-hy=1 \\ \ \\
+因为 \ (h, k) = 1, kx-hy=1 \ 有整数解 \\ \ \\
+另一方面，h/k \ 和 x /y \ 是相连的两项，那么 \\ \ \\
+k+y>n \Leftrightarrow y > n - k \\
+y < n \\ \ \\
+方程的解不妨设为 x_0, y_0 \\ \ \\
+x_0+th, \ y_0+tk, \forall t 成立， 满足 \\ \ \\
+0 \leqslant n - k < y \leqslant n \ 当然可以取得到</script><script type="math/tex; mode=display">
+kx-hy = 1 \Leftrightarrow \frac{x}{y}=\frac{h}{k}+\frac{1}{k y}>\frac{h}{k} \\ \ \\
+kx-hy \geqslant 1, \quad x/y \ 位于 \ h/k \ 的后面 \\ \ \\
+三个\text{ Farey }项的排列是 \ \{\frac{h}{k}, \frac{h'}{k'}, \frac{x}{y}\} \\ \ \\
+\frac{x}{y}-\frac{h^{\prime}}{k^{\prime}}=\frac{k^{\prime} x-h^{\prime} y}{k^{\prime} y} \geqslant \frac{1}{k^{\prime} y} \\ \ \\
+\frac{h^{\prime}}{k^{\prime}}-\frac{h}{k}=\frac{h^{\prime} k-k^{\prime} h}{k k^{\prime}} \geqslant \frac{1}{k k^{\prime}} \\ \ \\
+\frac{1}{k y}=\frac{k x-h y}{k y}=\frac{x}{y}-\frac{h}{k} \geqslant \frac{1}{k^{\prime} y}+\frac{1}{k k^{\prime}}=\frac{k+y}{k k^{\prime} y} >\frac{n}{k k^{\prime} y} \geqslant \frac{1}{k y} \\ \ \\
+矛盾，所以 x/y= h'/k'</script><h3 id="Farey算法"><a href="#Farey算法" class="headerlink" title="Farey算法"></a>Farey算法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void <span class="function"><span class="title">findNext</span></span>() &#123;</span><br><span class="line">    example: 4/9</span><br><span class="line">    </span><br><span class="line">    get one solution of 9x-4y=1</span><br><span class="line">    (x0, y0) = (1, 2)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">let</span> 13-9 &lt; 2+9r &lt; 13</span><br><span class="line">    </span><br><span class="line">    enumerate r = 1</span><br><span class="line">    x = 1 + 4r = 5</span><br><span class="line">    y = 2 + 9r = 11</span><br><span class="line"></span><br><span class="line">    5/11 is the answer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="初等数论相关算法"><a href="#初等数论相关算法" class="headerlink" title="初等数论相关算法"></a>初等数论相关算法</h2><h3 id="素数筛法"><a href="#素数筛法" class="headerlink" title="素数筛法"></a>素数筛法</h3><p>$\textbf{Eratosthenes筛法，用 v[x] 标记合数}$</p>
 <script type="math/tex; mode=display">
 从 \ x \ 开始 \\ \ \\
 \{x^2, (x+1)x, \ldots , [N/x]\cdot x\} 标记为合数</script><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int v[maxn];</span><br><span class="line">void primes(int n) &#123;</span><br><span class="line">    Set(v, 0);</span><br><span class="line">    _rep(i, 2, n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(v[i]) <span class="built_in">continue</span>;</span><br><span class="line">        cout &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">        _rep(j, i, n / i) v[i * j] = 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -415,7 +456,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#连分数逼近算法"><span class="nav-number">1.</span> <span class="nav-text">连分数逼近算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数与渐进分数的差"><span class="nav-number">1.1.</span> <span class="nav-text">连分数与渐进分数的差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数的极限"><span class="nav-number">1.2.</span> <span class="nav-text">连分数的极限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初等数论相关算法"><span class="nav-number">2.</span> <span class="nav-text">初等数论相关算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#素数筛法"><span class="nav-number">2.1.</span> <span class="nav-text">素数筛法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fermat数用于逼近"><span class="nav-number">2.2.</span> <span class="nav-text">Fermat数用于逼近</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#素数公式进一步结果"><span class="nav-number">2.3.</span> <span class="nav-text">素数公式进一步结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数模"><span class="nav-number">2.4.</span> <span class="nav-text">整数模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Galois理论角度理解"><span class="nav-number">2.5.</span> <span class="nav-text">Galois理论角度理解</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#连分数逼近算法"><span class="nav-number">1.</span> <span class="nav-text">连分数逼近算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数与渐进分数的差"><span class="nav-number">1.1.</span> <span class="nav-text">连分数与渐进分数的差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连分数的极限"><span class="nav-number">1.2.</span> <span class="nav-text">连分数的极限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Farey数列"><span class="nav-number">2.</span> <span class="nav-text">Farey数列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重要的结论"><span class="nav-number">2.1.</span> <span class="nav-text">重要的结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Farey算法"><span class="nav-number">2.2.</span> <span class="nav-text">Farey算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初等数论相关算法"><span class="nav-number">3.</span> <span class="nav-text">初等数论相关算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#素数筛法"><span class="nav-number">3.1.</span> <span class="nav-text">素数筛法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fermat数用于逼近"><span class="nav-number">3.2.</span> <span class="nav-text">Fermat数用于逼近</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#素数公式进一步结果"><span class="nav-number">3.3.</span> <span class="nav-text">素数公式进一步结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数模"><span class="nav-number">3.4.</span> <span class="nav-text">整数模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Galois理论角度理解"><span class="nav-number">3.5.</span> <span class="nav-text">Galois理论角度理解</span></a></li></ol></li></ol>
     
     </div>
   </aside>

@@ -32,7 +32,7 @@
 <meta property="og:site_name" content="算法小站">
 <meta property="og:description" content="这篇博文主要讲述了最短路算法中可能会用得到的建图技巧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-21T14:42:51.030Z">
+<meta property="og:updated_time" content="2020-05-22T08:04:27.900Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图算法和图模型(四)">
 <meta name="twitter:description" content="这篇博文主要讲述了最短路算法中可能会用得到的建图技巧">
@@ -229,7 +229,8 @@
         <p>这篇博文主要讲述了最短路算法中<br>可能会用得到的建图技巧</p>
 <a id="more"></a>
 <h2 id="隐式图Dijkstra"><a href="#隐式图Dijkstra" class="headerlink" title="隐式图Dijkstra"></a>隐式图Dijkstra</h2><p>$\text{隐式图 Dijkstra 的核心在于，一边 Dijkstra 一边建图}$<br>$\forall u \in V(G), u \text{ 一般情况表示状态编码 }$</p>
-<p>$\textbf{algorithm}$<br>$\textbf{u(state, dist)}$<br>$\textbf{i)} \quad \text{get start status}$<br>$\ \ \  \quad que \leftarrow\text{st(stateCode, 0)}$<br>$\textbf{ii)} \ \ \textbf{while(que.size())}$<br>$\quad \quad \quad \text{get u = que.front(), que.pop()}$<br>$\quad \quad \quad \textbf{for } \forall i \in \text{candidates}$<br>$\quad \quad \quad \quad \text{check}(edges(i)) \text{ is available?}$<br>$\quad \quad \quad \quad \text{if(check == false and not available)  } continue$<br>$\quad \quad \quad \quad \text{get } \textbf{v(newState, u.dist + e(u, v))}$<br>$\quad \quad \quad \quad \text{sometimes change v.state}$<br>$\quad \quad \quad \quad D(v) = \min(D(v), v.dist)$<br>$\quad \quad \quad \quad \quad \text{  if changed, que.push}(v)$</p>
+<p>$\textbf{algorithm}$<br>$\textbf{u(state, dist)}$<br>$\textbf{i)} \quad \text{get start status}$<br>$\ \ \  \quad que \leftarrow\text{st(stateCode, 0)}$<br>$\textbf{ii)} \ \ \textbf{while(que.size())}$<br>$\quad \quad \quad \text{get u = que.front(), que.pop()}$<br>$\quad \quad \quad \text{if u = endState, return } \textbf{D(u)}$</p>
+<p>$\quad \quad \quad \textbf{for } \forall i \in \text{candidates}$<br>$\quad \quad \quad \quad \text{check}(edges(i)) \text{ is available?}$<br>$\quad \quad \quad \quad \text{if(check == false and not available)  } continue$<br>$\quad \quad \quad \quad \text{get } \textbf{v(newState, u.dist + e(u, v))}$<br>$\quad \quad \quad \quad \text{sometimes change v.state}$<br>$\quad \quad \quad \quad D(v) = \min(D(v), v.dist)$<br>$\quad \quad \quad \quad \quad \text{  if changed, que.push}(v)$</p>
 
       
     </div>

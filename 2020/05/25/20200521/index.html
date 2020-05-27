@@ -34,7 +34,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/05/25/20200521/colored-cubes.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2020/05/25/20200521/colored-cubes02.jpg">
-<meta property="og:updated_time" content="2020-05-27T10:54:51.414Z">
+<meta property="og:updated_time" content="2020-05-27T11:02:42.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图算法和图模型(六)">
 <meta name="twitter:description" content="spfa判负环，差分约束系统状态图，隐式图等等图论最短路算法中一些比较精彩的应用">
@@ -272,7 +272,7 @@ i_{1} & i_{2} & \ldots & i_{n}
 <p>$\textbf{algorithm1}$<br>$\textbf{permutation groups}$<br>$\textbf{i) for } \forall i \in [1, n], e:\Rightarrow  A(i) = i$<br>$\textbf{ii) }$</p>
 <script type="math/tex; mode=display">
  \pi_{\textbf{left}} A= D \Rightarrow \\ \ \\
- \textbf{trans} = \pi_{\textbf{left}}, \quad \textbf{rot(trans, A):}</script><p>$\quad \textbf{for } \forall i \in [1, n]$<br>$\quad \quad \pi_{\textbf{left}}(i) = p$<br>$\quad \quad \textbf{do } A(i) \mapsto A(p)$<br>$\quad \quad \textbf{A(i)} \gets \textbf{trans(A(i))}$</p>
+ \textbf{trans} = \pi_{\textbf{left}}, \quad \textbf{rot(trans, A):}</script><p>$\quad \textbf{for } \forall i \in [1, n], \textbf{let } e = [A(i)]$<br>$\quad \quad \text{eg: }\quad \pi_{\textbf{left}}(i) = p$<br>$\quad \quad \pi^{k} = (\pi_k\pi_{k-1}\cdots \pi_2\pi_1) e$<br>$\quad \quad D(i) = \textbf{trans(A(i))}, \text{ return } D$</p>
 <p>$\textbf{algorithm2 逆运算}$</p>
 <script type="math/tex; mode=display">
 (\pi_1 \pi_2 \cdots \pi_k) A = D \Longrightarrow \\ \ \\

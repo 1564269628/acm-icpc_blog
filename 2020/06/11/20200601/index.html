@@ -16,7 +16,7 @@
   <meta name="google-site-verification" content="EMoSEE-nLoAdIHWBDmdYpa0t4XBCF8aLYOM3ayoI0pI">	
   <meta charset="utf-8">
   
-  <title>高级数据结构（三） | 算法小站</title>
+  <title>分治算法综合（一） | 算法小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="algorithmdata_structure">
@@ -24,22 +24,22 @@
   
   
   
-  <meta name="description" content="数据结构中还有一些值得探讨的高级专题比如$\textbf{Link-Cut-Tree，树链剖分，CDQ分治，点分治}$$\textbf{可持久化数据结构}$在高级数据结构部分将对这些内容做一点补充">
+  <meta name="description" content="分治算法中有一些值得探讨的高级专题比如$\textbf{CDQ分治，树上分治，整体分治}$$\textbf{其中树上分治又被分为点分治，边分治，动态树分治}$从这篇博文开始陆续对这些内容做一个补充">
 <meta name="keywords" content="algorithm,data_structure">
 <meta property="og:type" content="article">
-<meta property="og:title" content="高级数据结构（三）">
+<meta property="og:title" content="分治算法综合（一）">
 <meta property="og:url" content="https://www.fogsail.net/2020/06/11/20200601/index.html">
 <meta property="og:site_name" content="算法小站">
-<meta property="og:description" content="数据结构中还有一些值得探讨的高级专题比如$\textbf{Link-Cut-Tree，树链剖分，CDQ分治，点分治}$$\textbf{可持久化数据结构}$在高级数据结构部分将对这些内容做一点补充">
+<meta property="og:description" content="分治算法中有一些值得探讨的高级专题比如$\textbf{CDQ分治，树上分治，整体分治}$$\textbf{其中树上分治又被分为点分治，边分治，动态树分治}$从这篇博文开始陆续对这些内容做一个补充">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/06/11/20200601/POJ1741-01.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2020/06/11/20200601/POJ1741-02.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2020/06/11/20200601/POJ1741-03.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2020/06/11/20200601/Acwing264.jpg">
-<meta property="og:updated_time" content="2020-06-18T19:25:31.239Z">
+<meta property="og:updated_time" content="2020-07-01T01:00:26.508Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="高级数据结构（三）">
-<meta name="twitter:description" content="数据结构中还有一些值得探讨的高级专题比如$\textbf{Link-Cut-Tree，树链剖分，CDQ分治，点分治}$$\textbf{可持久化数据结构}$在高级数据结构部分将对这些内容做一点补充">
+<meta name="twitter:title" content="分治算法综合（一）">
+<meta name="twitter:description" content="分治算法中有一些值得探讨的高级专题比如$\textbf{CDQ分治，树上分治，整体分治}$$\textbf{其中树上分治又被分为点分治，边分治，动态树分治}$从这篇博文开始陆续对这些内容做一个补充">
 <meta name="twitter:image" content="https://www.fogsail.net/2020/06/11/20200601/POJ1741-01.jpg">
   
     <link rel="alternate" href="/atom.xml" title="算法小站" type="application/atom+xml">
@@ -92,7 +92,7 @@
         "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
         "@id": "http://www.fogsail.net/2020/06/11/20200601/",
         "appid": "1593711792635024",
-        "title": "高级数据结构（三）",
+        "title": "分治算法综合（一）",
         "images": [
         "http://www.fogsail.net/2020/06/11/20200601/01.png",
         "http://www.fogsail.net/2020/06/11/20200601/01.jpg"
@@ -204,7 +204,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      高级数据结构（三）
+      分治算法综合（一）
     </h1>
   
 
@@ -231,7 +231,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>数据结构中还有一些值得探讨的高级专题<br>比如<br>$\textbf{Link-Cut-Tree，树链剖分，CDQ分治，点分治}$<br>$\textbf{可持久化数据结构}$<br>在高级数据结构部分将对这些内容做一点补充</p>
+        <p>分治算法中有一些值得探讨的高级专题<br>比如<br>$\textbf{CDQ分治，树上分治，整体分治}$<br>$\textbf{其中树上分治又被分为点分治，边分治，动态树分治}$<br>从这篇博文开始陆续对这些内容做一个补充</p>
 <a id="more"></a>
 <h2 id="点分治"><a href="#点分治" class="headerlink" title="点分治"></a>点分治</h2><p><strong><a href="https://vjudge.net/problem/POJ-1741" target="_blank" rel="noopener">POJ1741</a></strong></p>
 <p><img src="/2020/06/11/20200601/POJ1741-01.jpg" alt="POJ1741"><br><img src="/2020/06/11/20200601/POJ1741-02.jpg" alt="POJ1741"><br><img src="/2020/06/11/20200601/POJ1741-03.jpg" alt="POJ1741"></p>
@@ -299,7 +299,7 @@ var a = new Donate({
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2020/06/11/20200601/" target="_blank" title="高级数据结构（三）">https://www.fogsail.net/2020/06/11/20200601/</a>
+          <a href="/2020/06/11/20200601/" target="_blank" title="分治算法综合（一）">https://www.fogsail.net/2020/06/11/20200601/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>
@@ -348,7 +348,7 @@ var a = new Donate({
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          离线算法（一）
+          分治算法综合（二）
         
       </div>
     </a>

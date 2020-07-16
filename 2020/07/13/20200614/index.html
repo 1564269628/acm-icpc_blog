@@ -34,7 +34,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/07/13/20200614/UVA10618-01.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2020/07/13/20200614/UVA10618-02.jpg">
-<meta property="og:updated_time" content="2020-07-16T08:19:30.511Z">
+<meta property="og:updated_time" content="2020-07-16T08:21:20.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态规划综合（四）">
 <meta name="twitter:description" content="对动态规划问题中的思维方式举了一些例子">
@@ -247,7 +247,7 @@ d(i+1, j - \text{diff}(i))
 \end{cases}</script><p>$\text{这里 } d(i, j) \text{ 表示这个状态是否存在}$<br>$\text{start: } d(0, 0) = 1$<br>$\text{因为有负值存在，这里我们算的时候，都加上一个 } n \text{ 做调整}$<br>$j \to j+n$</p>
 <p>$\textbf{iii) 如何输出？}$<br>$dp(0 \rightarrow cc-1), \text{如果能够存在某个 diff 差异} = ans$<br>$d(cc, ans) = 1$</p>
 <p>$\textbf{for } ans = [0 \cdots n]$<br>$\quad \textbf{if } d(cc, ans) = 1, \text{print}(ans), \textbf{ return}$</p>
-<p>$\textbf{print}(ans):$<br>$\textbf{for } \forall i = cc-1 \text{ downto } 0$<br>$\quad d(i, ans-\text{diff}(i))=1, ans-\text{diff}(i), [team0]$<br>$\quad d(i, ans+\text{diff}(i))=1, ans+\text{diff}(i), [team1]$<br>$[team0], [team1] \text{ is the answer}$</p>
+<p>$\textbf{print}(ans):$<br>$\textbf{for } \forall i = cc-1 \text{ downto } 0$<br>$\quad \textbf{if }d(i, ans-\text{diff}(i))=1, ans-\text{diff}(i), [team0]$<br>$\quad \textbf{if }d(i, ans+\text{diff}(i))=1, ans+\text{diff}(i), [team1]$<br>$[team0], [team1] \text{ is the answer}$</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>

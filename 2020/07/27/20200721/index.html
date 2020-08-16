@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://www.fogsail.net/2020/07/27/20200721/SCOI2010-02.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2020/07/27/20200721/SCOI2010-03.jpg">
 <meta property="og:image" content="https://www.fogsail.net/2020/07/27/20200721/HDU2870-01.jpg">
-<meta property="og:updated_time" content="2020-08-16T06:08:40.890Z">
+<meta property="og:updated_time" content="2020-08-16T07:17:46.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态规划综合（六）">
 <meta name="twitter:description" content="这篇博文探讨了单调队列优化dp的一些实践">
@@ -250,6 +250,10 @@
 <h2 id="模版补充：二分模版"><a href="#模版补充：二分模版" class="headerlink" title="模版补充：二分模版"></a>模版补充：二分模版</h2><p><strong>说到单调性的问题，很多二分可以解决的问题，往往也具有单调性</strong><br><strong>这里补充一些整数二分的模版</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">将区间 [l, r] 划分成为 [l, mid] 和 [mid+1, r]</span><br><span class="line">更新操作是 r = mid 或者 l = mid + 1</span><br><span class="line">最后的答案是新区间的 l</span><br><span class="line"></span><br><span class="line">int bsearch(int l, int r) &#123;</span><br><span class="line">    <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">        int mid = l + r &gt;&gt; 1;</span><br><span class="line">        <span class="keyword">if</span> (check(mid)) r = mid;</span><br><span class="line">        <span class="keyword">else</span> l = mid + 1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">将区间 [l, r] 划分成为 [l, mid-1] 和 [mid, r]</span><br><span class="line">更新操作是 l = mid 或者是 r = mid - 1</span><br><span class="line">为了防止死循环，计算 mid = l + r + 1 &gt;&gt; 1;</span><br><span class="line"></span><br><span class="line">int bsearch(int l, int r) &#123;</span><br><span class="line">    <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">        int mid = l + r + 1 &gt;&gt; 1;</span><br><span class="line">        <span class="keyword">if</span> (check(mid)) l = mid;</span><br><span class="line">        <span class="keyword">else</span> r = mid - 1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>两种二分，实际上是上取整和下取整的不同</strong><br><strong>实际上，中点都满足</strong> $mid = (l+r) / 2$</p>
+<p><strong>第一种情况</strong><br>$[l,r] \to [l,mid] \cup [mid+1, r]$</p>
+<p><strong>第二种情况</strong><br>$[l,r] \to [l,mid-1] \cup [mid, r]$<br>边界条件是 $r = l+1$<br>此时 $mid = (2l+1)/2 = l$ <strong>恒成立</strong><br>$[l, r] \to [mid, r]=[l,r]$<br><strong>区间没有发生变化，导致死循环</strong><br><strong>解决方法是</strong> $mid = (l+r+1) / 2$ <strong>进行上取整即可</strong></p>
+
       
     </div>
     <footer class="article-footer">

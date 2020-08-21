@@ -33,7 +33,7 @@
 <meta property="og:description" content="这部分主要讲约数和同余">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.fogsail.net/2020/08/20/20200729/divide01.jpg">
-<meta property="og:updated_time" content="2020-08-20T13:17:20.006Z">
+<meta property="og:updated_time" content="2020-08-21T16:32:41.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数学问题（二）">
 <meta name="twitter:description" content="这部分主要讲约数和同余">
@@ -235,7 +235,9 @@
 <p><strong>把一个数分解成最接近的两个数相乘</strong><br><strong>实际上，是要找出</strong> $\geqslant \sqrt{n}$ 的<br>能够被 $n$ 整除的<strong>最小的</strong>整数 $i$<br>$(i, n/i)$ 就是答案</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pair&lt;int, int&gt; crack(int n) &#123;</span><br><span class="line">    int i = sqrt(n);</span><br><span class="line">    int j = n / i;</span><br><span class="line">    <span class="keyword">while</span> (n % i) &#123;</span><br><span class="line">        i++;</span><br><span class="line">        j = n / i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> make_pair(i, j);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由此可见，一个数约数个数的上界是 $2\sqrt{n}$</p>
-<h3 id="求-1-to-N-每个数的正约数集合——倍数法"><a href="#求-1-to-N-每个数的正约数集合——倍数法" class="headerlink" title="求$1 \to N$ 每个数的正约数集合——倍数法"></a>求$1 \to N$ 每个数的正约数集合——倍数法</h3>
+<h3 id="求-1-to-N-每个数的正约数集合——倍数法"><a href="#求-1-to-N-每个数的正约数集合——倍数法" class="headerlink" title="求$1 \to N$ 每个数的正约数集合——倍数法"></a>求$1 \to N$ 每个数的正约数集合——倍数法</h3><p>对每一个数 $d$，$[1, N]$ 中以 $d$ 作为约数的数</p>
+<script type="math/tex; mode=display">\{d, 2d, 3d, \cdots, \lfloor n/d \rfloor \}</script><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const int maxn = 1e6 + 10;</span><br><span class="line">const int N = 1e6;</span><br><span class="line">vector&lt;int&gt; fac[maxn];</span><br><span class="line"></span><br><span class="line">void solve(int n) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j = 1; j &lt;= n/i; j++)</span><br><span class="line">            fac[i*j].push_back(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(auto x : fac[i]) <span class="built_in">printf</span>(<span class="string">"%d "</span>, x);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    solve(N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法实践"><a href="#算法实践" class="headerlink" title="算法实践"></a>算法实践</h2>
       
     </div>
     <footer class="article-footer">
@@ -323,7 +325,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#唯一分解定理的推论"><span class="nav-number">1.</span> <span class="nav-text">唯一分解定理的推论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求-1-to-N-每个数的正约数集合——倍数法"><span class="nav-number">1.1.</span> <span class="nav-text">求$1 \to N$ 每个数的正约数集合——倍数法</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#唯一分解定理的推论"><span class="nav-number">1.</span> <span class="nav-text">唯一分解定理的推论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求-1-to-N-每个数的正约数集合——倍数法"><span class="nav-number">1.1.</span> <span class="nav-text">求$1 \to N$ 每个数的正约数集合——倍数法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实践"><span class="nav-number">2.</span> <span class="nav-text">算法实践</span></a></li></ol>
     
     </div>
   </aside>
